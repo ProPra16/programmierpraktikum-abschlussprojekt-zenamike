@@ -4,7 +4,10 @@
 Nadine Foerster, Michael Liske, Kevin Dreyer, Zeljko Bekcic
 
 ## License
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/ProPra16/programmierpraktikum-abschlussprojekt-zenamike/blob/master/LICENSE )
+
 This project is licensed under the MIT-LICENSE
+
 
 ## Build information
 [![Build Status](https://travis-ci.org/ProPra16/programmierpraktikum-abschlussprojekt-zenamike.svg?branch=master)](https://travis-ci.org/ProPra16/programmierpraktikum-abschlussprojekt-zenamike)
