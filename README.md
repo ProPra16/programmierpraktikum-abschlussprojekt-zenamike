@@ -10,7 +10,7 @@ This project is licensed under the MIT-LICENSE
 
 ## Dependencies
 To compile the basic programm you will need the following libraries:
-- [`Virtual-Kata-Lib](https://github.com/bendisposto/virtual-kata-lib) by Jens Bendisposto
+- [`Virtual-Kata-Lib`](https://github.com/bendisposto/virtual-kata-lib) by Jens Bendisposto
 
 If you want to compile the test you will need to add also the following libraries:
 - [`Junit`](junit.org) Version 4.12
