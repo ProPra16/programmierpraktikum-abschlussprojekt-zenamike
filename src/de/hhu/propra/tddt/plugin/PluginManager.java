@@ -4,6 +4,11 @@ package de.hhu.propra.tddt.plugin;
  * Created by zeljko On 23.06.2016
  */
 
+import de.hhu.propra.tddt.contentmanager.CycleManager;
+import de.hhu.propra.tddt.contentmanager.TextManager;
+
+import java.awt.*;
+
 /******************************************************************************
  * Interface: PluginManager
  * <p>
@@ -21,35 +26,29 @@ package de.hhu.propra.tddt.plugin;
 public interface PluginManager {
 
     /**************************************************************************
-     * Method: getCode
+     * Method: getCodeManager
      * <p>
      * Gives the plugins the information about the code you wrote.
      *
-     * @return The code the user actually wrote
+     * @return The CodeManager which contains all information about the code
      ***************************************************************************/
-    public String getCode();
+    public TextManager getCodeManager();
 
     /**************************************************************************
-     * Method: modifyCode
+     * Method: getTestManager
      * <p>
-     * Modifies the source based on the result of the plugins
+     * Gives the plugins the information about the test you wrote.
      *
-     * @param code
-     **************************************************************************/
-    public void modifyCode(String code);
+     * @return The TestManager which contains all information about the test
+     ***************************************************************************/
+    public TextManager getTestManager();
 
     /**************************************************************************
-     * Method: getCycle
+     * Method: getCycleManager
      * <p>
      * Gives the plugins the information about the phase the user is in.
      *
-     * @return The current phase the user is in.
+     * @return The CycleManager which contains all information about the cycle
      **************************************************************************/
-    public void getCycle();
-
-
-    /*
-     * @TODO
-     * Think of what other information the plugins may need
-     */
+    public CycleManager getCycleManager();
 }

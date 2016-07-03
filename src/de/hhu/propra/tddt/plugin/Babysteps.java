@@ -4,7 +4,12 @@ package de.hhu.propra.tddt.plugin;
  * Created by zeljko On 24.06.2016
  */
 
+import de.hhu.propra.tddt.cycle.CycleEnum;
+
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,24 +39,47 @@ public class Babysteps implements Plugin {
 
     @Override
     public void start() {
+        /*
+         * @TODO Pull information from the SettingsManager
+         */
 
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                LocalDateTime localDateTime2 = LocalDateTime.now();
+                resetCode();
+            }
+        };
+        LocalDateTime localDateTime1 = LocalDateTime.now();
+        timer.schedule(timerTask, 10000);
+
+        /*
+         * If you have exceeded the given time this plugin will reset the code
+         * you wrote in this cycle element and reset the cycle
+         */
     }
 
     @Override
     public void stop() {
-
+        timer.cancel();
     }
 
     @Override
     public void setPluginManager(PluginManager pluginManager) {
         this.pluginManager = pluginManager;
     }
-}
 
-class BabystepsTimerTask extends TimerTask {
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
 
-    @Override
-    public void run() {
+    protected void resetCode() {
+        if (pluginManager.getCycleManager().getCurrentPhase() == CycleEnum.TEST) {
+            pluginManager.getTestManager().resetText();
+        }
 
+        if (pluginManager.getCycleManager().getCurrentPhase() == CycleEnum.CODE) {
+            pluginManager.getCodeManager().resetText();
+        }
     }
 }
