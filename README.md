@@ -9,5 +9,9 @@ Nadine Foerster, Michael Liske, Kevin Dreyer, Zeljko Bekcic
 This project is licensed under the MIT-LICENSE
 
 
+This project also uses a library given by Jens Bendisposto (virtual-kata-lib).
+
+
+
 ## Build information
 [![Build Status](https://travis-ci.org/ProPra16/programmierpraktikum-abschlussprojekt-zenamike.svg?branch=master)](https://travis-ci.org/ProPra16/programmierpraktikum-abschlussprojekt-zenamike)
