@@ -33,11 +33,11 @@ public class Settings {
 
     }
 
-    private void init(){
+    private void init() {
 
     }
 
-    private void loadSettings(){
+    private void loadSettings() {
         /*
          * @TODO
          * 1. Fire rockets
@@ -46,7 +46,7 @@ public class Settings {
          */
     }
 
-    private void saveSettings(){
+    private void saveSettings() {
         /*
          * @TODO
          * 1. Build new rockets

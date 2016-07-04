@@ -6,21 +6,21 @@ package de.hhu.propra.tddt.cycle;
 
 /*********************************************************
  * Class: AbstractCycleElement
- *
- * Task: Used to bring structure into the program, nothing
- * really happens here since all is abstract and has to be
- * implemented in the children of this class.
- *
+ * <p>
+ * Task: Used to bring structure into the program, nothing really happens here
+ * since all is abstract and has to be implemented in the children of this
+ * class.
  *
  * @author Kevin
  ********************************************************/
 
 
-
 public abstract class AbstractCycleElement {
 
     public abstract void moveToNextPhase();
+
     public abstract boolean compileCode();
+
     public abstract boolean runTest();
 
     /**

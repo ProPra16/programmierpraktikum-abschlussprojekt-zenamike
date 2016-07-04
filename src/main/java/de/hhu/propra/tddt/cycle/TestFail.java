@@ -6,20 +6,19 @@ package de.hhu.propra.tddt.cycle;
 
 /*********************************************************
  * Class: TestFail
- *
- * Task: First phase of the cycle, user gets prompted to write
- * a test which fails and/or their code isn't compilable.
- *
+ * <p>
+ * Task: First phase of the cycle, user gets prompted to write a test which
+ * fails and/or their code isn't compilable.
  *
  * @author Kevin
  ********************************************************/
-public class TestFail extends AbstractCycleElement{
+public class TestFail extends AbstractCycleElement {
 
     /*********************************************************
      * Method: moveToNextPhase
-     *
-     * Button click event handler, calls compileCode and runTest
-     * only if both return true, the user is allow to move on.
+     * <p>
+     * Button click event handler, calls compileCode and runTest only if both
+     * return true, the user is allow to move on.
      *
      * @return: void
      ***************************************************************/
@@ -31,15 +30,15 @@ public class TestFail extends AbstractCycleElement{
 
     /*********************************************************
      * Method: compileCode
-     *
-     * uses virtual kata, the code isn't allowed to compile here,
-     * look at annotation 1 on the project7.pdf
+     * <p>
+     * uses virtual kata, the code isn't allowed to compile here, look at
+     * annotation 1 on the project7.pdf
      *
      * @return: boolean expression
      ***************************************************************/
 
     @Override
-    public boolean compileCode(){
+    public boolean compileCode() {
 
 
         return false;
@@ -47,14 +46,14 @@ public class TestFail extends AbstractCycleElement{
 
     /*********************************************************
      * Method: runTest
-     *
+     * <p>
      * only one test is allowed to fail in this phase
      *
      * @return: boolean expression
      ***************************************************************/
 
     @Override
-    public boolean runTest(){
+    public boolean runTest() {
 
         return false;
     }
@@ -62,14 +61,14 @@ public class TestFail extends AbstractCycleElement{
 
     /*********************************************************
      * Method: editTest
-     *
-     * function to edit the test in this cycle-phase,
-     * return type not yet clear, hence the void
+     * <p>
+     * function to edit the test in this cycle-phase, return type not yet clear,
+     * hence the void
      *
      * @return: void for now
      ***************************************************************/
 
-    public void editTest(){
+    public void editTest() {
 
     }
 

@@ -7,7 +7,7 @@ import de.hhu.propra.tddt.cycle.CycleEnum;
  */
 public class CycleManager {
 
-    public CycleEnum getCurrentPhase(){
+    public CycleEnum getCurrentPhase() {
         return null;
     }
 }

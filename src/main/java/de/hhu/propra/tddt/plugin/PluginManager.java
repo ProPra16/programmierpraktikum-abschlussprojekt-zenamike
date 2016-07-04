@@ -7,8 +7,6 @@ package de.hhu.propra.tddt.plugin;
 import de.hhu.propra.tddt.contentmanager.CycleManager;
 import de.hhu.propra.tddt.contentmanager.TextManager;
 
-import java.awt.*;
-
 /******************************************************************************
  * Interface: PluginManager
  * <p>
