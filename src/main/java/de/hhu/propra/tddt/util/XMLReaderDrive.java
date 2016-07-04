@@ -1,5 +1,6 @@
-package de.hhu.propra.tddt.util;
+package main.java.de.hhu.propra.tddt.util;
 
+import main.java.de.hhu.propra.tddt.util.XMLReaderHandler;
 import org.xml.sax.SAXException;
 import java.io.IOException;
 import org.xml.sax.XMLReader;
