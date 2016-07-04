@@ -83,7 +83,7 @@ public class TestBabySteps {
         try {
             Thread.sleep(Duration.ofSeconds(5).toMillis());
         } catch (InterruptedException e) {
-            e.printStackTrace();
+
         }
         babysteps.stop();
 

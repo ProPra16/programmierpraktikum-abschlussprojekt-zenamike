@@ -2,6 +2,9 @@ package de.hhu.propra.tddt.contentmanager;
 
 import javafx.scene.control.TextField;
 
+import java.util.Arrays;
+import java.util.regex.Pattern;
+
 /**
  * Created by zeljko On 30.06.2016
  */
@@ -9,7 +12,9 @@ import javafx.scene.control.TextField;
 /**
  *
  */
-public class TextManager {
+public
+class
+TextManager {
 
     protected TextField textField;
     protected String string;
