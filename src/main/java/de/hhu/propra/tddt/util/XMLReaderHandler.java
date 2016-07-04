@@ -1,3 +1,4 @@
+package main.java.de.hhu.propra.tddt.util;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
