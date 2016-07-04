@@ -6,5 +6,4 @@ package de.hhu.propra.tddt.settings;
 public class SettingsManager {
 
 
-
 }

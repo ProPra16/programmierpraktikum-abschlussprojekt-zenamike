@@ -1,4 +1,4 @@
-package main.java.de.hhu.propra.tddt.util;
+package de.hhu.propra.tddt.util.xml.reader;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -19,18 +19,18 @@ public class XMLReaderHandler extends DefaultHandler {
     }
 
     public void characters(char[] chars, int begin, int length) throws SAXException {
-        for(int i = begin; i <(begin+length); i++){
+        for (int i = begin; i < (begin + length); i++) {
             System.out.print(chars[i]);
         }
     }
 
     public void startElement(String s, String s1, String s2, Attributes attributes) throws SAXException {
-        System.out.print("<"+s2+">");
+        System.out.print("<" + s2 + ">");
 
     }
 
     public void endElement(String s, String s1, String s2) throws SAXException {
-        System.out.println("</"+s2+">");
+        System.out.println("</" + s2 + ">");
     }
 
 }

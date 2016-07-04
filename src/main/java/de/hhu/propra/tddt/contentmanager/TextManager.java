@@ -2,9 +2,6 @@ package de.hhu.propra.tddt.contentmanager;
 
 import javafx.scene.control.TextField;
 
-import java.util.Arrays;
-import java.util.regex.Pattern;
-
 /**
  * Created by zeljko On 30.06.2016
  */
@@ -12,8 +9,7 @@ import java.util.regex.Pattern;
 /**
  *
  */
-public
-class
+public class
 TextManager {
 
     protected TextField textField;
@@ -33,7 +29,7 @@ TextManager {
     }
 
     public void resetText() {
-        if(phaseSave == null) phaseSave = "";
+        if (phaseSave == null) phaseSave = "";
         if (string == null) textField.setText(phaseSave);
         if (textField == null) string = phaseSave;
     }
@@ -48,7 +44,7 @@ TextManager {
         this.phaseSave = code;
     }
 
-    public String getPhaseSave(){
+    public String getPhaseSave() {
         return phaseSave;
     }
 }
