@@ -1,4 +1,4 @@
-package de.hhu.propra.tddt.contentmanager;
+package de.hhu.propra.tddt.settings;
 
 /**
  * Created by zeljko On 01.07.2016

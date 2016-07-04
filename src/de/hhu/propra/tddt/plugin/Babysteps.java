@@ -7,9 +7,6 @@ package de.hhu.propra.tddt.plugin;
 import de.hhu.propra.tddt.cycle.CycleEnum;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,35 +19,28 @@ import java.util.TimerTask;
  * By default it has been set to 3 Minutes.
  *
  * @author zeljko
- * @version 0.1
+ * @version 0.2
  ******************************************************************************/
-
- /*
-  * @TODO
-  * 1. Finish this program.
-  * 2. Write a test for this class to test if it really works how intended.
-  * 3. Be happy.
-  */
 public class Babysteps implements Plugin {
 
-    PluginManager pluginManager;
-    Duration duration = Duration.ofMinutes(3);
-    Timer timer = new Timer();
+    private PluginManager pluginManager;
+    private Duration duration = Duration.ofMinutes(3);
+    private Timer timer = new Timer();
 
     @Override
     public void start() {
         /*
-         * @TODO Pull information from the SettingsManager
+         * @TODO
+         * Write the SettingsManager
+         * Pull information from the SettingsManager
          */
 
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                LocalDateTime localDateTime2 = LocalDateTime.now();
                 resetCode();
             }
         };
-        LocalDateTime localDateTime1 = LocalDateTime.now();
         timer.schedule(timerTask, 10000);
 
         /*
@@ -69,11 +59,18 @@ public class Babysteps implements Plugin {
         this.pluginManager = pluginManager;
     }
 
+    /**
+     * Method: setDuration
+     * <p>
+     * Task: Setting the time of you have to write you code for each phase.
+     *
+     * @param duration a duration, where you can enter nearly every value.
+     */
     public void setDuration(Duration duration) {
         this.duration = duration;
     }
 
-    protected void resetCode() {
+    private void resetCode() {
         if (pluginManager.getCycleManager().getCurrentPhase() == CycleEnum.TEST) {
             pluginManager.getTestManager().resetText();
         }
