@@ -41,7 +41,7 @@ public class Babysteps implements Plugin {
                 resetCode();
             }
         };
-        timer.schedule(timerTask, 10000);
+        timer.schedule(timerTask, duration.toMillis());
 
         /*
          * If you have exceeded the given time this plugin will reset the code

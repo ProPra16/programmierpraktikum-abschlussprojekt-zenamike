@@ -19,7 +19,7 @@ public class TestBabySteps {
      * This test verifies that the code reset of babysteps is reseting the text
      */
     @Test
-    public void testTextReset() {
+    public void testTextReset() throws InterruptedException {
 
         //Custom PluginManager and TextManager for this test
         TextManager textManager = new TextManager("hello");
@@ -46,6 +46,8 @@ public class TestBabySteps {
         babysteps.setDuration(Duration.ofSeconds(2));
         babysteps.setPluginManager(pluginManager);
         babysteps.start();
+
+        Thread.sleep(Duration.ofSeconds(5).toMillis());
 
         Assert.assertEquals(textManager.getText(), "hel");
     }

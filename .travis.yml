@@ -1,6 +1,11 @@
 language: java
 
 jkd:
-    -oraclejdk8
+  - oraclejdk8
+
+
+sudo: false
+
+
 
 
