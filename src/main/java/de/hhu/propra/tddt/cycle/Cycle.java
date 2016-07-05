@@ -5,6 +5,7 @@ package de.hhu.propra.tddt.cycle;
  */
 
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import de.hhu.propra.tddt.util.classnameparser.ClassNameParser;
 import de.hhu.propra.tddt.util.classnameparser.ClassNameParserException;
 import vk.core.api.CompilationUnit;
@@ -69,8 +70,8 @@ public class Cycle {
             boolean isATest = true;
             String className = ClassNameParser.getClassName(code);
             CompilationUnit compilationUnit = new CompilationUnit(className, code, isATest);
-            //CompilerFactory.getCompiler(compilationUnit);
             CompilationUnit compArray [] = new CompilationUnit[0];
+            compArray [0] = compilationUnit;
             InternalCompiler internalCompiler = new InternalCompiler(compArray);
 
             if (internalCompiler.getTestResult().getNumberOfFailedTests() != 1) {
@@ -93,6 +94,31 @@ public class Cycle {
     }
 
 
+    /**
+     * Method: resetPhase
+     * <p>
+     * Task: Method that checks if the user is in the right phase to reset their code.
+     * If not they'll get notified.
+     *
+     *
+     * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
+     *                     the user is currently working.
+     */
+
+    public void resetPhase(CycleEnum currentPhase){
+        if (currentPhase.equals(CycleEnum.REFACTOR)){
+            throw new IllegalStateException("Only allowed in the Phase CODE");
+        }
+        if (currentPhase.equals(CycleEnum.CODE)){
+            phase = CycleEnum.TEST;
+            // TODO: 05.07.2016 kill the already written code
+        }
+        if (currentPhase.equals(CycleEnum.TEST)){
+            System.out.println("You can't change into the same phase again.");
+        }
+        // TODO: 05.07.2016 how to stop them Babysteps?
+
+    }
 
 
 }
