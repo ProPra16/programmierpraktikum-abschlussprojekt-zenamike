@@ -1,6 +1,6 @@
 language: java
 
-jkd: oraclejdk8
+jdk: oraclejdk8
 
 
 sudo: false
