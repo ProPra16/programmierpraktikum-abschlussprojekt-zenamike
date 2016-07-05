@@ -5,8 +5,6 @@ package de.hhu.propra.tddt.cycle;
  */
 
 
-
-import com.sun.org.apache.xpath.internal.SourceTree;
 import de.hhu.propra.tddt.util.classnameparser.ClassNameParser;
 import de.hhu.propra.tddt.util.classnameparser.ClassNameParserException;
 import vk.core.api.CompilationUnit;
@@ -61,6 +59,8 @@ public class Cycle {
      * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
      *                     the user is currently working. More a failsafe check for the backend
      *                     processes than for the user.
+     *
+     * @return returns the current phase in which the cycle is at the moment
      */
 
     public CycleEnum testingPhase(String testCode, String code, CycleEnum currentPhase)throws ClassNameParserException {
@@ -83,7 +83,7 @@ public class Cycle {
                 System.out.println("Ignored tests: " +internalCompiler.getTestResult().getNumberOfIgnoredTests());
                 System.out.println("Successful tests: "+internalCompiler.getTestResult().getNumberOfSuccessfulTests());
                 System.out.println("Test duration: " +internalCompiler.getTestResult().getTestDuration());
-                System.out.print("Too many or too less failed tests. Only one test is allowed to fail");
+                System.out.println("Too many or too less failed tests. Only one test is allowed to fail");
 
             }else if (internalCompiler.getTestResult().getNumberOfFailedTests() == 1){
                 currentPhase = CycleEnum.CODE;
@@ -91,6 +91,7 @@ public class Cycle {
 
             }else if (internalCompiler.getCompilerResult().hasCompileErrors()==false);
                 currentPhase = CycleEnum.CODE;
+                System.out.print("Code is not allowed to compile here");
                 return currentPhase;
 
         } else {
@@ -141,6 +142,8 @@ public class Cycle {
      * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
      *                     the user is currently working. More a failsafe check for the backend
      *                     processes than for the user.
+     *
+     * @return returns the current phase in which the cycle is at the moment
      */
 
     public CycleEnum codingPhase(String code, String testCode, CycleEnum currentPhase)throws ClassNameParserException {
@@ -179,8 +182,58 @@ public class Cycle {
     }
 
 
+    /**
+     * Method: refactoringPhase
+     * <p>
+     * Task: (does almost the same as codingPhase)
+     * Method that checks when the compile button is clicked, if the right phase was
+     * given to the method. If it got the right phase, the method compiles the test and all tests and
+     * code compiles then the user is allowed to move to complete the cycle and move to the
+     * the test phase again.
+     *
+     * @param testCode String testCode is the whole test the user typed into the textbox
+     * @param code  String code is the whole code which is going to be tested
+     * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
+     *                     the user is currently working. More a failsafe check for the backend
+     *                     processes than for the user.
+     *
+     * @return returns the current phase in which the cycle is at the moment
+     */
+
+    public CycleEnum refactoringPhase(String code, String testCode, CycleEnum currentPhase)throws ClassNameParserException {
+        if (currentPhase.equals(CycleEnum.REFACTOR)) {
+            boolean isATest = false;
+            boolean isARealTest = true;
+            String className = ClassNameParser.getClassName(code);
+            String testName = ClassNameParser.getClassName(testCode);
+            CompilationUnit compilationUnit = new CompilationUnit(className, code, isATest);
+            CompilationUnit compilationTestUnit = new CompilationUnit(testName, testCode, isARealTest);
+            CompilationUnit compArray[] = new CompilationUnit[1];
+            compArray[0] = compilationUnit;
+            compArray[1] = compilationTestUnit;
+
+            InternalCompiler internalCompiler = new InternalCompiler(compArray);
+
+            if ((internalCompiler.getTestResult().getNumberOfFailedTests() == 0) &&
+                    (internalCompiler.getCompilerResult().hasCompileErrors() == true)) {
+                currentPhase = CycleEnum.TEST;
+                return currentPhase;
+
+            } else {
+                System.out.println("Failed tests: " + internalCompiler.getTestResult().getNumberOfFailedTests());
+                System.out.println("Ignored tests: " + internalCompiler.getTestResult().getNumberOfIgnoredTests());
+                System.out.println("Successful tests: " + internalCompiler.getTestResult().getNumberOfSuccessfulTests());
+                System.out.println("Test duration: " + internalCompiler.getTestResult().getTestDuration());
+                System.out.println("");
+                System.out.println("Has it compile errors?" + internalCompiler.getCompilerResult().hasCompileErrors());
+                System.out.println("Compile duration" + internalCompiler.getCompilerResult().getCompileDuration());
+                return currentPhase;
+            }
+            // TODO: 05.07.2016 still the same as with the methods above
+        } else {
+            throw new IllegalStateException("Wrong function call");
+        }
+        }
+    }
 
 
-
-
-}
