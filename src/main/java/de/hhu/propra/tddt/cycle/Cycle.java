@@ -5,12 +5,10 @@ package de.hhu.propra.tddt.cycle;
  */
 
 
-import com.sun.org.apache.xpath.internal.SourceTree;
+
 import de.hhu.propra.tddt.util.classnameparser.ClassNameParser;
 import de.hhu.propra.tddt.util.classnameparser.ClassNameParserException;
 import vk.core.api.CompilationUnit;
-import vk.core.api.CompilerFactory;
-import vk.core.api.CompilerResult;
 import vk.core.internal.InternalCompiler;
 
 
@@ -66,7 +64,6 @@ public class Cycle {
     public CycleEnum testPhase(String code, CycleEnum currentPhase)throws ClassNameParserException {
 
         if (currentPhase.equals(CycleEnum.TEST)) {
-            listPosition = 0;
             boolean isATest = true;
             String className = ClassNameParser.getClassName(code);
             CompilationUnit compilationUnit = new CompilationUnit(className, code, isATest);
@@ -119,6 +116,11 @@ public class Cycle {
         // TODO: 05.07.2016 how to stop them Babysteps?
 
     }
+
+
+
+
+
 
 
 }
