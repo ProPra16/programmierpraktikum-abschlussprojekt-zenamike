@@ -16,7 +16,6 @@ public class URLTest {
     public void testURL(){
         URL url = getClass().getResource("/HelloWorld.java");
         System.out.println(url.getPath());
-        
         Assert.assertNotEquals(null, url);
     }
 }

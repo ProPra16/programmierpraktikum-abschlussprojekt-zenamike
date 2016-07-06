@@ -58,6 +58,7 @@ public class Babysteps implements Plugin {
 
     @Override
     public void setPluginManager(PluginManager pluginManager) {
+        if(pluginManager == null) throw new IllegalArgumentException();
         this.pluginManager = pluginManager;
     }
 
@@ -69,9 +70,15 @@ public class Babysteps implements Plugin {
      * @param duration a duration, where you can enter nearly every value.
      */
     public void setDuration(Duration duration) {
+        if(duration == null) throw new IllegalArgumentException();
         this.duration = duration;
     }
 
+    /**
+     * Method: resetCode
+     *
+     * Task: Reseting the code depending on in which phase you are.
+     */
     private void resetCode() {
         if (pluginManager.getCycleManager().getCurrentPhase() == CycleEnum.TEST) {
             pluginManager.getTestManager().resetText();
