@@ -1,10 +1,12 @@
-package de.hhu.propra.tddt.plugin;
+package de.hhu.propra.tddt.plugin.Babystep;
 
 /**
  * Created by zeljko On 24.06.2016
  */
 
 import de.hhu.propra.tddt.cycle.CycleEnum;
+import de.hhu.propra.tddt.plugin.Plugin;
+import de.hhu.propra.tddt.plugin.PluginManager;
 
 import java.time.Duration;
 import java.util.Timer;

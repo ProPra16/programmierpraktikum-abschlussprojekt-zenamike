@@ -6,6 +6,7 @@ package de.hhu.propra.tddt.settings;
 
 import java.net.URL;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * Class: Settings
@@ -27,17 +28,14 @@ import java.util.LinkedList;
 public class Settings {
 
     LinkedList<Setting> settingLinkedList = new LinkedList<>();
-    URL url = getClass().getResource("/rsc/settings/settings.xml");
+    final URL url = getClass().getResource("/rsc/settings/settings.xml");
 
-    public Settings() {
-
-    }
-
-    private void init() {
-
-    }
-
-    private void loadSettings() {
+    /**
+     * Method: loadSettings
+     *
+     * Load the current settings from a specified file.
+     */
+    protected void loadSettings() {
         /*
          * @TODO
          * 1. Fire rockets
@@ -46,7 +44,12 @@ public class Settings {
          */
     }
 
-    private void saveSettings() {
+    /**
+     * Method: saveSettings
+     *
+     * Save the settings to a specified file.
+     */
+    protected void saveSettings() {
         /*
          * @TODO
          * 1. Build new rockets
@@ -54,5 +57,57 @@ public class Settings {
          * 3. Blame Donald Trump
          * 4. Use the XMLWriter
          */
+    }
+
+    /**
+     * Method
+     */
+    public Settings() {
+
+    }
+
+    /**
+     * Method: loadSetting
+     * <p>
+     * Task: Providing the setting for an ID.
+     *
+     * @param id The ID for the setting you are looking for
+     *
+     * @return The Setting
+     *
+     * @throws SettingException If there is no setting for the given ID this
+     *                          exception will be thrown
+     */
+    protected Setting loadSetting(String id) throws SettingException {
+        for (Setting setting : settingLinkedList) {
+            if (setting.getID().equals(id)) return setting;
+        }
+
+        throw new SettingException();
+    }
+
+    protected void removeSetting(String id) throws SettingException {
+        boolean settingDoesNotExist = true;
+
+        for (int i = 0; i < settingLinkedList.size(); i++) {
+            if (settingLinkedList.get(i).getID().equals(id)) {
+                settingLinkedList.remove(i);
+                settingDoesNotExist = false;
+            }
+        }
+
+        if(!settingDoesNotExist) throw new SettingException();
+    }
+
+    protected void addSetting(Setting setting) throws SettingException {
+        boolean settingAlready = false;
+
+        for (int i = 0; i < settingLinkedList.size(); i++) {
+            if (settingLinkedList.get(i).getID().equals(setting.getID()))
+                settingAlready = true;
+        }
+
+        if (!settingAlready) settingLinkedList.add(setting);
+        if (settingAlready) throw new SettingException();
     }
 }
