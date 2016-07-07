@@ -1,3 +1,4 @@
+package de.hhu.propra.tddt.controller;
 import javafx.fxml.Initializable;
 
 /**

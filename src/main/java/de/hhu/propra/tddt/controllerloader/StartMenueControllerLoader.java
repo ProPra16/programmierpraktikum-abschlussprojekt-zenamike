@@ -1,3 +1,5 @@
+package de.hhu.propra.tddt.controllerloader;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 

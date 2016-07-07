@@ -1,3 +1,4 @@
+package de.hhu.propra.tddt.controller;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 

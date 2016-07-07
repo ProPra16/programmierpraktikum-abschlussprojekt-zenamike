@@ -1,3 +1,4 @@
+package de.hhu.propra.tddt.controllerloader;
 import javafx.scene.Scene;
 
 /**
