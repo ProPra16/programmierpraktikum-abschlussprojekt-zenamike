@@ -1,5 +1,3 @@
-package de.hhu.propra.tddt.controller;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
@@ -31,7 +29,7 @@ public class StartMenueControllerLoader extends ControllerLoader{
     }
 
     private void loadController() throws IOException{
-        URL fxml = getClass().getResource("/de/hhu/propra/tddt/main/MainController.fmxl");
+        URL fxml = getClass().getResource("/rsc/MainController.fmxl");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(fxml);
 

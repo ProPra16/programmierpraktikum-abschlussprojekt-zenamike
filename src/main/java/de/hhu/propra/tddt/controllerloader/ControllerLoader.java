@@ -1,5 +1,3 @@
-package de.hhu.propra.tddt.controller;
-
 import javafx.scene.Scene;
 
 /**

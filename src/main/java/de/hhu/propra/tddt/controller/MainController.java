@@ -1,5 +1,3 @@
-package de.hhu.propra.tddt.controller;
-
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -16,9 +14,9 @@ public class MainController {
     private Scene tDD;
 
     private StartMenueController startMenueController;
-    /*private SettingMenueController settingMenueController;
+    private SettingMenueController settingMenueController;
     private TaskListMenueController taskListMenueController;
-    private TDDController tddController;*/
+    private TDDController tDDController;
 
 
     public MainController(final Stage window) throws Exception{
@@ -31,13 +29,42 @@ public class MainController {
         startMenueController = (StartMenueController) startMenueControllerLoader.controller();
         startMenue = startMenueControllerLoader.scene();
 
-        this.window.setScene(startMenue);
-        this.window.setResizable(false);
-        this.window.show();
+        SettingsMenueLoader settingsMenueLoader = new SettingsMenueLoader(this);
+        settingsMenueLoader = (SettingsMenueLoader) settingsMenueLoader.controller();
+        settingsMenue = settingsMenueLoader.scene();
 
+        TaskListMenueLoader taskListMenueLoader = new TaskListMenueLoader(this);
+        taskListMenueLoader = (TaskListMenueLoader) taskListMenueLoader.controller();
+        taskListMenue = taskListMenueLoader.scene();
 
+        TDDControllerLoader tDDControllerLoader = new TDDCOntrollerLoader(this);
+        tDDController = (TDDController) tDDControllerLoader.controller();
+        tDDController = tDDControllerLoader.scene();
+
+        this.stage.setScene(startMenue);
+        this.stage.show();
     }
 
+    protected void switchToStartMenue() {
+        stage.setScene(startMenue);
+    }
+
+    protected void switchToSettingMenue() {
+        stage.setScene(settingMenue);
+    }
+
+    protected void switchToTaskListMenue() {
+        stage.setScene(taskListMenue);
+    }
+
+    /**
+     * TDD Programmdifficulty has to be implemented.
+     */
+    protected void switchToTDD(){
+
+        Scene tDDScene = tDDControllerLoader.scene();
+        stage.setScene(tDDScene);
+    }
 
 
 
