@@ -1,5 +1,7 @@
 package de.hhu.propra.tddt.controller;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 
 /**
@@ -32,7 +34,7 @@ public class MainController {
     }
     @FXML
     private void startNewProgram() throws Exception {
-        mainController.switchToProgram(programDifficulty);
+        mainController.switchToTDD();
     }
     @FXML
     private void exitProgram() {

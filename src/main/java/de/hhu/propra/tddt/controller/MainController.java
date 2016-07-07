@@ -1,4 +1,7 @@
 package de.hhu.propra.tddt.controller;
+import de.hhu.propra.tddt.controllerloader.SettingsControllerLoader;
+import de.hhu.propra.tddt.controllerloader.StartControllerLoader;
+import de.hhu.propra.tddt.controllerloader.TDDControllerLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -9,15 +12,15 @@ public class MainController {
 
     private final Stage window;
 
-    private Scene startMenue;
-    private Scene settingMenue;
-    private Scene taskListMenue;
+    private Scene start;
+    private Scene setting;
+    private Scene taskList;
     private Scene tDD;
 
-    private StartMenueController startMenueController;
-    private SettingMenueController settingMenueController;
-    private TaskListMenueController taskListMenueController;
-    private TDDController tDDController;
+    private StartController startController;
+    private SettingsController settingController;
+    private TaskListController taskListController;
+    private ProgramController tDDController;
 
 
     public MainController(final Stage window) throws Exception{
@@ -26,36 +29,36 @@ public class MainController {
     }
 
     private void initialise() throws Exception{
-        StartMenueControllerLoader startMenueControllerLoader = new StartMenueControllerLoader(this);
-        startMenueController = (StartMenueController) startMenueControllerLoader.controller();
-        startMenue = startMenueControllerLoader.scene();
+        StartControllerLoader startControllerLoader = new StartControllerLoader(this);
+        startController = (StartController) startControllerLoader.controller();
+        start = startControllerLoader.scene();
 
-        SettingsMenueLoader settingsMenueLoader = new SettingsMenueLoader(this);
-        settingsMenueLoader = (SettingsMenueLoader) settingsMenueLoader.controller();
-        settingsMenue = settingsMenueLoader.scene();
+        SettingsControllerLoader settingsControllerLoader = new SettingsControllerLoader(this);
+        settingsControllerLoader = (SettingsControllerLoader) settingsControllerLoader.controller();
+        settingsController = SettingsControllerLoader.scene();
 
-        TaskListMenueLoader taskListMenueLoader = new TaskListMenueLoader(this);
-        taskListMenueLoader = (TaskListMenueLoader) taskListMenueLoader.controller();
-        taskListMenue = taskListMenueLoader.scene();
+        TaskListLoader taskListLoader = new TaskListLoader(this);
+        taskListLoader = (TaskListLoader) taskListLoader.controller();
+        taskList = taskListLoader.scene();
 
         TDDControllerLoader tDDControllerLoader = new TDDCOntrollerLoader(this);
         tDDController = (TDDController) tDDControllerLoader.controller();
         tDDController = tDDControllerLoader.scene();
 
-        this.stage.setScene(startMenue);
+        this.stage.setScene(start);
         this.stage.show();
     }
 
     protected void switchToStartMenue() {
-        stage.setScene(startMenue);
+        stage.setScene(start);
     }
 
     protected void switchToSettingMenue() {
-        stage.setScene(settingMenue);
+        stage.setScene(setting);
     }
 
     protected void switchToTaskListMenue() {
-        stage.setScene(taskListMenue);
+        stage.setScene(taskList);
     }
 
     /**
