@@ -9,13 +9,13 @@ import java.net.URL;
 /**
  * Created by Nadine on 03.07.16.
  */
-public class StartMenueControllerLoader extends ControllerLoader{
+public class StartControllerLoader extends ControllerLoader{
 
     private static Scene startMenue;
     private static StartMenueController startMenueController;
     private static MainController mainController;
 
-    public StartMenueControllerLoader(MainController mainController){
+    public StartControllerLoader(MainController mainController){
         this.mainController = mainController;
     }
 

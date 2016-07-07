@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Nadine on 03.07.16.
  */
-public class StartMenueController extends CustomController{
+public class StartController extends CustomController{
 
     private MainController mainController;
 
