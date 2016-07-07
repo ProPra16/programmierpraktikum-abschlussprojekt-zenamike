@@ -22,6 +22,5 @@
       </TextArea>
       <Button layoutX="488.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleStartTDDButton" text="Start TDD" />
       <Button layoutX="14.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
-      <CheckBox layoutX="14.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleHardButton" prefHeight="18.0" prefWidth="174.0" text="BabySteps + Tracking" />
    </children>
 </AnchorPane>
