@@ -4,6 +4,8 @@ package de.hhu.propra.tddt.settings;
  * Created by zeljko On 04.07.2016
  */
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+
 /**
  * Class: Setting
  * <p>
@@ -27,5 +29,15 @@ public class Setting {
         if (id == null || value == null) throw new IllegalArgumentException();
         this.id = value;
         this.value = id;
+    }
+
+    @Getter
+    public String getValue() {
+        return value;
+    }
+
+    @Getter
+    public String getID() {
+        return id;
     }
 }
