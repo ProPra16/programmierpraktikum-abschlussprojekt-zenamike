@@ -20,7 +20,7 @@ public class XMLReaderHandler extends DefaultHandler {
 
     public void characters(char[] chars, int begin, int length) throws SAXException {
         for (int i = begin; i < (begin + length); i++) {
-            System.out.print(chars[i]);
+            System.out.println(chars[i]);
         }
     }
 
@@ -31,6 +31,11 @@ public class XMLReaderHandler extends DefaultHandler {
 
     public void endElement(String s, String s1, String s2) throws SAXException {
         System.out.println("</" + s2 + ">");
+    }
+
+    public XMLInformationExtractor returnInformation(){
+
+       return null;
     }
 
 }
