@@ -11,7 +11,6 @@ import vk.core.api.CompilationUnit;
 import vk.core.internal.InternalCompiler;
 
 
-import java.util.LinkedList;
 
 /*********************************************************
  * Class: Cycle
@@ -24,27 +23,9 @@ import java.util.LinkedList;
  ********************************************************/
 public class Cycle {
 
-    public int listPosition = 0;
-    public LinkedList<CycleEnum> cycleList = new LinkedList<CycleEnum>();
     CycleEnum phase = CycleEnum.TEST;
+    CycleInformation cycleInfo = new CycleInformation();
 
-
-    /*********************************************************
-     * Method: startCycle
-     * <p>
-     * Start a new cycle
-     *
-     * @return: void
-     ***************************************************************/
-
-    public void startCycle() {
-        cycleList.add(CycleEnum.TEST);
-        cycleList.add(CycleEnum.CODE);
-        cycleList.add(CycleEnum.REFACTOR);
-
-        // TODO: 05.07.2016 Ask Zeljiko for the fourth time why a linked list is useful.
-
-        }
 
     /**
      * Method: testPhase
@@ -79,19 +60,14 @@ public class Cycle {
             InternalCompiler internalCompiler = new InternalCompiler(compArray);
 
             if (internalCompiler.getTestResult().getNumberOfFailedTests() != 1) {
-                System.out.println("Failed tests: " +internalCompiler.getTestResult().getNumberOfFailedTests());
-                System.out.println("Ignored tests: " +internalCompiler.getTestResult().getNumberOfIgnoredTests());
-                System.out.println("Successful tests: "+internalCompiler.getTestResult().getNumberOfSuccessfulTests());
-                System.out.println("Test duration: " +internalCompiler.getTestResult().getTestDuration());
-                System.out.println("Too many or too less failed tests. Only one test is allowed to fail");
+                cycleInfo.setTestResults(internalCompiler);
 
             }else if (internalCompiler.getTestResult().getNumberOfFailedTests() == 1){
                 currentPhase = CycleEnum.CODE;
                 return currentPhase;
 
-            }else if (internalCompiler.getCompilerResult().hasCompileErrors()==false);
-                currentPhase = CycleEnum.CODE;
-                System.out.print("Code is not allowed to compile here");
+            }else if (internalCompiler.getCompilerResult().hasCompileErrors()==true);
+                cycleInfo.setCycleError(1);
                 return currentPhase;
 
         } else {
@@ -99,7 +75,7 @@ public class Cycle {
 
         }
 
-        // TODO: 05.07.2016 how to implement babysteps in this function?
+
     }
 
 
@@ -120,12 +96,13 @@ public class Cycle {
         }
         if (currentPhase.equals(CycleEnum.CODE)){
             phase = CycleEnum.TEST;
-            // TODO: 05.07.2016 kill the already written code
+
         }
         if (currentPhase.equals(CycleEnum.TEST)){
-            System.out.println("You can't change into the same phase again.");
+            cycleInfo.setCycleError(2);
+
         }
-        // TODO: 05.07.2016 how to stop them Babysteps?
+
 
     }
 
@@ -161,21 +138,16 @@ public class Cycle {
             InternalCompiler internalCompiler = new InternalCompiler(compArray);
 
             if ((internalCompiler.getTestResult().getNumberOfFailedTests() == 0) &&
-                    (internalCompiler.getCompilerResult().hasCompileErrors() == true)) {
+                    (internalCompiler.getCompilerResult().hasCompileErrors() == false)) {
                 currentPhase = CycleEnum.REFACTOR;
                 return currentPhase;
 
             } else {
-                System.out.println("Failed tests: " + internalCompiler.getTestResult().getNumberOfFailedTests());
-                System.out.println("Ignored tests: " + internalCompiler.getTestResult().getNumberOfIgnoredTests());
-                System.out.println("Successful tests: " + internalCompiler.getTestResult().getNumberOfSuccessfulTests());
-                System.out.println("Test duration: " + internalCompiler.getTestResult().getTestDuration());
-                System.out.println("");
-                System.out.println("Has it compile errors?" + internalCompiler.getCompilerResult().hasCompileErrors());
-                System.out.println("Compile duration" + internalCompiler.getCompilerResult().getCompileDuration());
+                cycleInfo.setTestResults(internalCompiler);
+                cycleInfo.setCompileResults(internalCompiler, compilationUnit);
                 return currentPhase;
             }
-            // TODO: 05.07.2016 the same as with the methods above
+
         } else {
             throw new IllegalStateException("Wrong function call");
         }
@@ -220,20 +192,16 @@ public class Cycle {
                 return currentPhase;
 
             } else {
-                System.out.println("Failed tests: " + internalCompiler.getTestResult().getNumberOfFailedTests());
-                System.out.println("Ignored tests: " + internalCompiler.getTestResult().getNumberOfIgnoredTests());
-                System.out.println("Successful tests: " + internalCompiler.getTestResult().getNumberOfSuccessfulTests());
-                System.out.println("Test duration: " + internalCompiler.getTestResult().getTestDuration());
-                System.out.println("");
-                System.out.println("Has it compile errors?" + internalCompiler.getCompilerResult().hasCompileErrors());
-                System.out.println("Compile duration" + internalCompiler.getCompilerResult().getCompileDuration());
+                cycleInfo.setTestResults(internalCompiler);
+                cycleInfo.setCompileResults(internalCompiler, compilationUnit);
                 return currentPhase;
             }
-            // TODO: 05.07.2016 still the same as with the methods above
+
         } else {
             throw new IllegalStateException("Wrong function call");
         }
         }
+
     }
 
 
