@@ -53,21 +53,27 @@ public class Cycle {
             String testName = ClassNameParser.getClassName(testCode);
             CompilationUnit compilationUnit = new CompilationUnit(className, code, isATest);
             CompilationUnit compilationTestUnit = new CompilationUnit(testName, testCode, isARealTest);
-            CompilationUnit compArray [] = new CompilationUnit[1];
+            CompilationUnit compArray [] = new CompilationUnit[2];
             compArray [0] = compilationUnit;
             compArray [1] = compilationTestUnit;
 
             InternalCompiler internalCompiler = new InternalCompiler(compArray);
+            internalCompiler.compileAndRunTests();
+
 
             if (internalCompiler.getTestResult().getNumberOfFailedTests() != 1) {
                 cycleInfo.setTestResults(internalCompiler);
+                System.out.println("your tests sucks you're in !=1");
 
             }else if (internalCompiler.getTestResult().getNumberOfFailedTests() == 1){
                 currentPhase = CycleEnum.CODE;
+                System.out.println("you were in == 1");
                 return currentPhase;
 
             }else if (internalCompiler.getCompilerResult().hasCompileErrors()==true);
                 cycleInfo.setCycleError(1);
+            System.out.println("hahalol error");
+
                 return currentPhase;
 
         } else {
