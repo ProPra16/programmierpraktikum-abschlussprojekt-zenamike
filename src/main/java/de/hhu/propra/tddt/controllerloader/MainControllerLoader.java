@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
  */
 public class MainControllerLoader {
 
-    @FXML protected void handleSettingsButton(ActionEvent eventSetting){
+   /** @FXML protected void handleSettingsButton(ActionEvent eventSetting){
         System.out.println("SettingsButton pressed!");
     }
 
@@ -19,4 +19,7 @@ public class MainControllerLoader {
     @FXML protected void handleStartButton(ActionEvent eventStart){
         System.out.println("StartButton pressed!");
     }
-}
+
+    */
+    }
+

@@ -4,8 +4,8 @@ import javafx.fxml.Initializable;
 /**
  * Created by MichaelLiske on 04.07.16.
  */
-public abstract class ProgramController extends CustomController {
-    private MainController mainController;
+public abstract class ProgramController /** extends CustomController */{
+   /** private MainController mainController;
     private ProgramDifficulty programDifficulty;
 
     @FXML
@@ -31,4 +31,5 @@ public abstract class ProgramController extends CustomController {
 
 
     void close();
+    */
 }

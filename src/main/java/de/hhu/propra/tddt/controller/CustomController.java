@@ -1,4 +1,4 @@
-package de.hhu.propra.tddt.controller;
+package main.java.de.hhu.propra.tddt.controller;
 import javafx.fxml.Initializable;
 
 /**
@@ -6,5 +6,5 @@ import javafx.fxml.Initializable;
  */
 public abstract class CustomController implements Initializable{
 
-    public abstract void setMainController(MainController mainController);
+   /** public abstract void setMainController(MainController mainController); */
 }
