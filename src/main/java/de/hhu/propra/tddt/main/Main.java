@@ -15,6 +15,6 @@ public class Main extends Application{
 
     @Override
     public void start(Stage window) throws Exception{
-        new MainController(window);
+        //new MainController(window);
     }
 }
