@@ -25,28 +25,34 @@ public class ClassNameParser {
 
         String[] codeToken = classContent.split("\\s+");
         String returnString = "";
+        String compare ="class";
 
         try {
             for (int i = 0; i < codeToken.length; i++) {
                 if (codeToken[i].equals("public")) {
-
+                    i++;
 
                     while (codeToken[i].equals("strictfp") ||
                             codeToken[i].equals("abstract") ||
                             codeToken[i].equals("final")) {
                         i++;
                     }
-                    i++;
-                    if (codeToken[i].equals("class")) {
+
+                    if (codeToken[i].equals(compare)) {
                         returnString = codeToken[i + 1];
+
                     }
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
+            e.getMessage();
             throw new ClassNameParserException();
+
+
         }
-
+        if(returnString.endsWith("{")){
+            returnString = returnString.substring(0, returnString.length() - 1);
+        }
         return returnString;
-
     }
 }

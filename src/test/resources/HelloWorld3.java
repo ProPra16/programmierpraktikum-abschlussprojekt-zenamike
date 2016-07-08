@@ -1,4 +1,4 @@
-public abstract class HelloWorld{
+public final class HelloWorld3{
 
 
     String hallo = "";

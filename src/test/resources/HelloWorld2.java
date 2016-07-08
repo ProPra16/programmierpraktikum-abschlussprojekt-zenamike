@@ -1,4 +1,4 @@
-public abstract class HelloWorld{
+public strictfp class HelloWorld2{
 
 
     String hallo = "";
