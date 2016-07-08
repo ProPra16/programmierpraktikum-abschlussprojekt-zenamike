@@ -9,9 +9,9 @@ import java.net.URL;
 /**
  * Created by Nadine on 03.07.16.
  */
-public class StartControllerLoader extends ControllerLoader{
+public class StartControllerLoader /**extends ControllerLoader*/{
 
-    private static Scene startMenue;
+    /**private static Scene startMenue;
     private static StartMenueController startMenueController;
     private static MainController mainController;
 
@@ -39,7 +39,7 @@ public class StartControllerLoader extends ControllerLoader{
         startMenueController = fxmlLoader.getController();
         startMenueController.setMainController(mainController);
     }
-
+*/
 
 
 }

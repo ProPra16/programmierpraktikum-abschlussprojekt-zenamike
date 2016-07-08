@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 /**
  * Created by MichaelLiske on 04.07.16.
  */
-public class MainController {
-    private MainController mainController;
+public class SettingsController {
+   /** private MainController mainController;
     private ProgramDifficulty programDifficulty = ProgramDifficulty.CLEAN;
 
 

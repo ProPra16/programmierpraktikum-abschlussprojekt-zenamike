@@ -10,7 +10,7 @@ import javafx.stage.Stage;
  */
 public class MainController {
 
-    private final Stage window;
+    /**private final Stage window;
 
     private Scene start;
     private Scene setting;
@@ -63,12 +63,16 @@ public class MainController {
 
     /**
      * TDD Programmdifficulty has to be implemented.
-     */
+     *//**
     protected void switchToTDD(){
 
         Scene tDDScene = tDDControllerLoader.scene();
         stage.setScene(tDDScene);
     }
+
+
+
+     */
 
 
 

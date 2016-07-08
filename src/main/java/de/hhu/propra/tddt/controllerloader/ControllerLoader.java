@@ -6,11 +6,11 @@ import javafx.scene.Scene;
  */
 public abstract class ControllerLoader {
 
-    protected CustomController controller;
+  /**  protected CustomController controller;
     protected Scene scene;
 
     public abstract CustomController controller() throws Exception;
 
-    public abstract Scene scene();
+    public abstract Scene scene();*/
 
 }

@@ -23,12 +23,12 @@ public class TDDControllerLoader {
      * Add colors to Progressbar.
      */
 
-    @FXML protected void handleStartTDDButton(ActionEvent eventTask){
+   /** @FXML protected void handleStartTDDButton(ActionEvent eventTask){
         System.out.println("NextButton pressed!");
     }
 
     @FXML protected void handleBackButton(ActionEvent eventTask){
         System.out.println("BackButton pressed!");
     }
-
+*/
 }

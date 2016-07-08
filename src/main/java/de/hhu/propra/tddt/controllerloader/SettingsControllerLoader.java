@@ -11,7 +11,7 @@ import javafx.fxml.FXML;
 
 public class SettingsControllerLoader {
 
-    @FXML protected void handleBabyStepsButton(ActionEvent eventSetting){
+   /** @FXML protected void handleBabyStepsButton(ActionEvent eventSetting){
         System.out.println("BabyStepsButton activated!");
     }
 
@@ -30,5 +30,5 @@ public class SettingsControllerLoader {
     @FXML protected void handleBackButton(ActionEvent eventTask){
         System.out.println("BackButton pressed!");
     }
-
+*/
 }

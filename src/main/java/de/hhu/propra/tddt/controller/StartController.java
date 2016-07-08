@@ -8,9 +8,9 @@ import java.util.ResourceBundle;
 /**
  * Created by Nadine on 03.07.16.
  */
-public class StartController extends CustomController{
+public class StartController /**extends CustomController*/{
 
-    private MainController mainController;
+    /**private MainController mainController;
 
     @FXML protected void handleSettingsButton(ActionEvent eventSetting){ System.out.println("SettingsButton pressed!");}
 
@@ -30,5 +30,5 @@ public class StartController extends CustomController{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-    }
+    }*/
 }
