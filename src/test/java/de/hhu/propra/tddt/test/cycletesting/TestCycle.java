@@ -1,6 +1,6 @@
 package de.hhu.propra.tddt.test.cycletesting;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import de.hhu.propra.tddt.cycle.Cycle;
 import de.hhu.propra.tddt.cycle.CycleEnum;
 import de.hhu.propra.tddt.cycle.CycleInformation;
