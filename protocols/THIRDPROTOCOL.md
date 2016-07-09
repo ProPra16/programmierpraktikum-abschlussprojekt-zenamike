@@ -102,7 +102,7 @@ Michael & Nadine: Package contoller & controllerLoader (partly implement, partly
 
 Zeljko: Tracking (implement (needs xml-related classes)), settings (needs xml-related classes)
 
-Kevin:  
+Kevin:  Making tests for cycle and ensure that cycle works
 
 
 
