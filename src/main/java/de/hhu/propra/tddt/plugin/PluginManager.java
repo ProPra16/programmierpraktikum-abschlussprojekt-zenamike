@@ -4,7 +4,7 @@ package de.hhu.propra.tddt.plugin;
  * Created by zeljko On 23.06.2016
  */
 
-import de.hhu.propra.tddt.contentmanager.CycleManager;
+import de.hhu.propra.tddt.cycle.CycleManager;
 import de.hhu.propra.tddt.contentmanager.TextManager;
 
 /******************************************************************************
