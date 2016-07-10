@@ -1,34 +1,45 @@
 package de.hhu.propra.tddt.controller;
+
+import de.hhu.propra.tddt.loader.SettingsLoader;
+import de.hhu.propra.tddt.loader.StartLoader;
+import de.hhu.propra.tddt.loader.TDDLoader;
+import de.hhu.propra.tddt.loader.TaskListLoader;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.io.IOException;
 
 /**
- * Created by Nadine on 03.07.16.
+ * Created by MichaelLiske on 09.07.16
  */
-public class StartController /**extends CustomController*/{
 
-    /**private MainController mainController;
+/**
+ *  Class: handles the scenes' buttons (namely setting, tasklist and
+ *  start button)
+ */
 
-    @FXML protected void handleSettingsButton(ActionEvent eventSetting){ System.out.println("SettingsButton pressed!");}
+public class StartController{
+    @FXML private Button Setting;
+    @FXML private Button TaskList;
+    @FXML private Button TDDCycle;
 
-    @FXML protected void handleTaskButton(ActionEvent eventTask){
-        System.out.println("TaskButton pressed!");
+
+    @FXML
+    public void handleSettingsButton(ActionEvent actionEvent)
+            throws IOException {
+        new SettingsLoader(StartLoader.getWindow());
+        System.out.println("Settings");
     }
-
-    @FXML protected void handleStartButton(ActionEvent eventStart){
-        System.out.println("StartButton pressed!");
+    @FXML
+    public void handleTaskButton(ActionEvent actionEvent) throws IOException {
+        new TaskListLoader(StartLoader.getWindow());
+        System.out.println("Task");
     }
-
-    @Override
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+    @FXML
+    public void handleStartButton(ActionEvent actionEvent) throws IOException {
+        new TDDLoader(StartLoader.getWindow());
+        System.out.println("Start");
     }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }*/
 }

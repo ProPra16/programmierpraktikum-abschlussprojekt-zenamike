@@ -1,51 +1,49 @@
 package de.hhu.propra.tddt.controller;
+
+import de.hhu.propra.tddt.loader.SettingsLoader;
+import de.hhu.propra.tddt.loader.StartLoader;
+import de.hhu.propra.tddt.loader.TDDLoader;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
- * Created by MichaelLiske on 04.07.16.
+ * Created by Nadine on 09.07.16
  */
+
+/**
+ *  Class: handles the scenes' buttons (namely back and startTDD button),
+ *  handling the listener information and activating the plugins (Checkboxes)
+ */
+
 public class SettingsController {
-   /** private MainController mainController;
-    private ProgramDifficulty programDifficulty = ProgramDifficulty.CLEAN;
+
+    @FXML private CheckBox BabySteps;
+    @FXML private CheckBox Tracking;
+    @FXML private Button Back;
+    @FXML private Button TDDCycle;
 
 
-    @FXML CheckBox babySteps;
-    @FXML CheckBox tracking;
-    @FXML CheckBox Hard;
-
     @FXML
-    private void setProgramClean(){
-        this.programDifficulty = ProgramDifficulty.Clean;
+    public void handleBabyStepsBox(ActionEvent actionEvent) {
+        System.out.println("BabySteps");
     }
     @FXML
-    private void setProgramBabySteps(){
-        this.programDifficulty = ProgramDifficulty.BABYSTEPS;
+    public void handleTrackingBox(ActionEvent actionEvent) {
+        System.out.println("Tracking");
     }
     @FXML
-    private void setProgramTracking(){
-        this.programDifficulty = ProgramDifficulty.TRACKING;
+    public void handleBackButton(ActionEvent actionEvent) throws IOException {
+        new StartLoader(SettingsLoader.getWindow());
+        System.out.println("Back");
     }
     @FXML
-    private void setProgramHard(){
-        this.programDifficulty = ProgramDifficulty.Hard;
+    public void handleStartTDDButton(ActionEvent actionEvent) throws IOException {
+        new TDDLoader(SettingsLoader.getWindow());
+        System.out.println("Start");
     }
-    @FXML
-    private void startNewProgram() throws Exception {
-        mainController.switchToTDD();
-    }
-    @FXML
-    private void exitProgram() {
-        System.exit(0);
-    }
-    @Override
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
-    /**
-     * init?
-     */
-
 }
