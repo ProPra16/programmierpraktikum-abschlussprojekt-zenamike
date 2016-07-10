@@ -27,38 +27,35 @@ public class TestCycle {
 
     @Test
     public void testCycleTestPhase() {
-       /* try {
+        try {
 
             String testCode = getTestCode();
             String code = getCodeCode();
-            testResultPhase = testCycle.testingPhase(testCode,code,testPhase);
-            System.out.println(testResultPhase);
-            System.out.println(cycleInfo.getCompileResults());
+            testResultPhase = testCycle.testingPhase(testCode,testPhase);
+
 
 
 
         }catch(ClassNameParserException f){
         System.out.println(f.getMessage());
     }
-       // Assert.assertEquals(CycleEnum.CODE, testResultPhase);
-    +*/}
+        Assert.assertEquals(CycleEnum.TEST, testResultPhase);
+    }
 
 
     @Test
     public void testCycleCodePhase(){
-      /*  try{
+       try{
             testPhase = CycleEnum.CODE;
             String testCode = getTestCode();
             String code = getCodeCode();
-            testResultPhase = testCycle.codingPhase(testCode,code,testPhase);
-            System.out.println(testResultPhase);
-            System.out.println(cycleInfo.getCompileResults());
+            testResultPhase = testCycle.codingPhase(code,testCode,testPhase);
 
         }catch(ClassNameParserException f){
-            System.out.println(f.getMessage());     // else part of the function
+            System.out.println(f.getMessage());
         }
         // Assert.assertEquals(CycleEnum.CODE, testResultPhase);
-    **/}
+    }
 
 
 

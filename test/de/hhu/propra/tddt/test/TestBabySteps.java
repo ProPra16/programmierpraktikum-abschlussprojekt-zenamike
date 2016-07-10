@@ -1,6 +1,6 @@
 package de.hhu.propra.tddt.test;
 
-import de.hhu.propra.tddt.contentmanager.CycleManager;
+import de.hhu.propra.tddt.cycle.CycleManager;
 import de.hhu.propra.tddt.contentmanager.TextManager;
 import de.hhu.propra.tddt.cycle.CycleEnum;
 import de.hhu.propra.tddt.plugin.Babystep.Babysteps;
