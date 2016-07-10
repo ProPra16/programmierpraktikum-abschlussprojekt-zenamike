@@ -5,13 +5,8 @@ package de.hhu.propra.tddt.cycle;
  */
 
 
-import de.hhu.propra.tddt.util.classnameparser.ClassNameParser;
-import de.hhu.propra.tddt.util.classnameparser.ClassNameParserException;
-import vk.core.api.CompilationUnit;
-import vk.core.api.CompileError;
-import vk.core.api.CompilerFactory;
-import vk.core.api.JavaStringCompiler;
-import vk.core.internal.InternalCompiler;
+import de.hhu.propra.tddt.compiler.CompileResults;
+import de.hhu.propra.tddt.compiler.CompilerManager;
 
 
 
@@ -27,17 +22,15 @@ import vk.core.internal.InternalCompiler;
 public class Cycle {
 
     CycleEnum phase = CycleEnum.TEST;
-    CycleInformation cycleInfo = new CycleInformation();
-    boolean firstcyle = true;
+    CompilerManager compManager = new CompilerManager();
+    CompileResults compResults = new CompileResults();
 
 
     /**
      * Method: testPhase
      * <p>
-     * Task: Method that checks if the compile button is clicked, if the right phase was
-     * given to the method. If it got the right phase, the method compiles the test and if
-     * there is only one failed test or the code doesn't compile then the method sets the phase to
-     * the CODE phase.
+     * Task: Method that takes the testcode and the normal code and gives it with the
+     * currentphase to the compilerManager in the refactor phase.
      *
      * @param testCode String testCode is the whole test the user typed into the textbox
      * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
@@ -47,47 +40,19 @@ public class Cycle {
      * @return returns the current phase in which the cycle is at the moment
      */
 
-    public CycleEnum testingPhase(String testCode, CycleEnum currentPhase)throws ClassNameParserException {
-
+    public CycleEnum testingPhase(String testCode, CycleEnum currentPhase){
+        try{
         if (currentPhase.equals(CycleEnum.TEST)) {
 
-            boolean isARealTest = true;
-            String testName = ClassNameParser.getClassName(testCode);
-            CompilationUnit compilationTestUnit = new CompilationUnit(testName, testCode, isARealTest);
-            JavaStringCompiler testComp;
-            testComp = CompilerFactory.getCompiler(compilationTestUnit);
-            testComp.compileAndRunTests();
-
-            if (testComp.getCompilerResult().hasCompileErrors() && firstcyle) {
-                phase = CycleEnum.CODE;
-                return currentPhase;
-            }else {cycleInfo.setCycleError(1);}
-
-
-            if (testComp.getCompilerResult().hasCompileErrors() && !firstcyle) {
-                    errorStringInit(testComp, compilationTestUnit);
-
-
-            }else if (!testComp.getCompilerResult().hasCompileErrors() && !firstcyle) {
-                    cycleInfo.setTestResults(testComp);
-
-                    if (testComp.getTestResult().getNumberOfFailedTests() == 1) {
-
-                        phase = CycleEnum.CODE;
-                        return phase;
-
-                    }else{
-                        cycleInfo.setCycleError(3);
-                    }
-            }
-
-                return currentPhase;
+            currentPhase = compManager.compileTest(testCode,currentPhase);
 
         } else {
             throw new IllegalStateException("Wrong function call");
 
+        }}catch (Exception e){
+            System.out.println(e.getMessage());
         }
-
+        return currentPhase;
 
     }
 
@@ -103,29 +68,26 @@ public class Cycle {
      *                     the user is currently working.
      */
 
-    public void resetPhase(CycleEnum currentPhase){
+    public CycleEnum resetPhase(CycleEnum currentPhase){
         if (currentPhase.equals(CycleEnum.REFACTOR)){
             throw new IllegalStateException("Only allowed in the Phase CODE");
         }
         if (currentPhase.equals(CycleEnum.CODE)){
-            phase = CycleEnum.TEST;
+            return phase = CycleEnum.TEST;
 
         }
         if (currentPhase.equals(CycleEnum.TEST)){
-            cycleInfo.setCycleError(2);
+            compResults.setCycleError(2);
 
         }
-
-
+        return currentPhase;
     }
 
     /**
      * Method: codingPhase
      * <p>
-     * Task: Method that checks when the compile button is clicked, if the right phase was
-     * given to the method. If it got the right phase, the method compiles the test and if
-     * there is only one failed test or the code doesn't compile then the method sets the phase to
-     * the CODE phase.
+     * Task: Method that takes the testcode and the normal code and gives it with the
+     * currentphase to the compilerManager in the refactor phase.
      *
      * @param testCode String testCode is the whole test the user typed into the textbox
      * @param code  String code is the whole code which is going to be tested
@@ -136,45 +98,17 @@ public class Cycle {
      * @return returns the current phase in which the cycle is at the moment
      */
 
-    public CycleEnum codingPhase(String code, String testCode, CycleEnum currentPhase)throws ClassNameParserException {
-        if (currentPhase.equals(CycleEnum.CODE)) {
-            boolean isATest = false;
-            boolean isARealTest = true;
-            String className = ClassNameParser.getClassName(code);
-            String testName = ClassNameParser.getClassName(testCode);
-            CompilationUnit compilationUnit = new CompilationUnit(className, code, isATest);
-            CompilationUnit compilationTestUnit = new CompilationUnit(testName, testCode, isARealTest);
-            JavaStringCompiler testComp;
-            JavaStringCompiler codeComp;
-            testComp = CompilerFactory.getCompiler(compilationTestUnit);
-            codeComp = CompilerFactory.getCompiler(compilationUnit);
+    public CycleEnum codingPhase(String code, String testCode, CycleEnum currentPhase){
+       try {
+           if (currentPhase.equals(CycleEnum.CODE)) {
+               currentPhase = compManager.compileCode(code, testCode, currentPhase);
 
-            testComp.compileAndRunTests();
-            codeComp.compileAndRunTests();
-
-            if(testComp.getTestResult().getTestFailures().isEmpty()
-                    && !codeComp.getCompilerResult().hasCompileErrors()
-                    && testComp.getTestResult().getNumberOfIgnoredTests() == 0){
-
-                phase = CycleEnum.REFACTOR;
-                return phase;
-
-            } else if (codeComp.getCompilerResult().hasCompileErrors()) {
-                errorStringInit(codeComp, compilationUnit);
-                cycleInfo.setCodeResults(codeComp, compilationUnit);
-
-
-            } else if (testComp.getCompilerResult().hasCompileErrors()) {
-                errorStringInit(testComp, compilationTestUnit);
-                cycleInfo.setTestResults(testComp);
-            }
-
-
-
-        }else{
-            throw new IllegalStateException("Wrong function call");
-        }
-
+           } else {
+               throw new IllegalStateException("Wrong function call");
+           }
+       }catch(Exception e){
+           System.out.println(e.getMessage());
+       }
         return currentPhase;
     }
 
@@ -182,11 +116,8 @@ public class Cycle {
     /**
      * Method: refactoringPhase
      * <p>
-     * Task: (does almost the same as codingPhase)
-     * Method that checks when the compile button is clicked, if the right phase was
-     * given to the method. If it got the right phase, the method compiles the test and all tests and
-     * code compiles then the user is allowed to move to complete the cycle and move to the
-     * the test phase again.
+     * Task: Method that takes the testcode and the normal code and gives it with the
+     * currentphase to the compilerManager in the refactor phase.
      *
      * @param testCode String testCode is the whole test the user typed into the textbox
      * @param code  String code is the whole code which is going to be tested
@@ -197,43 +128,17 @@ public class Cycle {
      * @return returns the current phase in which the cycle is at the moment
      */
 
-    public CycleEnum refactoringPhase(String code, String testCode, CycleEnum currentPhase)throws ClassNameParserException {
-        if (currentPhase.equals(CycleEnum.REFACTOR)) {
-            boolean isATest = false;
-            boolean isARealTest = true;
-            String className = ClassNameParser.getClassName(code);
-            String testName = ClassNameParser.getClassName(testCode);
-            CompilationUnit compilationUnit = new CompilationUnit(className, code, isATest);
-            CompilationUnit compilationTestUnit = new CompilationUnit(testName, testCode, isARealTest);
-            JavaStringCompiler testComp;
-            JavaStringCompiler codeComp;
-            testComp = CompilerFactory.getCompiler(compilationTestUnit);
-            codeComp = CompilerFactory.getCompiler(compilationUnit);
-
-            testComp.compileAndRunTests();
-            codeComp.compileAndRunTests();
+    public CycleEnum refactoringPhase(String code, String testCode, CycleEnum currentPhase) {
+        try {
+            if (currentPhase.equals(CycleEnum.REFACTOR)) {
+                currentPhase = compManager.compileRefactor(code, testCode, currentPhase);
 
 
-            if(testComp.getTestResult().getTestFailures().isEmpty()
-                    && !codeComp.getCompilerResult().hasCompileErrors()
-                    && testComp.getTestResult().getNumberOfIgnoredTests() == 0){
-
-                phase = CycleEnum.TEST;
-                return phase;
-
-            } else if (codeComp.getCompilerResult().hasCompileErrors()) {
-               errorStringInit(codeComp, compilationUnit);
-                cycleInfo.setCodeResults(codeComp, compilationUnit);
-
-
-            } else if (testComp.getCompilerResult().hasCompileErrors()){
-                errorStringInit(testComp,compilationTestUnit);
-                cycleInfo.setTestResults(testComp);
+            } else {
+                throw new IllegalStateException("Wrong function call");
             }
-
-
-            throw new IllegalStateException("Wrong function call");
-
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
 
         return currentPhase;
@@ -241,17 +146,7 @@ public class Cycle {
 
 
 
-    private void errorStringInit (JavaStringCompiler compiler, CompilationUnit cu){
-        String errorString = "";
-        for (CompileError compileError :
-                compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(cu)) {
-            errorString = "Line " + compileError.getLineNumber() + ": " + compileError.getMessage() +
-                    ": \n " + compileError.getCodeLineContainingTheError() + "\n" +
-                    compileError.getMessage() + "\n";
-            cycleInfo.setCompileErrors(errorString);
-        }
 
-    }
 
 
 
