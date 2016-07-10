@@ -1,4 +1,4 @@
-package de.hhu.propra.tddt.plugin.Tracker;
+package de.hhu.propra.tddt.plugin.tracker;
 
 import de.hhu.propra.tddt.plugin.Plugin;
 import de.hhu.propra.tddt.plugin.PluginManager;

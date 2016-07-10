@@ -1,4 +1,4 @@
-package de.hhu.propra.tddt.test;
+package de.hhu.propra.tddt.test.classnameparsertesting;
 
 import de.hhu.propra.tddt.util.classnameparser.ClassNameParser;
 import de.hhu.propra.tddt.util.classnameparser.ClassNameParserException;

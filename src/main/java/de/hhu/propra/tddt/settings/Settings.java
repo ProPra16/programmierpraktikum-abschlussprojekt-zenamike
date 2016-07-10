@@ -1,16 +1,15 @@
 package de.hhu.propra.tddt.settings;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * Created by zeljko On 04.07.2016
  */
 
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.Set;
-
 /**
- * Class: Settings
- * <p>
  * Task This class represents a collection of instaces of the setting class.
  * Provides information about the wanted id.
  *
@@ -27,12 +26,19 @@ import java.util.Set;
      */
 public class Settings {
 
-    LinkedList<Setting> settingLinkedList = new LinkedList<>();
+    HashMap<String, Setting> settingHashMap = new HashMap<>();
+    //the place where the settings will be stored, so that the program remembers the changes.
     final URL url = getClass().getResource("/rsc/settings/settings.xml");
 
     /**
-     * Method: loadSettings
-     *
+     * Preventing unwanted use of this class by restricting it's accessibility.
+     * When Settings becomes initialized it automatically loads the settings from the file
+     */
+    protected Settings(){
+        loadSettings();
+    }
+
+    /**
      * Load the current settings from a specified file.
      */
     protected void loadSettings() {
@@ -45,8 +51,6 @@ public class Settings {
     }
 
     /**
-     * Method: saveSettings
-     *
      * Save the settings to a specified file.
      */
     protected void saveSettings() {
@@ -60,16 +64,7 @@ public class Settings {
     }
 
     /**
-     * Method
-     */
-    public Settings() {
-
-    }
-
-    /**
-     * Method: loadSetting
-     * <p>
-     * Task: Providing the setting for an ID.
+     * Providing the setting for an ID.
      *
      * @param id The ID for the setting you are looking for
      *
@@ -79,35 +74,43 @@ public class Settings {
      *                          exception will be thrown
      */
     protected Setting loadSetting(String id) throws SettingException {
-        for (Setting setting : settingLinkedList) {
-            if (setting.getID().equals(id)) return setting;
-        }
-
-        throw new SettingException();
+        String idCopy = id.toLowerCase();
+        Setting setting = settingHashMap.get(idCopy);
+        if(setting == null) throw new SettingException();
+        return setting;
     }
 
-    protected void removeSetting(String id) throws SettingException {
-        boolean settingDoesNotExist = true;
-
-        for (int i = 0; i < settingLinkedList.size(); i++) {
-            if (settingLinkedList.get(i).getID().equals(id)) {
-                settingLinkedList.remove(i);
-                settingDoesNotExist = false;
-            }
-        }
-
-        if(!settingDoesNotExist) throw new SettingException();
+    /**
+     * Removes a setting with the given ID from the Settings.
+     *
+     * @param id The Setting with this ID will be removed, nothing will happen
+     *           if no setting with the given ID was present.
+     */
+    protected void removeSettingWithID(String id) throws SettingException {
+        String idCopy = id.toLowerCase();
+        Setting setting = settingHashMap.get(id);
+        if (setting != null) settingHashMap.remove(setting);
+        if (setting == null) throw new SettingException();
     }
 
-    protected void addSetting(Setting setting) throws SettingException {
-        boolean settingAlready = false;
-
-        for (int i = 0; i < settingLinkedList.size(); i++) {
-            if (settingLinkedList.get(i).getID().equals(setting.getID()))
-                settingAlready = true;
+    /**
+     * Adds a setting to the Settings. If the Setting already existed it will be
+     * overwritten.
+     *
+     * @param setting The setting you want to add/overwrite
+     */
+    protected void addSetting(Setting setting) {
+        if (settingHashMap.containsKey(setting.getID())) {
+            settingHashMap.replace(setting.getID(), setting);
         }
+        if (!settingHashMap.containsKey(setting.getID())) {
+            settingHashMap.put(setting.getID(), setting);
+        }
+    }
 
-        if (!settingAlready) settingLinkedList.add(setting);
-        if (settingAlready) throw new SettingException();
+    protected List<Setting> dumpSettings(){
+        ArrayList<Setting> arrayList = new ArrayList<>();
+        arrayList.addAll(settingHashMap.values());
+        return arrayList;
     }
 }

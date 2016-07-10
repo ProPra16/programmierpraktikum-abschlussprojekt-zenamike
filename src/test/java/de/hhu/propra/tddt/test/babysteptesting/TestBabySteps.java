@@ -1,10 +1,12 @@
-package de.hhu.propra.tddt.test;
+package de.hhu.propra.tddt.test.babysteptesting;
 
 import de.hhu.propra.tddt.cycle.CycleManager;
 import de.hhu.propra.tddt.contentmanager.TextManager;
 import de.hhu.propra.tddt.cycle.CycleEnum;
-import de.hhu.propra.tddt.plugin.Babystep.Babysteps;
+import de.hhu.propra.tddt.informationcore.InformationCore;
+import de.hhu.propra.tddt.plugin.babystep.Babysteps;
 import de.hhu.propra.tddt.plugin.PluginManager;
+import de.hhu.propra.tddt.settings.SettingsManager;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,22 +27,10 @@ public class TestBabySteps {
         TextManager textManager = new TextManager("hello");
         textManager.updatePhaseSave("hel");
 
-        PluginManager pluginManager = new PluginManager() {
-            @Override
-            public TextManager getCodeManager() {
-                return textManager;
-            }
-
-            @Override
-            public TextManager getTestManager() {
-                return null;
-            }
-
-            @Override
-            public CycleManager getCycleManager() {
-                return new StubCycleManagerCycleCODE();
-            }
-        };
+        PluginManager pluginManager = new StubInformationCore();
+        ((StubInformationCore) pluginManager).setCodeManager(textManager);
+        ((StubInformationCore) pluginManager).setCycleManager(new StubCycleManagerCycleCODE());
+        ((StubInformationCore) pluginManager).setSettingsManager(new SettingsManager());
 
         Babysteps babysteps = new Babysteps();
         babysteps.setDuration(Duration.ofSeconds(2));
@@ -61,22 +51,10 @@ public class TestBabySteps {
         TextManager textManager = new TextManager("hello");
         textManager.updatePhaseSave("hel");
 
-        PluginManager pluginManager = new PluginManager() {
-            @Override
-            public TextManager getCodeManager() {
-                return textManager;
-            }
-
-            @Override
-            public TextManager getTestManager() {
-                return null;
-            }
-
-            @Override
-            public CycleManager getCycleManager() {
-                return new StubCycleManagerCycleCODE();
-            }
-        };
+        PluginManager pluginManager = new StubInformationCore();
+        ((StubInformationCore) pluginManager).setCodeManager(textManager);
+        ((StubInformationCore) pluginManager).setCycleManager(new StubCycleManagerCycleCODE());
+        ((StubInformationCore) pluginManager).setSettingsManager(new SettingsManager());
 
         Babysteps babysteps = new Babysteps();
         //To ensure the other thread will stop the babysteps process
@@ -103,5 +81,11 @@ class StubCycleManagerCycleCODE extends CycleManager {
     @Override
     public CycleEnum getCurrentPhase() {
         return CycleEnum.CODE;
+    }
+}
+
+class StubInformationCore extends InformationCore {
+    public StubInformationCore(){
+
     }
 }

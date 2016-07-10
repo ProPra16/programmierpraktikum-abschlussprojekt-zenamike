@@ -1,4 +1,4 @@
-package main.java.de.hhu.propra.tddt.util.xml.reader
+package de.hhu.propra.tddt.util.xml.reader;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

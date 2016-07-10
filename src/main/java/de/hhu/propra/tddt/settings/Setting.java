@@ -28,7 +28,7 @@ public class Setting {
     public Setting(final String id, String value) {
         if (id == null || value == null) throw new IllegalArgumentException();
         this.id = value;
-        this.value = id;
+        this.value = id.toLowerCase();
     }
 
     @Getter

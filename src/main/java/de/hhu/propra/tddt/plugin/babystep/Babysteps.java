@@ -1,4 +1,4 @@
-package de.hhu.propra.tddt.plugin.Babystep;
+package de.hhu.propra.tddt.plugin.babystep;
 
 /**
  * Created by zeljko On 24.06.2016
@@ -7,10 +7,13 @@ package de.hhu.propra.tddt.plugin.Babystep;
 import de.hhu.propra.tddt.cycle.CycleEnum;
 import de.hhu.propra.tddt.plugin.Plugin;
 import de.hhu.propra.tddt.plugin.PluginManager;
+import de.hhu.propra.tddt.settings.Setting;
+import de.hhu.propra.tddt.settings.SettingException;
 
 import java.time.Duration;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 /******************************************************************************
  * Class: Babysteps implements Plugin
@@ -31,11 +34,12 @@ public class Babysteps implements Plugin {
 
     @Override
     public void start() {
-        /*
-         * @TODO
-         * Write the SettingsManager
-         * Pull information from the SettingsManager
-         */
+
+        try {
+            Setting setting = pluginManager.getSettingsManager().loadSetting("babysteps");
+        } catch (SettingException e) {
+            System.out.println("COULD NOT LOAD SETTINGS FROM THE SETTINGSMANAGER");
+        }
 
         TimerTask timerTask = new TimerTask() {
             @Override

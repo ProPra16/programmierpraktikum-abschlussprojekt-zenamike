@@ -5,28 +5,22 @@ package de.hhu.propra.tddt.settings;
  */
 
 /**
- * Class: SettingsManager
- * <p>
- * Task: Handling the settings.
+ * Handling and saving the settings.
  *
  * @author zeljko
  * @version 0.1
  */
 public class SettingsManager {
 
-    private Settings settings = new Settings();
+    private final Settings settings = new Settings();
 
-    /**
-     * Constructor: SettingsManager
-     */
-    public SettingsManager() {
-        settings.loadSettings();
+    public void saveSettings(){
+        //@TODO this will 100% be needed to rework
+        settings.saveSettings();
     }
 
     /**
-     * Method: loadSetting
-     * <p>
-     * Task: Loading one specific Setting from the Settings.
+     * Loading one specific Setting from the Settings.
      *
      * @param id The ID of the Setting you are looking for.
      *
@@ -40,9 +34,7 @@ public class SettingsManager {
     }
 
     /**
-     * Method: addSetting
-     * <p>
-     * Task: Adding a new Setting to the Settings of the SettingsManager.
+     * Adding a new Setting to the Settings of the SettingsManager.
      *
      * @param setting The setting you want to add.
      *
@@ -54,9 +46,7 @@ public class SettingsManager {
     }
 
     /**
-     * Method: removeSetting
-     * <p>
-     * Task: Removing an Setting from the Settings in the SettingsManager
+     * Removing an Setting from the Settings in the SettingsManager
      *
      * @param id The id of the Setting you want to remove.
      *
@@ -64,7 +54,7 @@ public class SettingsManager {
      *                          will be thrown.
      */
     public void removeSetting(String id) throws SettingException {
-        settings.removeSetting(id);
+        settings.removeSettingWithID(id);
     }
 
 }
