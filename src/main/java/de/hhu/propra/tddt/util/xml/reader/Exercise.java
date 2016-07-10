@@ -1,5 +1,4 @@
-package Main;
-
+package main.java.de.hhu.propra.tddt.util.xml.reader
 import java.util.ArrayList;
 
 /**
