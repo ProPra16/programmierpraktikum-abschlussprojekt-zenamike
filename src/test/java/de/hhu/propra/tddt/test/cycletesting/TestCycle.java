@@ -1,10 +1,9 @@
 package de.hhu.propra.tddt.test.cycletesting;
 
 
+import de.hhu.propra.tddt.compiler.CompileResults;
 import de.hhu.propra.tddt.cycle.Cycle;
 import de.hhu.propra.tddt.cycle.CycleEnum;
-import de.hhu.propra.tddt.cycle.CycleInformation;
-import de.hhu.propra.tddt.util.classnameparser.ClassNameParserException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +18,7 @@ import java.util.List;
  * Created by Kevin on 08.07.16.
  */
 public class TestCycle {
-    CycleInformation cycleInfo = new CycleInformation();
+    CompileResults compileResults = new CompileResults();
     Cycle testCycle = new Cycle();
     CycleEnum testPhase = CycleEnum.TEST;
     Path path =null;
@@ -27,35 +26,56 @@ public class TestCycle {
 
     @Test
     public void testCycleTestPhase() {
-        try {
 
             String testCode = getTestCode();
-            String code = getCodeCode();
             testResultPhase = testCycle.testingPhase(testCode,testPhase);
-
-
-
-
-        }catch(ClassNameParserException f){
-        System.out.println(f.getMessage());
-    }
-        Assert.assertEquals(CycleEnum.TEST, testResultPhase);
+            Assert.assertEquals(CycleEnum.TEST, testResultPhase);
     }
 
 
     @Test
     public void testCycleCodePhase(){
-       try{
             testPhase = CycleEnum.CODE;
             String testCode = getTestCode();
             String code = getCodeCode();
             testResultPhase = testCycle.codingPhase(code,testCode,testPhase);
-
-        }catch(ClassNameParserException f){
-            System.out.println(f.getMessage());
-        }
-        // Assert.assertEquals(CycleEnum.CODE, testResultPhase);
+            Assert.assertEquals(CycleEnum.REFACTOR, testResultPhase);
     }
+
+    @Test
+    public void testCycleRefactorPhase(){
+
+            testPhase = CycleEnum.REFACTOR;
+            String testcode =getTestCode();
+            String code = getCodeCode();
+            testResultPhase = testCycle.refactoringPhase(code, testcode, testPhase);
+            Assert.assertEquals(CycleEnum.TEST,testResultPhase);
+    }
+
+
+    @Test
+    public void testResetPhaseTEST(){
+
+            testPhase = CycleEnum.TEST;
+            testCycle.resetPhase(testPhase);
+            Assert.assertEquals("You can't change into the same phase again.", compileResults.getCycleError());
+    }
+
+
+    @Test
+    public void testResetPhaseCODE(){
+        testPhase = CycleEnum.CODE;
+        testResultPhase= testCycle.resetPhase(testPhase);
+        Assert.assertEquals(CycleEnum.TEST, testResultPhase);
+    }
+
+    @Test
+    public void testResetPhaseRefactor(){
+        testPhase = CycleEnum.REFACTOR;
+        testResultPhase= testCycle.resetPhase(testPhase);
+
+    }
+
 
 
 
