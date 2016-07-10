@@ -69,7 +69,7 @@ public class TestCycle {
         Assert.assertEquals(CycleEnum.TEST, testResultPhase);
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void testResetPhaseRefactor(){
         testPhase = CycleEnum.REFACTOR;
         testResultPhase= testCycle.resetPhase(testPhase);
