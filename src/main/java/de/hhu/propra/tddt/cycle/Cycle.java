@@ -8,6 +8,9 @@ package de.hhu.propra.tddt.cycle;
 import de.hhu.propra.tddt.util.classnameparser.ClassNameParser;
 import de.hhu.propra.tddt.util.classnameparser.ClassNameParserException;
 import vk.core.api.CompilationUnit;
+import vk.core.api.CompileError;
+import vk.core.api.CompilerFactory;
+import vk.core.api.JavaStringCompiler;
 import vk.core.internal.InternalCompiler;
 
 
@@ -25,6 +28,7 @@ public class Cycle {
 
     CycleEnum phase = CycleEnum.TEST;
     CycleInformation cycleInfo = new CycleInformation();
+    boolean firstcyle = true;
 
 
     /**
@@ -36,7 +40,6 @@ public class Cycle {
      * the CODE phase.
      *
      * @param testCode String testCode is the whole test the user typed into the textbox
-     * @param code  String code is the whole code which is going to be tested
      * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
      *                     the user is currently working. More a failsafe check for the backend
      *                     processes than for the user.
@@ -44,30 +47,40 @@ public class Cycle {
      * @return returns the current phase in which the cycle is at the moment
      */
 
-    public CycleEnum testingPhase(String testCode, String code, CycleEnum currentPhase)throws ClassNameParserException {
+    public CycleEnum testingPhase(String testCode, CycleEnum currentPhase)throws ClassNameParserException {
 
         if (currentPhase.equals(CycleEnum.TEST)) {
-            boolean isATest = false;
+
             boolean isARealTest = true;
-            String className = ClassNameParser.getClassName(code);
             String testName = ClassNameParser.getClassName(testCode);
-            CompilationUnit compilationUnit = new CompilationUnit(className, code, isATest);
             CompilationUnit compilationTestUnit = new CompilationUnit(testName, testCode, isARealTest);
-            CompilationUnit compArray [] = new CompilationUnit[1];
-            compArray [0] = compilationUnit;
-            compArray [1] = compilationTestUnit;
+            JavaStringCompiler testComp;
+            testComp = CompilerFactory.getCompiler(compilationTestUnit);
+            testComp.compileAndRunTests();
 
-            InternalCompiler internalCompiler = new InternalCompiler(compArray);
-
-            if (internalCompiler.getTestResult().getNumberOfFailedTests() != 1) {
-                cycleInfo.setTestResults(internalCompiler);
-
-            }else if (internalCompiler.getTestResult().getNumberOfFailedTests() == 1){
-                currentPhase = CycleEnum.CODE;
+            if (testComp.getCompilerResult().hasCompileErrors() && firstcyle) {
+                phase = CycleEnum.CODE;
                 return currentPhase;
+            }else {cycleInfo.setCycleError(1);}
 
-            }else if (internalCompiler.getCompilerResult().hasCompileErrors()==true);
-                cycleInfo.setCycleError(1);
+
+            if (testComp.getCompilerResult().hasCompileErrors() && !firstcyle) {
+                    errorStringInit(testComp, compilationTestUnit);
+
+
+            }else if (!testComp.getCompilerResult().hasCompileErrors() && !firstcyle) {
+                    cycleInfo.setTestResults(testComp);
+
+                    if (testComp.getTestResult().getNumberOfFailedTests() == 1) {
+
+                        phase = CycleEnum.CODE;
+                        return phase;
+
+                    }else{
+                        cycleInfo.setCycleError(3);
+                    }
+            }
+
                 return currentPhase;
 
         } else {
@@ -131,26 +144,38 @@ public class Cycle {
             String testName = ClassNameParser.getClassName(testCode);
             CompilationUnit compilationUnit = new CompilationUnit(className, code, isATest);
             CompilationUnit compilationTestUnit = new CompilationUnit(testName, testCode, isARealTest);
-            CompilationUnit compArray[] = new CompilationUnit[1];
-            compArray[0] = compilationUnit;
-            compArray[1] = compilationTestUnit;
+            JavaStringCompiler testComp;
+            JavaStringCompiler codeComp;
+            testComp = CompilerFactory.getCompiler(compilationTestUnit);
+            codeComp = CompilerFactory.getCompiler(compilationUnit);
 
-            InternalCompiler internalCompiler = new InternalCompiler(compArray);
+            testComp.compileAndRunTests();
+            codeComp.compileAndRunTests();
 
-            if ((internalCompiler.getTestResult().getNumberOfFailedTests() == 0) &&
-                    (internalCompiler.getCompilerResult().hasCompileErrors() == false)) {
-                currentPhase = CycleEnum.REFACTOR;
-                return currentPhase;
+            if(testComp.getTestResult().getTestFailures().isEmpty()
+                    && !codeComp.getCompilerResult().hasCompileErrors()
+                    && testComp.getTestResult().getNumberOfIgnoredTests() == 0){
 
-            } else {
-                cycleInfo.setTestResults(internalCompiler);
-                cycleInfo.setCompileResults(internalCompiler, compilationUnit);
-                return currentPhase;
+                phase = CycleEnum.REFACTOR;
+                return phase;
+
+            } else if (codeComp.getCompilerResult().hasCompileErrors()) {
+                errorStringInit(codeComp, compilationUnit);
+                cycleInfo.setCodeResults(codeComp, compilationUnit);
+
+
+            } else if (testComp.getCompilerResult().hasCompileErrors()) {
+                errorStringInit(testComp, compilationTestUnit);
+                cycleInfo.setTestResults(testComp);
             }
 
-        } else {
+
+
+        }else{
             throw new IllegalStateException("Wrong function call");
         }
+
+        return currentPhase;
     }
 
 
@@ -180,28 +205,57 @@ public class Cycle {
             String testName = ClassNameParser.getClassName(testCode);
             CompilationUnit compilationUnit = new CompilationUnit(className, code, isATest);
             CompilationUnit compilationTestUnit = new CompilationUnit(testName, testCode, isARealTest);
-            CompilationUnit compArray[] = new CompilationUnit[1];
-            compArray[0] = compilationUnit;
-            compArray[1] = compilationTestUnit;
+            JavaStringCompiler testComp;
+            JavaStringCompiler codeComp;
+            testComp = CompilerFactory.getCompiler(compilationTestUnit);
+            codeComp = CompilerFactory.getCompiler(compilationUnit);
 
-            InternalCompiler internalCompiler = new InternalCompiler(compArray);
+            testComp.compileAndRunTests();
+            codeComp.compileAndRunTests();
 
-            if ((internalCompiler.getTestResult().getNumberOfFailedTests() == 0) &&
-                    (internalCompiler.getCompilerResult().hasCompileErrors() == true)) {
-                currentPhase = CycleEnum.TEST;
-                return currentPhase;
 
-            } else {
-                cycleInfo.setTestResults(internalCompiler);
-                cycleInfo.setCompileResults(internalCompiler, compilationUnit);
-                return currentPhase;
+            if(testComp.getTestResult().getTestFailures().isEmpty()
+                    && !codeComp.getCompilerResult().hasCompileErrors()
+                    && testComp.getTestResult().getNumberOfIgnoredTests() == 0){
+
+                phase = CycleEnum.TEST;
+                return phase;
+
+            } else if (codeComp.getCompilerResult().hasCompileErrors()) {
+               errorStringInit(codeComp, compilationUnit);
+                cycleInfo.setCodeResults(codeComp, compilationUnit);
+
+
+            } else if (testComp.getCompilerResult().hasCompileErrors()){
+                errorStringInit(testComp,compilationTestUnit);
+                cycleInfo.setTestResults(testComp);
             }
 
-        } else {
+
             throw new IllegalStateException("Wrong function call");
+
         }
+
+        return currentPhase;
+    }
+
+
+
+    private void errorStringInit (JavaStringCompiler compiler, CompilationUnit cu){
+        String errorString = "";
+        for (CompileError compileError :
+                compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(cu)) {
+            errorString = "Line " + compileError.getLineNumber() + ": " + compileError.getMessage() +
+                    ": \n " + compileError.getCodeLineContainingTheError() + "\n" +
+                    compileError.getMessage() + "\n";
+            cycleInfo.setCompileErrors(errorString);
         }
 
     }
+
+
+
+
+}
 
 

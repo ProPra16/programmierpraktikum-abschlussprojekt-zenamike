@@ -2,11 +2,14 @@ package de.hhu.propra.tddt.cycle;
 
 import vk.core.api.CompilationUnit;
 import vk.core.api.CompileError;
+import vk.core.api.JavaStringCompiler;
 import vk.core.api.TestFailure;
 import vk.core.internal.InternalCompiler;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * Created by Kevin on 07.07.2016.
@@ -33,13 +36,56 @@ public class CycleInformation {
     String ignoredTests = null;
     String successfulTests = null;
     String testDuration = null;
-    String testMessage = null;
 
     String compileErrors = null;
     String compileDuration = null;
     String compileMessage = null;
 
     String errorMessage = null;
+    private LinkedList<String> compilerErrorList = new LinkedList<>();
+
+
+
+
+    /**
+     * Method: setCompileErrors
+     * <p>
+     * Task: Method that saves the compileerrors in one convinent linked list
+     *
+     * @param compileErrors A preprade string from Cycle.java which is nicely formated
+     *
+     * @return void
+     */
+
+
+
+    protected void setCompileErrors(String compileErrors){
+        compilerErrorList.add(compileErrors);
+    }
+
+    /**
+     * Method: getCompilerErrors
+     * <p>
+     * Task: Method that makes the LinkedList from setCompileErrors accessable
+     *
+     *
+     * @return LinkedList compilerErrorList
+     */
+
+    public LinkedList<String> getCompilerErrors(){
+        return compilerErrorList;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
@@ -48,28 +94,35 @@ public class CycleInformation {
      * Task: Method that saves the errors/information from the internal compiler into
      * an ArrayList.
      *
-     * @param internalCompiler so that method can access the information
+     * @param compiler so that method can access the information
      *
      * @return void
      */
 
-    protected void setTestResults(InternalCompiler internalCompiler){
-        int failedTestsNumber = internalCompiler.getTestResult().getNumberOfFailedTests();
+    protected void setTestResults(JavaStringCompiler compiler){
+        int failedTestsNumber = compiler.getTestResult().getNumberOfFailedTests();
         failedTests = Integer.toString(failedTestsNumber);
-        int ignoredTestsNumber = internalCompiler.getTestResult().getNumberOfIgnoredTests();
+        int ignoredTestsNumber = compiler.getTestResult().getNumberOfIgnoredTests();
         ignoredTests = Integer.toString(ignoredTestsNumber);
-        int successfulTestsNumber = internalCompiler.getTestResult().getNumberOfSuccessfulTests();
+        int successfulTestsNumber = compiler.getTestResult().getNumberOfSuccessfulTests();
         successfulTests = Integer.toString(successfulTestsNumber);
-        Duration testDurationTime = internalCompiler.getTestResult().getTestDuration();
-        testDuration = testDurationTime.toString();
-        Collection<TestFailure> testFailures = internalCompiler.getTestResult().getTestFailures();
-        testMessage = testFailures.toString();
+        Duration testDurationTime = compiler.getTestResult().getTestDuration();
+        testDuration = Long.toString(testDurationTime.getSeconds());
+        Collection<TestFailure> testFailures = compiler.getTestResult().getTestFailures();
+        String testFailureCollectionString ="";
+        if (!testFailures.isEmpty()) {
+            String arr[] = new String[testFailures.size()];
+            testFailures.toArray(arr);
+            testFailureCollectionString = Arrays.toString(arr);
+        }
+
 
         testResults.add(failedTests);
         testResults.add(ignoredTests);
         testResults.add(successfulTests);
         testResults.add(testDuration);
-        testResults.add(testMessage);
+        testResults.add(testFailureCollectionString);
+
     }
 
     /**
@@ -100,23 +153,24 @@ public class CycleInformation {
      * Task: Method that saves the errors/information from the internal compiler into
      * an ArrayList.
      *
-     * @param internalCompiler so that method can access the information
+     * @param compiler so that method can access the information
      * @param compilationUnit is needed for the CompileError collection in order to
      *                        specify with CompilationUnit should be looked at.
      *
      * @return void
      */
 
-    protected void setCompileResults(InternalCompiler internalCompiler, CompilationUnit compilationUnit){
-        boolean hasItCompileErrors = internalCompiler.getCompilerResult().hasCompileErrors();
-        compileErrors = Boolean.toString(hasItCompileErrors);
-        Duration compileDurationTime = internalCompiler.getCompilerResult().getCompileDuration();
-        compileDuration = compileDurationTime.toString();
-        Collection<CompileError> compileMessages = internalCompiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnit);
-        compileMessage = compileMessages.toString();
+    protected void setCodeResults(JavaStringCompiler compiler, CompilationUnit compilationUnit){
+        Duration compileDurationTime = compiler.getCompilerResult().getCompileDuration();
+        compileDuration = Long.toString(compileDurationTime.getSeconds());
+        Collection<CompileError> compileMessages = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnit);
 
+        if (!compileMessages.isEmpty()) {
+            String arr[] = new String[compileMessages.size()];
+            compileMessages.toArray(arr);
+            compileMessage = Arrays.toString(arr);
+        }
 
-        compileResults.add(compileErrors);
         compileResults.add(compileDuration);
         compileResults.add(compileMessage);
     }
@@ -158,6 +212,9 @@ public class CycleInformation {
             case 1: errorMessage = "Code is not allowed to compile here";
                 break;
             case 2: errorMessage = "You can't change into the same phase again.";
+                break;
+            case 3: errorMessage = "You shallow not pass since something does not work, check" +
+                    "the following: ";
                 break;
         }
 
