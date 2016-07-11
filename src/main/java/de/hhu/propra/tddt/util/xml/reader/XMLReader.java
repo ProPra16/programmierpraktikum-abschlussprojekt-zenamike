@@ -44,7 +44,6 @@ public class XMLReader {
      * @return a string that contains all the information in the file
      * @throws IOException
      */
-
     private String readSomeXMLFile(String path) throws IOException {
 
         File xmlFile = new File(path);

@@ -22,6 +22,8 @@ public class TestBabySteps {
     /*
      * This test verifies that the code reset of babysteps is reseting the text
      */
+
+
     @Test
     public void testApplySettings(){
         PluginManager pluginManager = new StubInformationCore();
@@ -98,7 +100,7 @@ class StubInformationCore extends InformationCore {
 class StubSettingsManager2Seconds extends SettingsManager {
     public StubSettingsManager2Seconds() {
         try {
-            super.addSetting(new Setting("babysteps", Duration.ofSeconds(2)));
+            super.addSetting(new Setting("babysteps", "2000"));
         } catch (SettingException e) {
             System.err.println("Sir, we got a problem over here");
         }
