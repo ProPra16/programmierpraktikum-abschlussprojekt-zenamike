@@ -30,24 +30,24 @@ public class CompilerManager {
      * the CODE phase.
      *
      * @param testCode String testCode is the whole test the user typed into the textbox
-     * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
-     *                     the user is currently working. More a failsafe check for the backend
-     *                     processes than for the user.
+     * @param firstcyle which tells the compiler if the cycle is in the very first round or
+     *                  not
      *
      * @return returns the current phase in which the cycle is at the moment
      */
 
-    public CycleEnum compileTest(String testCode, CycleEnum currentPhase)throws ClassNameParserException{
+    public boolean compileTest(String testCode, boolean firstcyle)throws ClassNameParserException{
         boolean isARealTest = true;
         String testName = ClassNameParser.getClassName(testCode);
         CompilationUnit compilationTestUnit = new CompilationUnit(testName, testCode, isARealTest);
         JavaStringCompiler testComp;
         testComp = CompilerFactory.getCompiler(compilationTestUnit);
         testComp.compileAndRunTests();
+        boolean advance = false;
 
         if (testComp.getCompilerResult().hasCompileErrors() && firstcyle) {
-            phase = CycleEnum.CODE;
-            return currentPhase;
+            advance = true;
+            return advance;
         }else {setCycleError(1);}
 
 
@@ -60,15 +60,15 @@ public class CompilerManager {
 
             if (testComp.getTestResult().getNumberOfFailedTests() == 1) {
 
-                phase = CycleEnum.CODE;
-                return phase;
+                advance = true;
+                return advance;
 
             }else{
                 setCycleError(3);
             }
         }
 
-        return currentPhase;
+        return advance;
     }
 
 
@@ -82,18 +82,17 @@ public class CompilerManager {
      *
      * @param testCode String testCode is the whole test the user typed into the textbox
      * @param code  String code is the whole code which is going to be tested
-     * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
-     *                     the user is currently working. More a failsafe check for the backend
-     *                     processes than for the user.
+     *
      *
      * @return returns the current phase in which the cycle is at the moment
      */
 
 
 
-    public CycleEnum compileCode (String code, String testCode, CycleEnum currentPhase)throws ClassNameParserException{
+    public boolean compileCode (String code, String testCode)throws ClassNameParserException{
         boolean isATest = false;
         boolean isARealTest = true;
+        boolean advance = false;
         String className = ClassNameParser.getClassName(code);
         String testName = ClassNameParser.getClassName(testCode);
         CompilationUnit compilationUnit = new CompilationUnit(className, code, isATest);
@@ -110,8 +109,8 @@ public class CompilerManager {
                 && !codeComp.getCompilerResult().hasCompileErrors()
                 && testComp.getTestResult().getNumberOfIgnoredTests() == 0){
 
-            phase = CycleEnum.REFACTOR;
-            return phase;
+            advance = true;
+            return advance;
 
         } else if (codeComp.getCompilerResult().hasCompileErrors()) {
             errorStringInit(codeComp, compilationUnit);
@@ -124,7 +123,7 @@ public class CompilerManager {
         }
 
 
-        return currentPhase;
+        return advance;
 
     }
 
@@ -133,24 +132,24 @@ public class CompilerManager {
     /**
      * Method: compileRefactor
      * <p>
-     * Task: (does almost the same as codingPhase)
+     * Task:
      * Method that checks when the compile button is clicked, if the right phase was
      * given to the method. If it got the right phase, the method compiles the test and all tests and
      * code compiles then the user is allowed to move to complete the cycle and move to the
      * the test phase again.
+     * Is only a seprate function just because if the refactor phase needs to be changed.
      *
      * @param testCode String testCode is the whole test the user typed into the textbox
      * @param code  String code is the whole code which is going to be tested
-     * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
-     *                     the user is currently working. More a failsafe check for the backend
-     *                     processes than for the user.
+     *
      *
      * @return returns the current phase in which the cycle is at the moment
      */
 
-    public CycleEnum compileRefactor(String code, String testCode, CycleEnum currentPhase)throws ClassNameParserException{
+    public boolean compileRefactor(String code, String testCode)throws ClassNameParserException{
         boolean isATest = false;
         boolean isARealTest = true;
+        boolean advance = false;
         String className = ClassNameParser.getClassName(code);
         String testName = ClassNameParser.getClassName(testCode);
         CompilationUnit compilationUnit = new CompilationUnit(className, code, isATest);
@@ -168,8 +167,8 @@ public class CompilerManager {
                 && !codeComp.getCompilerResult().hasCompileErrors()
                 && testComp.getTestResult().getNumberOfIgnoredTests() == 0){
 
-            phase = CycleEnum.TEST;
-            return phase;
+            advance = true;
+            return advance;
 
         } else if (codeComp.getCompilerResult().hasCompileErrors()) {
             errorStringInit(codeComp, compilationUnit);
@@ -182,7 +181,7 @@ public class CompilerManager {
         }
 
 
-        return currentPhase;
+        return advance;
     }
 
 

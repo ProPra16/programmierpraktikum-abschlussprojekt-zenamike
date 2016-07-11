@@ -27,9 +27,9 @@ public class CompileResults {
     ********************************************************/
 
 
-    LinkedList<String> testResults = new LinkedList<>();
-    LinkedList<String>compileResults = new LinkedList<>();
-    LinkedList<String> compilerErrorList = new LinkedList<>();
+    LinkedList<String> testResults;
+    LinkedList<String>compileResults;
+    LinkedList<String> compilerErrorList;
     static String errorMessage;
 
     String failedTests = null;
@@ -39,6 +39,12 @@ public class CompileResults {
     String compileDuration = null;
     String compileMessage = null;
 
+
+    public CompileResults(){
+        testResults = new CustomLinkedList();
+        compileResults = new CustomLinkedList();
+        compilerErrorList = new CustomLinkedList();
+    }
 
 
 
@@ -225,3 +231,14 @@ public class CompileResults {
         }
 
     }
+
+
+class CustomLinkedList extends LinkedList{
+
+    @Override
+    public String toString() {
+        String result = "";
+        for (int j = 0; j<size(); j++) result += get(j);
+        return result;
+    }
+        }

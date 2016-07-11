@@ -24,6 +24,7 @@ public class Cycle {
     CycleEnum phase = CycleEnum.TEST;
     CompilerManager compManager = new CompilerManager();
     CompileResults compResults = new CompileResults();
+    boolean advance;
 
 
     /**
@@ -40,11 +41,17 @@ public class Cycle {
      * @return returns the current phase in which the cycle is at the moment
      */
 
-    public CycleEnum testingPhase(String testCode, CycleEnum currentPhase){
+    public CycleEnum testingPhase(String testCode, CycleEnum currentPhase, boolean firstCycle){
         try{
         if (currentPhase.equals(CycleEnum.TEST)) {
 
-            currentPhase = compManager.compileTest(testCode,currentPhase);
+            advance = compManager.compileTest(testCode, firstCycle);
+            if (advance){
+                currentPhase = CycleEnum.CODE;
+                return currentPhase;
+            }else{
+                return currentPhase;
+            }
 
         } else {
             throw new IllegalStateException("Wrong function call");
@@ -101,7 +108,13 @@ public class Cycle {
     public CycleEnum codingPhase(String code, String testCode, CycleEnum currentPhase){
        try {
            if (currentPhase.equals(CycleEnum.CODE)) {
-               currentPhase = compManager.compileCode(code, testCode, currentPhase);
+               advance = compManager.compileCode(code, testCode);
+               if(advance){
+                   currentPhase = CycleEnum.REFACTOR;
+                   return currentPhase;
+               }else{
+                   return currentPhase;
+               }
 
            } else {
                throw new IllegalStateException("Wrong function call");
@@ -131,8 +144,13 @@ public class Cycle {
     public CycleEnum refactoringPhase(String code, String testCode, CycleEnum currentPhase) {
         try {
             if (currentPhase.equals(CycleEnum.REFACTOR)) {
-                currentPhase = compManager.compileRefactor(code, testCode, currentPhase);
-
+                advance = compManager.compileRefactor(code, testCode);
+                if (advance){
+                    currentPhase = CycleEnum.TEST;
+                    return currentPhase;
+                }else{
+                    return currentPhase;
+                }
 
             } else {
                 throw new IllegalStateException("Wrong function call");
