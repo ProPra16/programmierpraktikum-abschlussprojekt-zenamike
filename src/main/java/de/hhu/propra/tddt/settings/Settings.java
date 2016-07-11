@@ -1,5 +1,11 @@
 package de.hhu.propra.tddt.settings;
 
+import de.hhu.propra.tddt.util.xml.reader.XMLCatalogReader;
+import de.hhu.propra.tddt.util.xml.reader.XMLReader;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +54,18 @@ public class Settings {
          * 2. Blame Kim Jong-Un(o)
          * 2. Use hte XMLReader
          */
+        try {
+            XMLReader xmlReader = new XMLReader(getClass().getResource("/settings/settings.xml").toExternalForm());
+            System.out.println(getClass().getResource("/settings/settings.xml").toExternalForm());
+
+            System.out.println(XMLReader.getXmlToString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

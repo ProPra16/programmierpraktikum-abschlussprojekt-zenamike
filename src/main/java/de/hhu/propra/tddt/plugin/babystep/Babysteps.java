@@ -67,7 +67,7 @@ public class Babysteps implements Plugin {
 
     private void applySettingSetting() throws SettingException {
         Setting setting = pluginManager.getSettingsManager().loadSetting("babysteps");
-        duration = (Duration) setting.getValue();
+        duration = Duration.ofMillis(Long.parseLong(setting.getValue()));
     }
 
     private void resetCode() {

@@ -17,7 +17,7 @@ import jdk.nashorn.internal.objects.annotations.Getter;
  */
 public class Setting {
     final String id;
-    Object value;
+    String value;
 
     /**
      * Constructor: Setting
@@ -25,14 +25,14 @@ public class Setting {
      * @param id    The id which the setting has to hold.
      * @param value The value the setting has been assigned.
      */
-    public Setting(final String id, Object value) {
+    public Setting(final String id, String value) {
         if (id == null || value == null) throw new IllegalArgumentException();
         this.id = id.toLowerCase();
         this.value = value;
     }
 
     @Getter
-    public Object getValue() {
+    public String getValue() {
         return value;
     }
 
