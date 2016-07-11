@@ -4,9 +4,7 @@ import vk.core.api.CompilationUnit;
 import vk.core.api.CompileError;
 import vk.core.api.JavaStringCompiler;
 import vk.core.api.TestFailure;
-
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -63,8 +61,9 @@ public class CompileResults {
 
 
 
-        protected void setCompileErrors(String compileErrors){
+        protected void addCompileErrors(String compileErrors){
             compilerErrorList.add(compileErrors);
+            System.out.println(compilerErrorList.size());
         }
 
         /**
@@ -77,6 +76,7 @@ public class CompileResults {
          */
 
         public LinkedList<String> getCompilerErrors(){
+            System.out.println(compilerErrorList.size());
             return compilerErrorList;
         }
 

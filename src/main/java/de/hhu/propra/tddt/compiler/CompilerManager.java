@@ -48,7 +48,9 @@ public class CompilerManager {
         if (testComp.getCompilerResult().hasCompileErrors() && firstcyle) {
             advance = true;
             return advance;
-        }else {setCycleError(1);}
+        }else if(firstcyle ==false){
+            setCycleError(1);
+        }
 
 
         if (testComp.getCompilerResult().hasCompileErrors() && !firstcyle) {
@@ -196,7 +198,7 @@ public class CompilerManager {
             errorString = "Line " + compileError.getLineNumber() + ": " + compileError.getMessage() +
                     ": \n " + compileError.getCodeLineContainingTheError() + "\n" +
                     compileError.getMessage() + "\n";
-            compResult.setCompileErrors(errorString);
+            compResult.addCompileErrors(errorString);
         }
 
     }
