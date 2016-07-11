@@ -10,7 +10,6 @@ import org.junit.Test;
         NormalCode rechnung = new NormalCode();
         int ergebnis = rechnung.awesomerechnung();
 
-    Assert.assertEquals(6,ergebnis);
-
+    Assert.assertEquals(7,ergebnis);
 
 }}
