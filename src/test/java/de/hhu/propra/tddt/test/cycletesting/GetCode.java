@@ -14,25 +14,10 @@ public class GetCode {
 
     Path path = null;
 
-    public String getTestCode(){
-        String testCode = null;
-        try {
-            URL testUrl = getClass().getResource("/TestCode.java");
-            Path path = Paths.get(testUrl.getPath());
-            testCode = readFile(path);
-
-
-        } catch (IOException e) {
-            System.out.println(path.toAbsolutePath().toString());
-        }
-
-        return testCode;
-    }
-
-    public String getCodeCode() {
+    public String getCode(String classname) {
         String codeCode = null;
         try {
-            URL codeUrl = getClass().getResource("/NormalCode.java");
+            URL codeUrl = getClass().getResource(classname);
             Path path = Paths.get(codeUrl.getPath());
             codeCode = readFile(path);
         } catch (IOException e) {

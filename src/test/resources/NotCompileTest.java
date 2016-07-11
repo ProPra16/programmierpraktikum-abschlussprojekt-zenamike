@@ -8,8 +8,8 @@ public class TestCode {
     @Test
     public void rechnungstest(){
         NormalCode rechnung = new NormalCode();
-        int ergebnis = rechnung.awesomerechnung();
+        int ergebnis = rechnung.awesomerechnung()
 
         Assert.assertEquals(3,ergebnis);
 
-    }}
+    }
