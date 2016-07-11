@@ -1,11 +1,13 @@
 package de.hhu.propra.tddt.test.babysteptesting;
 
-import de.hhu.propra.tddt.cycle.CycleManager;
 import de.hhu.propra.tddt.contentmanager.TextManager;
 import de.hhu.propra.tddt.cycle.CycleEnum;
+import de.hhu.propra.tddt.cycle.CycleManager;
 import de.hhu.propra.tddt.informationcore.InformationCore;
-import de.hhu.propra.tddt.plugin.babystep.Babysteps;
 import de.hhu.propra.tddt.plugin.PluginManager;
+import de.hhu.propra.tddt.plugin.babystep.Babysteps;
+import de.hhu.propra.tddt.settings.Setting;
+import de.hhu.propra.tddt.settings.SettingException;
 import de.hhu.propra.tddt.settings.SettingsManager;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,25 +23,36 @@ public class TestBabySteps {
      * This test verifies that the code reset of babysteps is reseting the text
      */
     @Test
+    public void testApplySettings(){
+        PluginManager pluginManager = new StubInformationCore();
+        ((StubInformationCore) pluginManager).setSettingsManager(new StubSettingsManager2Seconds());
+        StubAccessDurationBabysteps babysteps = new StubAccessDurationBabysteps();
+        babysteps.setPluginManager(pluginManager);
+        babysteps.start();
+
+        try {
+            Thread.sleep(Duration.ofSeconds(5).toMillis());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Assert.assertEquals(Duration.ofSeconds(2), babysteps.getDuration());
+    }
+
+    @Test
     public void testTextReset() throws InterruptedException {
 
-        //Custom PluginManager and TextManager for this test
-        TextManager textManager = new TextManager("hello");
-        textManager.updatePhaseSave("hel");
-
+        //Initializing the StubInformationCore as an PluginManager and setting the one special value
         PluginManager pluginManager = new StubInformationCore();
-        ((StubInformationCore) pluginManager).setCodeManager(textManager);
-        ((StubInformationCore) pluginManager).setCycleManager(new StubCycleManagerCycleCODE());
-        ((StubInformationCore) pluginManager).setSettingsManager(new SettingsManager());
+        ((StubInformationCore) pluginManager).setSettingsManager(new StubSettingsManager2Seconds());
 
         Babysteps babysteps = new Babysteps();
-        babysteps.setDuration(Duration.ofSeconds(2));
         babysteps.setPluginManager(pluginManager);
         babysteps.start();
 
         Thread.sleep(Duration.ofSeconds(5).toMillis());
 
-        Assert.assertEquals(textManager.getText(), "hel");
+        Assert.assertEquals(pluginManager.getCodeManager().getText(), "hel");
     }
 
     /*
@@ -47,22 +60,15 @@ public class TestBabySteps {
      */
     @Test
     public void testNotTextReset() {
-        //Custom PluginManager and TextManager for this test
-        TextManager textManager = new TextManager("hello");
-        textManager.updatePhaseSave("hel");
 
         PluginManager pluginManager = new StubInformationCore();
-        ((StubInformationCore) pluginManager).setCodeManager(textManager);
-        ((StubInformationCore) pluginManager).setCycleManager(new StubCycleManagerCycleCODE());
         ((StubInformationCore) pluginManager).setSettingsManager(new SettingsManager());
 
+        //Initializing and starting babysteps
         Babysteps babysteps = new Babysteps();
-        //To ensure the other thread will stop the babysteps process
-
-        Duration duration = Duration.ofHours(2);
-        babysteps.setDuration(duration);
         babysteps.setPluginManager(pluginManager);
         babysteps.start();
+
         try {
             Thread.sleep(Duration.ofSeconds(5).toMillis());
         } catch (InterruptedException e) {
@@ -70,10 +76,7 @@ public class TestBabySteps {
         }
         babysteps.stop();
 
-
-        Assert.assertEquals("hello", textManager.getText());
-
-
+        Assert.assertEquals("hello", pluginManager.getCodeManager().getText());
     }
 }
 
@@ -85,7 +88,27 @@ class StubCycleManagerCycleCODE extends CycleManager {
 }
 
 class StubInformationCore extends InformationCore {
-    public StubInformationCore(){
+    public StubInformationCore() {
+        super.setCodeManager(new TextManager("hello"));
+        super.getCodeManager().updatePhaseSave("hel");
+        super.setCycleManager(new StubCycleManagerCycleCODE());
+    }
+}
 
+class StubSettingsManager2Seconds extends SettingsManager {
+    public StubSettingsManager2Seconds() {
+        try {
+            super.addSetting(new Setting("babysteps", Duration.ofSeconds(2)));
+        } catch (SettingException e) {
+            System.err.println("Sir, we got a problem over here");
+        }
+    }
+}
+
+class StubAccessDurationBabysteps extends Babysteps {
+
+    @Override
+    protected Duration getDuration() {
+        return super.getDuration();
     }
 }

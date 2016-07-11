@@ -37,8 +37,6 @@ public class TextManager {
      * The String from where the text will be taken.
      *
      * @param string
-     *
-     * @deprecated This constructor was only invented to use it for tests.
      */
     public TextManager(final String string) {
         if (string == null) throw new IllegalArgumentException();

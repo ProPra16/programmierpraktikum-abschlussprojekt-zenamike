@@ -13,18 +13,15 @@ import de.hhu.propra.tddt.settings.SettingException;
 import java.time.Duration;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
 /******************************************************************************
- * Class: Babysteps implements Plugin
- * <p>
- * Task: After waiting X Minutes it erase the source code and resets the current
+ * After waiting X Minutes it erase the source code and resets the current
  * phase. You can define the X in the minutes (you should be able to do it).
  * <p>
  * By default it has been set to 3 Minutes.
  *
  * @author zeljko
- * @version 0.2
+ * @version 1.0
  ******************************************************************************/
 public class Babysteps implements Plugin {
 
@@ -34,9 +31,11 @@ public class Babysteps implements Plugin {
 
     @Override
     public void start() {
+        if (pluginManager == null)
+            throw new IllegalStateException("The PluginManager has not been set. Please set the PluginManager before using this Plugin.");
 
         try {
-            Setting setting = pluginManager.getSettingsManager().loadSetting("babysteps");
+            applySettingSetting();
         } catch (SettingException e) {
             System.out.println("COULD NOT LOAD SETTINGS FROM THE SETTINGSMANAGER");
         }
@@ -62,27 +61,15 @@ public class Babysteps implements Plugin {
 
     @Override
     public void setPluginManager(PluginManager pluginManager) {
-        if(pluginManager == null) throw new IllegalArgumentException();
+        if (pluginManager == null) throw new IllegalArgumentException();
         this.pluginManager = pluginManager;
     }
 
-    /**
-     * Method: setDuration
-     * <p>
-     * Task: Setting the time of you have to write you code for each phase.
-     *
-     * @param duration a duration, where you can enter nearly every value.
-     */
-    public void setDuration(Duration duration) {
-        if(duration == null) throw new IllegalArgumentException();
-        this.duration = duration;
+    private void applySettingSetting() throws SettingException {
+        Setting setting = pluginManager.getSettingsManager().loadSetting("babysteps");
+        duration = (Duration) setting.getValue();
     }
 
-    /**
-     * Method: resetCode
-     *
-     * Task: Reseting the code depending on in which phase you are.
-     */
     private void resetCode() {
         if (pluginManager.getCycleManager().getCurrentPhase() == CycleEnum.TEST) {
             pluginManager.getTestManager().resetText();
@@ -91,5 +78,9 @@ public class Babysteps implements Plugin {
         if (pluginManager.getCycleManager().getCurrentPhase() == CycleEnum.CODE) {
             pluginManager.getCodeManager().resetText();
         }
+    }
+
+    protected Duration getDuration(){
+        return duration;
     }
 }
