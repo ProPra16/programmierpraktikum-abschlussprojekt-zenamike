@@ -1,6 +1,6 @@
 package de.hhu.propra.tddt.contentmanager;
 
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import jdk.nashorn.internal.objects.annotations.Getter;
 
 /**
@@ -25,7 +25,7 @@ public class TextManager {
     /**
      * Constructor: TextManager
      *
-     * @param textField the textfield from where the text will be pulled
+     * @param textArea the textfield from where the text will be pulled
      */
     public TextManager(final TextArea textArea) {
         if (textArea == null) throw new IllegalArgumentException();
