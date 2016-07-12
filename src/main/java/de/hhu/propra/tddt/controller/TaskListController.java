@@ -7,7 +7,8 @@ import de.hhu.propra.tddt.util.xml.reader.Exercise;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 
@@ -24,7 +25,8 @@ public class TaskListController {
 
     @FXML private Button Back;
     @FXML private Button TDDCycle;
-    @FXML private ListView<String> Tasks;
+    @FXML private ChoiceBox<String> Tasks;
+    @FXML private TextArea Discription;
 
     @FXML Exercise task;
 
