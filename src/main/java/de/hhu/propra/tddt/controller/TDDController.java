@@ -63,7 +63,6 @@ public class TDDController {
     @FXML
     public void handleCompileButton(ActionEvent actionEvent) {
         System.out.println("Compile");
-        PhaseLabel.setText("TEST");
 
         if(phase.equals(CycleEnum.TEST))
         {
