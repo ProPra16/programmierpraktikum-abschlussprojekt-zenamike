@@ -21,6 +21,11 @@ public class TextManager {
     protected String phaseSave;
 
     /**
+<<<<<<< HEAD
+=======
+     * Constructor: TextManager
+     *
+>>>>>>> 0a8d0575da59ed7d97f94202b5f4f381b26a86ff
      * @param textArea the textfield from where the text will be pulled
      */
     public TextManager(final TextArea textArea) {
