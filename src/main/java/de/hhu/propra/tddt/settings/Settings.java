@@ -55,9 +55,9 @@ public class Settings {
          * 2. Use hte XMLReader
          */
         try {
-            XMLReader xmlReader = new XMLReader(getClass().getResource("/settings/settings.xml").toExternalForm());
-            System.out.println(getClass().getResource("/settings/settings.xml").toExternalForm());
+            XMLReader xmlReader = new XMLReader(getClass().getResource("/settings/settings.xml").toExternalForm(), true);
 
+            System.out.println(getClass().getResource("/settings/settings.xml").toExternalForm());
             System.out.println(XMLReader.getXmlToString());
         } catch (IOException e) {
             e.printStackTrace();

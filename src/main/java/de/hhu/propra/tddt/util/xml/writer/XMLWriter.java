@@ -87,11 +87,11 @@ public class XMLWriter {
      *
      * IGNORE: just for testing issues.
      */
-    /**
+
      public static void main(String[] args) throws TransformerException, ParserConfigurationException {
 
      String content = "FOR THE LOLZ";
      String namePath = "src/Main/ExampleWriter.xml";
      new XMLWriter(content, namePath);
-     }*/
+     }
 }
