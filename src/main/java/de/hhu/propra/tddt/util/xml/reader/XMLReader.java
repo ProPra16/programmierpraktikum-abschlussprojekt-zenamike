@@ -35,12 +35,7 @@ public class XMLReader {
         else{
             this.xmlToString = readSomeXMLFile(path);
         }
-
-        /**if(templateOrNot.equals("template"))
-            this.xmlToString = readTemplateXMLFile(path);
-        else{
-            this.xmlToString = readSomeXMLFile(path);
-        }*/
+        
     }
 
     /**
