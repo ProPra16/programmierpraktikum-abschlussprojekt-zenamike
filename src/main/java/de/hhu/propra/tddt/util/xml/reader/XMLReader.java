@@ -24,14 +24,23 @@ public class XMLReader {
 
     /**
      * Method: Constructor
-     * @param path
+     * @param path, templateOrNot
      * @throws IOException
      */
 
-    public XMLReader(String path) throws IOException, ParserConfigurationException, SAXException {
+    public XMLReader(String path,boolean isTemplate) throws IOException, ParserConfigurationException, SAXException {
+        if(isTemplate){
+            this.xmlToString = readTemplateXMLFile(path);
+        }
+        else{
+            this.xmlToString = readSomeXMLFile(path);
+        }
 
-        this.xmlToString = readTemplateXMLFile(path);
-        /**this.xmlToString = readSomeXMLFile(path);*/
+        /**if(templateOrNot.equals("template"))
+            this.xmlToString = readTemplateXMLFile(path);
+        else{
+            this.xmlToString = readSomeXMLFile(path);
+        }*/
     }
 
     /**
@@ -108,9 +117,9 @@ public class XMLReader {
      *
      * IGNORE: just for testing issues.
      */
-
-    /**public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
-     new XMLReader("src/Main/ExampleWriter.xml");
+    /**
+    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+     new XMLReader("src/Main/ExampleWriter.xml", false);
      System.out.println(getXmlToString());
      }*/
 
