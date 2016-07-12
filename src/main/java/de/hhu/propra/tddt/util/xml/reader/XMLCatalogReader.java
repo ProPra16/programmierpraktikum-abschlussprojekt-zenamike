@@ -100,8 +100,9 @@ public class XMLCatalogReader {
         String name = getTextValue(element, "name");
         String description = getTextValue(element, "description");
 
-        ArrayList<String> classes = getListOfTextValues(element, "classes", "class");
-        ArrayList<String> tests = getListOfTextValues(element, "tests","test");
+        String classes = getTextValue(element, "class");
+        String tests = getTextValue(element, "description");
+
 
         //Create a exercise with values read from the xml file
 
