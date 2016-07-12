@@ -15,10 +15,10 @@ public class Exercise {
     String name;
     String description;
 
-    ArrayList<String> classes;
-    ArrayList<String> tests;
+    String classes;
+    String tests;
 
-    public Exercise(String name, String description, ArrayList<String> classes, ArrayList<String> tests){
+    public Exercise(String name, String description, String classes, String tests){
 
         this.name = name;
         this.description = description;
@@ -34,9 +34,9 @@ public class Exercise {
         return description;
     }
 
-    public ArrayList<String> getClasses() { return classes; }
+    public String getClasses() { return classes; }
 
-    public ArrayList<String> getTests() { return tests; }
+    public String getTests() { return tests; }
 
     @Override
     public String toString() {
