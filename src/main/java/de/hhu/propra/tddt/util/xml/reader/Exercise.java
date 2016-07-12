@@ -27,12 +27,16 @@ public class Exercise {
     }
 
     public String getName() {
-        return name;
+                return name;
     }
 
     public String getDescription() {
         return description;
     }
+
+    public ArrayList<String> getClasses() { return classes; }
+
+    public ArrayList<String> getTests() { return tests; }
 
     @Override
     public String toString() {
