@@ -1,0 +1,36 @@
+.root{
+    -fx-background-color: linear-gradient(white,black);
+}
+#downbar{
+    -fx-background-color: linear-gradient(white,grey,dimgrey,black);
+}
+.h-box{
+    -fx-background-color: transparent;
+}
+#Button{
+    -fx-font-weight: bold;
+    -fx-text-fill: darkred;
+    -fx-background-color: linear-gradient(white,black);
+
+}
+#Button:hover{
+    -fx-background-color: linear-gradient(grey,white);
+}
+
+#Label{
+    -fx-font-family: "Impact";
+    -fx-font-size: 40;
+    -fx-fill: #828282;
+}
+
+#LeftArea{
+    -fx-background-color: transparent;
+}
+#RightArea{
+    -fx-background-color: transparent;
+}
+
+#TimePhaseLabel{
+    -fx-font-weight: bold;
+    -fx-text-fill: darkred;
+}
