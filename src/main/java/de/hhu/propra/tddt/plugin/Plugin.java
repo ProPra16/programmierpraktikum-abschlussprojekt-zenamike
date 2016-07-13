@@ -49,4 +49,5 @@ public interface Plugin {
      * are allowed to use.
      **************************************************************************/
     public void setPluginManager(PluginManager pluginManager);
+
 }

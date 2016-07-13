@@ -29,6 +29,8 @@ public class Babysteps implements Plugin {
     private Duration duration = Duration.ofMinutes(3);
     private Timer timer = new Timer();
 
+    private Babysteps(){ }
+
     @Override
     public void start() {
         if (pluginManager == null)
