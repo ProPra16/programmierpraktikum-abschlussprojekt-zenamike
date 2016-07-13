@@ -19,6 +19,8 @@ import jdk.nashorn.internal.objects.annotations.Setter;
  */
 public class InformationCore implements PluginManager {
 
+    private static final InformationCore informationcore = new InformationCore();
+
     private TextManager codeManager = null;
     private TextManager testManager = null;
     private CycleManager cycleManager = null;
@@ -34,6 +36,9 @@ public class InformationCore implements PluginManager {
      * bind the compileManager right here in and change the return type of the
      * method in the interface.
      */
+    public static InformationCore informationCore(){
+        return informationcore;
+    }
 
     @Setter
     public void setCodeManager(TextManager codeManager) {
