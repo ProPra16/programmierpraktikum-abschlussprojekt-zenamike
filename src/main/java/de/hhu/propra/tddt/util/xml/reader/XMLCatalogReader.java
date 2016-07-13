@@ -19,6 +19,10 @@ public class XMLCatalogReader {
     private static Document dom;
     private static ArrayList<Exercise> ExerciseList;
 
+    public XMLCatalogReader(String path){
+        parseXMLFile(path);
+    }
+
 
     /**
      *  Method: parseXMLFile
@@ -26,7 +30,7 @@ public class XMLCatalogReader {
      *  TODO: the path needs to be adjusted to our project
      */
 
-    private static void parseXMLFile(String pathName){
+    private void parseXMLFile(String pathName){
 
         //get the factory
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -59,7 +63,7 @@ public class XMLCatalogReader {
      * TODO: the ExerciseList which is created in this class.
      */
 
-    private static void parseDocument(){
+    private void parseDocument(){
         //get the root element
 
         Element docEle = dom.getDocumentElement();
@@ -92,7 +96,7 @@ public class XMLCatalogReader {
      * @return the current exercise in the exerciseList-file
      */
 
-    private static Exercise getExercise(Element element){
+    private Exercise getExercise(Element element){
 
         //for each <exercise> element get test or String values of
         //name, description, classes, tests
@@ -119,7 +123,7 @@ public class XMLCatalogReader {
      * @return
      */
 
-    private static String getTextValue(Element element, String tagName){
+    private String getTextValue(Element element, String tagName){
         String textValue = null;
         NodeList nodeList = element.getElementsByTagName(tagName);
         if(nodeList != null && nodeList.getLength() > 0){
@@ -139,7 +143,7 @@ public class XMLCatalogReader {
      * @return
      */
 
-    private static ArrayList<String> getListOfTextValues(Element element, String tagName,String subTag){
+    private ArrayList<String> getListOfTextValues(Element element, String tagName,String subTag){
         ArrayList<String> currentList = new ArrayList<>();
         String textValue;
         NodeList nodeList = element.getElementsByTagName(tagName);
@@ -157,7 +161,7 @@ public class XMLCatalogReader {
      * consisting of Exercise-Objects containing the information.
      */
 
-    public static void printList(){
+    public void printList(){
         System.out.println("Anzahl der Aufgaben: '"+ ExerciseList.size()+ "'.");
 
         for(int i = 0; i < ExerciseList.size(); i++){
@@ -170,7 +174,7 @@ public class XMLCatalogReader {
      * Task: returns the ExerciseList containing all the information from the xml-file.
      * @return the ExerciseList
      */
-    public static ArrayList<Exercise> getExerciseList() {
+    public ArrayList<Exercise> getExerciseList() {
         return ExerciseList;
     }
 
