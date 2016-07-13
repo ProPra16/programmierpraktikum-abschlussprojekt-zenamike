@@ -15,13 +15,24 @@ import java.util.ArrayList;
 public class CatalogManager {
 
 
+    static XMLCatalogReader xmlInformation;
+    static ArrayList<Exercise> exerciseCatalog;
+    static ArrayList<String> exerciseNames;
 
-    public static ArrayList<String> useXMLReader(String path){
+    public CatalogManager(String path){
+        useXMLReader(path);
+        readNames();
+    }
 
-        XMLCatalogReader xmlInformation = new XMLCatalogReader(path);
-        ArrayList<Exercise> exerciseCatalog = xmlInformation.getExerciseList();
-        ArrayList<String> exerciseNames = new ArrayList<>();
+    private void useXMLReader(String path){
 
+        xmlInformation = new XMLCatalogReader(path);
+        exerciseCatalog = xmlInformation.getExerciseList();
+        exerciseNames = new ArrayList<>();
+
+    }
+
+    private ArrayList<String> readNames(){
         for(int i = 0; i < exerciseCatalog.size(); i++){
             String current = exerciseCatalog.get(i).getName();
             exerciseNames.add(current);
@@ -29,15 +40,33 @@ public class CatalogManager {
         return exerciseNames;
     }
 
+    // Methode nimmt string entgegen und gleicht alle exercises ab
 
-    /**
-     public static void main(String[] args) {
-     ArrayList<String> bla = useXMLReader("src/Main/ExerciseRoman.xml");
+    public ArrayList<String> getExerciseNames() {
+        return exerciseNames;
+    }
 
-     for(int i = 0; i < bla.size(); i++){
-     String current = bla.get(i);
-     System.out.println(current);
-     }
+    public String compareChoiceWithCatalog(String choice){
+        for(int i = 0; i < exerciseCatalog.size(); i++){
+            if(choice.equals(exerciseCatalog.get(i).getName())){
+                return exerciseCatalog.get(i).getDescription();
+            }
+        }
+        return "";
+    }
 
-     }*/
+
+    /**public static void main(String[] args) {
+        CatalogManager manager = new CatalogManager("src/Main/ExerciseRoman.xml");
+        ArrayList<String> names = manager.getExerciseNames();
+
+
+        for(int i = 0; i < names.size(); i++){
+            String current = names.get(i);
+            System.out.println(current);
+        }
+
+        System.out.println(manager.compareChoiceWithCatalog("FucksGivenCounter"));
+
+    }*/
 }
