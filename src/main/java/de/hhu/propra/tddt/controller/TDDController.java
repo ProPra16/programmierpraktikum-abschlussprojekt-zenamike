@@ -43,49 +43,11 @@ public class TDDController {
     @FXML
     public void handleBackButton(ActionEvent actionEvent) throws IOException {
 
-        if(phase.equals(CycleEnum.TEST))
-        {
-            new StartLoader(StartLoader.getWindow());
 
-        }
-        if(phase.equals(CycleEnum.CODE))
-        {
-
-
-        }
-        if(phase.equals(CycleEnum.REFACTOR))
-        {
-
-
-        }
-        System.out.println("Back");
     }
     @FXML
     public void handleCompileButton(ActionEvent actionEvent) {
-        System.out.println("Compile");
-
-        if(phase.equals(CycleEnum.TEST))
-        {
-            test = testArea.getText();
-            phase = cycle.testingPhase(test,phase);
-
-            if(phase.equals(CycleEnum.CODE)) PhaseLabel.setText("CODE");
-        }
-        if(phase.equals(CycleEnum.CODE))
-        {
-            test = testArea.getText();
-            code = codeArea.getText();
-            phase = cycle.codingPhase(code,test,phase);
-            if(phase.equals(CycleEnum.REFACTOR)) PhaseLabel.setText("REFACTOR");
-
-        }
-        if(phase.equals(CycleEnum.REFACTOR))
-        {
-            test = testArea.getText();
-            code = codeArea.getText();
-            phase = cycle.refactoringPhase(code,test,phase);
-
-        }
+      
 
     }
 
