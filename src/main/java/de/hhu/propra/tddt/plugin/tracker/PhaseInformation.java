@@ -9,6 +9,11 @@ import java.util.List;
  * Created by zeljko On 09.07.2016
  */
 public class PhaseInformation {
+
+    /*
+     * @TODO
+     * This here will need a rework, waiting for Kevin's CompileManager3
+     */
     CycleEnum phase = null;
     Duration duration = null;
     List<String> savedHistroy = null;

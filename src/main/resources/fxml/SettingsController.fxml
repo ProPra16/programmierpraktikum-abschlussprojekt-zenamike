@@ -6,10 +6,10 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhu.propra.tddt.controller.SettingsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/StartCSS.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhu.propra.tddt.controller.SettingsController">
    <children>
-      <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBabyStepsBox" prefHeight="22.0" prefWidth="174.0" text="BabySteps" />
-      <CheckBox layoutX="14.0" layoutY="209.0" mnemonicParsing="false" onAction="#handleTrackingBox" prefHeight="18.0" prefWidth="174.0" text="Tracking" />
+      <CheckBox id="TimePhaseLabel" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBabyStepsBox" prefHeight="22.0" prefWidth="174.0" stylesheets="@../css/StartCSS.css" text="BabySteps" />
+      <CheckBox id="TimePhaseLabel" layoutX="14.0" layoutY="209.0" mnemonicParsing="false" onAction="#handleTrackingBox" prefHeight="18.0" prefWidth="174.0" stylesheets="@../css/StartCSS.css" text="Tracking" />
       <TextArea editable="false" layoutX="272.0" layoutY="14.0" prefHeight="169.0" prefWidth="295.0" text="BabySteps ermöglicht es, die jeweiligen &#10;Phasen des TDD-Zyklusses zeitlich zu&#10;limitieren. Wenn die Zeit (hier: 3 Minuten)&#10;vorüber ist und kein fehlschlagender Test&#10;bzw. funktionierender Code entstanden ist&#10;werden alle Eingaben der aktuellen Phase&#10;gelöscht und die Phase beginnt erneut.&#10;Hinweis: Es gibt kein Zeitlimit für die &#10;Phase &quot;Refactor&quot;.">
          <effect>
             <DropShadow />
@@ -20,7 +20,7 @@
             <DropShadow />
          </effect>
       </TextArea>
-      <Button layoutX="488.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleStartTDDButton" text="Start TDD" />
-      <Button layoutX="14.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
+      <Button id="Button" layoutX="488.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleStartTDDButton" stylesheets="@../css/StartCSS.css" text="Start TDD" />
+      <Button id="Button" layoutX="14.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleBackButton" stylesheets="@../css/StartCSS.css" text="Back" />
    </children>
 </AnchorPane>

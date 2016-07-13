@@ -1,6 +1,6 @@
 package de.hhu.propra.tddt.contentmanager;
 
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import jdk.nashorn.internal.objects.annotations.Getter;
 
 /**
@@ -8,9 +8,7 @@ import jdk.nashorn.internal.objects.annotations.Getter;
  */
 
 /**
- * Class: TextManager
- * <p>
- * Task: Handling the Text which will be pulled from the a Textfield from the
+ * Handling the Text which will be pulled from the a Textfield from the
  * GUI or from a String.
  *
  * @author zeljko
@@ -18,18 +16,21 @@ import jdk.nashorn.internal.objects.annotations.Getter;
  */
 public class TextManager {
 
-    protected TextField textField;
+    protected TextArea textArea;
     protected String string;
     protected String phaseSave;
 
     /**
+<<<<<<< HEAD
+=======
      * Constructor: TextManager
      *
-     * @param textField the textfield from where the text will be pulled
+>>>>>>> 0a8d0575da59ed7d97f94202b5f4f381b26a86ff
+     * @param textArea the textfield from where the text will be pulled
      */
-    public TextManager(final TextField textField) {
-        if (textField == null) throw new IllegalArgumentException();
-        this.textField = textField;
+    public TextManager(final TextArea textArea) {
+        if (textArea == null) throw new IllegalArgumentException();
+        this.textArea = textArea;
         string = null;
     }
 
@@ -37,38 +38,32 @@ public class TextManager {
      * The String from where the text will be taken.
      *
      * @param string
-     *
-     * @deprecated This constructor was only invented to use it for tests.
      */
     public TextManager(final String string) {
         if (string == null) throw new IllegalArgumentException();
         this.string = string;
-        textField = null;
+        textArea = null;
     }
 
     /**
-     * Method: resetText
-     * <p>
-     * Task: Reset the text to the last phase save. It is important to set a
+     * Reset the text to the last phase save. It is important to set a
      * phase save before calling this method, otherwise will this method set the
      * phase save to an empty string.
      */
     public void resetText() {
         if (phaseSave == null) phaseSave = "";
-        if (string == null) textField.setText(phaseSave);
-        if (textField == null) string = phaseSave;
+        if (string == null) textArea.setText(phaseSave);
+        if (textArea == null) string = phaseSave;
     }
 
     @Getter
     public String getText() {
-        if (string == null) return textField.getText();
-        if (textField == null) return string;
+        if (string == null) return textArea.getText();
+        if (textArea == null) return string;
         return null;
     }
 
     /**
-     * Method: updatePhaseSave
-     *
      * Task: Assign the phase save a new value which is not null
      */
     public void updatePhaseSave(String code) {
