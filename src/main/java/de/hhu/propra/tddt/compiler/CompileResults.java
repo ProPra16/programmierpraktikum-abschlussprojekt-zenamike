@@ -4,9 +4,7 @@ import vk.core.api.CompilationUnit;
 import vk.core.api.CompileError;
 import vk.core.api.JavaStringCompiler;
 import vk.core.api.TestFailure;
-
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -27,18 +25,22 @@ public class CompileResults {
     ********************************************************/
 
 
-    LinkedList<String> testResults = new LinkedList<>();
-    LinkedList<String>compileResults = new LinkedList<>();
-    LinkedList<String> compilerErrorList = new LinkedList<>();
-    static String errorMessage;
+    LinkedList<String> testResults;
+    LinkedList<String>compileResults;
+
 
     String failedTests = null;
     String ignoredTests = null;
     String successfulTests = null;
     String testDuration = null;
     String compileDuration = null;
-    String compileMessage = null;
 
+
+    public CompileResults(){
+        testResults = new LinkedList();
+        compileResults = new LinkedList();
+
+    }
 
 
 
@@ -57,22 +59,11 @@ public class CompileResults {
 
 
 
-        protected void setCompileErrors(String compileErrors){
-            compilerErrorList.add(compileErrors);
+        protected void addCompileErrors(String compileErrors){
+            compileResults.add(compileErrors);
         }
 
-        /**
-         * Method: getCompilerErrors
-         * <p>
-         * Task: Method that makes the LinkedList from setCompileErrors accessable
-         *
-         *
-         * @return LinkedList compilerErrorList
-         */
 
-        public LinkedList<String> getCompilerErrors(){
-            return compilerErrorList;
-        }
 
 
 
@@ -121,16 +112,16 @@ public class CompileResults {
          *
          *
          *
-         * @return ArrayList<String> testResults
+         * @return LinkedList<String> testResults
          *              in this order:
-         *                  failedTests
-         *                  ignoredTests
-         *                  successfulTests
-         *                  testDuration
-         *                  testMessage
+         *                  failed tests
+         *                  ignored tests
+         *                  successful tests
+         *                  test duration
+         *                  test fail messages
          */
 
-        public LinkedList<String> getTestResults(){
+        protected LinkedList<String> getTestResults(){
 
             return testResults;
         }
@@ -151,16 +142,10 @@ public class CompileResults {
         protected void setCodeResults(JavaStringCompiler compiler, CompilationUnit compilationUnit){
             Duration compileDurationTime = compiler.getCompilerResult().getCompileDuration();
             compileDuration = Long.toString(compileDurationTime.getSeconds());
-            Collection<CompileError> compileMessages = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnit);
-
-            if (!compileMessages.isEmpty()) {
-                String arr[] = new String[compileMessages.size()];
-                compileMessages.toArray(arr);
-                compileMessage = Arrays.toString(arr);
-            }
-
             compileResults.add(compileDuration);
-            compileResults.add(compileMessage);
+            errorStringInit(compiler, compilationUnit);
+
+
         }
 
         /**
@@ -173,55 +158,35 @@ public class CompileResults {
          *
          * @return LinkedList<String> compileResults
          *          in this order:
-         *                  compileErrors
-         *                  compileDuration
-         *                  compileMessage
+         *                  compile duration
+         *                  compile errors
          */
 
-        public LinkedList<String> getCompileResults(){
+        protected LinkedList<String> getCompileResults(){
             return compileResults;
         }
 
 
-        /**
-         * Method: setCycleError
-         * <p>
-         * Task: Method that decides which error is saved to a String so the GUI can
-         * pop an alarm box
-         *
-         * @param setError tells clearly which errors it's going to be
-         *
-         * @return void
-         */
 
+    /**
+     * Method: errorStringInit
+     * <p>
+     * Task: gets the compile errors and formats them in a readable way
+     *
+     *
+     * @return void
+     */
 
-        public static void setCycleError (int setError){
-
-            switch(setError){
-
-                case 1: errorMessage = "Code is not allowed to compile here";
-                    break;
-                case 2: errorMessage = "You can't change into the same phase again.";
-                    break;
-                case 3: errorMessage = "You shallow not pass since something does not work, check" +
-                        "the following: ";
-                    break;
-                default: errorMessage = null;
-            }
-
-        }
-
-        /**
-         * Method: getCycleError
-         * <p>
-         * Task: Method that just gives the errorMessage String to the GUI
-         *
-         *
-         * @return errorMessage
-         */
-
-        public String getCycleError(){
-            return errorMessage;
+    protected void errorStringInit (JavaStringCompiler compiler, CompilationUnit cu){
+        String errorString = "";
+        for (CompileError compileError :
+                compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(cu)) {
+            errorString = "Line " + compileError.getLineNumber() + ": " + compileError.getMessage() +
+                    ": \n " + compileError.getCodeLineContainingTheError() + "\n" +
+                    compileError.getMessage() + "\n";
+            addCompileErrors(errorString);
         }
 
     }
+}
+
