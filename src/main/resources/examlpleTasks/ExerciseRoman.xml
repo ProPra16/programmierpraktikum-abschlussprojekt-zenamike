@@ -1,21 +1,51 @@
 <exercises>
-<exercise>
-  <name>Roman Numbers</name>
-<description>Converts Arabic Numbers into Roman Numbers.</description> 
-<classes>
-          public class RomanNumberConverter {
-        }
+    <exercise>
+        <name>Roman Numbers</name>
+        <description>Converts Arabic Numbers into Roman Numbers.</description>
+        <classes>
+            <class>
+                public class RomanNumberConverter {
+                }
+            </class>
+        </classes>
+        <tests>
+            <test>
 
-    </classes>
-<tests>
-import static org.junit.Assert.*;
-import org.junit.Test;
-public class RomanNumbersTest {
-   @Test
-   public void testSomething() {
-} }
-       
+                import static org.junit.Assert.*;
+                import org.junit.Test;
+                public class RomanNumbersTest {
+                @Test
+                public void testSomething() {
+                } }
+            </test>
 
-</tests>
-</exercise>
+        </tests>
+    </exercise>
+    <exercise>
+        <name>FucksGivenCounter</name>
+        <description>In the following task, we want you to write a program, that
+            is able to count just how many fucks i give.
+            It is more of a rhetorical questions, since i really really really
+            don't give any, but try you best.
+
+            Good luck.
+        </description>
+        <classes>
+            <class>
+                public class FucksGivenCounter {
+                }
+            </class>
+        </classes>
+        <tests>
+            <test>
+                import static org.junit.Assert.*;
+                import org.junit.Test;
+                public class FucksGivenCounter {
+                @Test
+                public void testSomething() {
+                } }
+            </test>
+        </tests>
+
+    </exercise>
 </exercises>
