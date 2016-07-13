@@ -28,23 +28,44 @@ public class SettingsController {
     @FXML private Button TDDCycle;
 
     private static boolean Babybool = false;
-    private static String Babysteps = "";
+    private static String Babysteps = "B-out";
     private static boolean Trackbool= false;
-    private static String Track  = "Tracking";
+    private static String Track  = "T-out";
 
 
     @FXML
     public void handleBabyStepsBox(ActionEvent actionEvent) {
-        System.out.println("BabySteps");
-        if(Babybool == false) {Babybool = true; Babysteps = "Babysteps";
-            System.out.println(getBabySteps());}
-        if(Babybool == true ) {Babybool = false; Babysteps = ""        ;}
+        if(Babybool == false) {Babybool = true; Babysteps = "Babysteps-on";
+            System.out.println(getBabySteps());
+            /**
+             * TODO: give the brain the information that Babysteps is on;
+             */
+            return;
+        }
+        if(Babybool == true ) {Babybool = false; Babysteps = "B-off";
+            System.out.println(getBabySteps());
+            /**
+             * TODO: give the brain the information that Babysteps is off;
+             */
+            return;
+        }
     }
     @FXML
     public void handleTrackingBox(ActionEvent actionEvent) {
-        System.out.println("Tracking");
-        if(Trackbool == false) {Trackbool = true; Track = "Tracking";}
-        if(Trackbool == true ) {Trackbool = false;Track = ""        ;}
+        if(Trackbool == false) {Trackbool = true; Track = "Tracking-on";
+            System.out.println(getTracking());
+            /**
+             * TODO: give the brain the information that Tracking is on;
+             */
+            return;
+        }
+        if(Trackbool == true ) {Trackbool = false;Track = "T-off";
+            System.out.println(getTracking());
+            /**
+             * TODO: give the brain the information that Tracking is off;
+             */
+            return;
+        }
     }
     @FXML
     public void handleBackButton(ActionEvent actionEvent) throws IOException {

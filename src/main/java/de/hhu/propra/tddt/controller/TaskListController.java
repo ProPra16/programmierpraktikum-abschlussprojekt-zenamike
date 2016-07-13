@@ -3,14 +3,16 @@ package de.hhu.propra.tddt.controller;
 import de.hhu.propra.tddt.loader.StartLoader;
 import de.hhu.propra.tddt.loader.TDDLoader;
 import de.hhu.propra.tddt.loader.TaskListLoader;
-import de.hhu.propra.tddt.util.xml.reader.Exercise;
+import de.hhu.propra.tddt.util.manager.CatalogManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 /**
@@ -23,14 +25,27 @@ import java.io.IOException;
 
 public class TaskListController {
 
+    @FXML public Button Go;
     @FXML private Button Back;
     @FXML private Button TDDCycle;
     @FXML private ChoiceBox<String> Tasks;
     @FXML private TextArea Discription;
+    @FXML private TextField pathField;
+    String path =  null;
 
-    @FXML Exercise task;
 
+    /**
+     * TODO: Handle the Task and TextArea and
+     * TODO: make a Listener between them
+     * TODO: give the matching Code and Test to TDDController
+     * @param actionEvent
+     * @throws IOException
+     */
 
+    public String getPath(){
+        path = pathField.toString();
+        return path;
+    }
 
     @FXML
     public void handleBackButton(ActionEvent actionEvent) throws IOException {
@@ -41,6 +56,19 @@ public class TaskListController {
     public void handleStartTDDButton(ActionEvent actionEvent) throws IOException {
         new TDDLoader(TaskListLoader.getWindow());
         System.out.println("Start");
+    }
+    @FXML
+    public void handleGoButton(ActionEvent actionEvent) throws IOException{
+        path = getPath();
+        CatalogManager manager = new CatalogManager(path);
+        ArrayList<String> names = manager.getExerciseNames();
+
+        for(int i = 0; i < names.size(); i++){
+            String current = names.get(i);
+            Tasks.getItems().add(current);
+        }
+
+
     }
 }
 

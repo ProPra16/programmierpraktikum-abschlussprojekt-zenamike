@@ -47,7 +47,7 @@ public class MainControlClass {
         start = startLoader.scene();
 
         SettingsLoader settingsLoader = new SettingsLoader(window);
-        settingsController = (SettingsController) settingsLoader.controller();
+        settingsController = (SettingsController)w settingsLoader.controller();
         setting = settingsLoader.scene();
 
         TaskListLoader taskListLoader = new TaskListLoader(window);
@@ -62,4 +62,7 @@ public class MainControlClass {
         this.window.setResizable(false);
         this.window.show();
     }
+
+
+
 }

@@ -27,8 +27,7 @@ public class StartController{
 
 
     @FXML
-    public void handleSettingsButton(ActionEvent actionEvent)
-            throws IOException {
+    public void handleSettingsButton(ActionEvent actionEvent) throws IOException {
         new SettingsLoader(StartLoader.getWindow());
         System.out.println("Settings");
     }

@@ -5,11 +5,14 @@ import de.hhu.propra.tddt.cycle.CycleEnum;
 import de.hhu.propra.tddt.loader.StartLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Created by MichaelLiske on 09.07.16
@@ -24,7 +27,7 @@ import java.io.IOException;
  *  TODO: adding code and test code, changing the compile and back button
  *  TODO: depending on phase
  */
-public class TDDController {
+public class TDDController implements Initializable {
 
     @FXML private Button Back;
     @FXML private Button Compile;
@@ -33,12 +36,13 @@ public class TDDController {
     private String code;
     private String test;
 
+
     @FXML private CycleEnum phase = CycleEnum.TEST;
-    Cycle cycle = new Cycle();
     @FXML private Label PhaseLabel;
     @FXML private Label Time;
     @FXML private TextArea Test;
     @FXML private TextArea Code;
+    Cycle cycle = new Cycle();
 
     @FXML
     public void handleBackButton(ActionEvent actionEvent) throws IOException {
@@ -66,24 +70,44 @@ public class TDDController {
 
         if(phase.equals(CycleEnum.TEST))
         {
-            test = testArea.getText();
-            phase = cycle.testingPhase(test,phase);
-
-            if(phase.equals(CycleEnum.CODE)) PhaseLabel.setText("CODE");
+            /*
+            phase = InformationCore.informationCore.getCyleManager.getCurrentPhase();
+            InformationCore.informationcore.setCodeManager();
+            */
+            if(phase.equals(CycleEnum.CODE)) {
+                PhaseLabel.setText("CODE");
+                codeArea.setEditable(true);
+                testArea.setEditable(false);
+            }
+            return;
         }
         if(phase.equals(CycleEnum.CODE))
         {
             test = testArea.getText();
             code = codeArea.getText();
-            phase = cycle.codingPhase(code,test,phase);
-            if(phase.equals(CycleEnum.REFACTOR)) PhaseLabel.setText("REFACTOR");
 
+            phase = cycle.codingPhase(code,test,phase);
+
+            if(phase.equals(CycleEnum.REFACTOR)) {
+                PhaseLabel.setText("REFACTOR");
+                testArea.setEditable(true);
+                codeArea.setEditable(true);
+            }
+            return;
         }
         if(phase.equals(CycleEnum.REFACTOR))
         {
             test = testArea.getText();
             code = codeArea.getText();
+
             phase = cycle.refactoringPhase(code,test,phase);
+
+            if(phase.equals(CycleEnum.TEST)) {
+                PhaseLabel.setText("TEST");
+                testArea.setEditable(true);
+                codeArea.setEditable(true);
+            }
+            return;
 
         }
 
@@ -94,5 +118,13 @@ public class TDDController {
     }
 
     public TextArea getTestArea() { return testArea; }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        /*
+        InformationCore.informationCore().setCodeManager(codeArea);
+        InformationCore.informationCore().setTestManager(testArea);
+        */
+    }
 }
 
