@@ -16,13 +16,13 @@ import java.util.ArrayList;
  */
 public class XMLCatalogReader {
 
-    private static Document dom;
-    private static ArrayList<Exercise> ExerciseList;
+
+    static private  Document dom;
+    static private  ArrayList<Exercise> ExerciseList;
 
     public XMLCatalogReader(String path){
         parseXMLFile(path);
     }
-
 
     /**
      *  Method: parseXMLFile
@@ -105,8 +105,7 @@ public class XMLCatalogReader {
         String description = getTextValue(element, "description");
 
         String classes = getTextValue(element, "class");
-        String tests = getTextValue(element, "description");
-
+        String tests = getTextValue(element,"test");
 
         //Create a exercise with values read from the xml file
 
@@ -161,7 +160,7 @@ public class XMLCatalogReader {
      * consisting of Exercise-Objects containing the information.
      */
 
-    public void printList(){
+    public static void printList(){
         System.out.println("Anzahl der Aufgaben: '"+ ExerciseList.size()+ "'.");
 
         for(int i = 0; i < ExerciseList.size(); i++){
@@ -174,7 +173,7 @@ public class XMLCatalogReader {
      * Task: returns the ExerciseList containing all the information from the xml-file.
      * @return the ExerciseList
      */
-    public ArrayList<Exercise> getExerciseList() {
+    public static ArrayList<Exercise> getExerciseList() {
         return ExerciseList;
     }
 
@@ -182,11 +181,14 @@ public class XMLCatalogReader {
      *
      * IGNORE: just for testing issues.
      */
-    /*public static void main(String[] args){
-        parseXMLFile("src/Main/ExerciseRoman.xml");
-        printList();
+    /**
+     public static void main(String[] args){
+     XMLCatalogReader bla = new XMLCatalogReader();
+     bla.parseXMLFile("src/Main/ExerciseRoman.xml");
+     printList();
 
-    }*/
+     }
+     */
 }
 
 
