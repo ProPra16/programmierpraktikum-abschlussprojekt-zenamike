@@ -12,11 +12,11 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/StartCSS.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhu.propra.tddt.controller.TaskListController">
    <children>
       <HBox alignment="CENTER_RIGHT" layoutY="354.0" prefHeight="0.0" prefWidth="0.0" />
-      <Button id="Button" layoutX="507.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleStartTDDButton" text="Start TDD" />
-      <Button id="Button" layoutX="14.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
+      <Button id="Button" fx:id="TDDCycle" layoutX="507.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleStartTDDButton" text="Start TDD" />
+      <Button id="Button" fx:id="Back" layoutX="14.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
       <Separator layoutY="350.0" prefHeight="8.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="350.0" />
-      <ChoiceBox id="Button" layoutX="348.0" layoutY="359.0" prefHeight="27.0" prefWidth="147.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="348.0" AnchorPane.rightAnchor="105.0" AnchorPane.topAnchor="359.0" />
-      <TextArea editable="false" layoutX="7.0" layoutY="6.0" prefHeight="353.0" prefWidth="600.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ChoiceBox id="Button" fx:id="Tasks" layoutX="348.0" layoutY="359.0" prefHeight="27.0" prefWidth="147.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="348.0" AnchorPane.rightAnchor="105.0" AnchorPane.topAnchor="359.0" />
+      <TextArea editable="false" fx:id="Discription" layoutX="7.0" layoutY="6.0" prefHeight="353.0" prefWidth="600.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Label id="TimePhaseLabel" layoutX="71.0" layoutY="359.0" prefHeight="27.0" prefWidth="41.0" text="Path :" />
       <TextField fx:id="pathField" layoutX="119.0" layoutY="359.0" />
       <Button id="Button" fx:id="handleGoButton" layoutX="300.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleGoButton" prefHeight="27.0" prefWidth="41.0" text="Go" />

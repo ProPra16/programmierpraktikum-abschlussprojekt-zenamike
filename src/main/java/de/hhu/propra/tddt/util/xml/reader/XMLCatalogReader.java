@@ -8,6 +8,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -37,11 +38,14 @@ public class XMLCatalogReader {
         ExerciseList = new ArrayList<>();
 
         try {
+            System.out.println("CheckPoint XMLCatalogReader");
+
 
             //Using factory get an instance of document builder
             DocumentBuilder db = dbf.newDocumentBuilder();
 
             //parse using builder to get DOM representation of the XML file
+            //File catalog = new File(pathName);
             dom = db.parse(pathName);
             parseDocument();
 

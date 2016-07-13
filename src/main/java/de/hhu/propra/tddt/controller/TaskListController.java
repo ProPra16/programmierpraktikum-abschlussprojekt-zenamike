@@ -31,19 +31,30 @@ public class TaskListController {
     @FXML private ChoiceBox<String> Tasks;
     @FXML private TextArea Discription;
     @FXML private TextField pathField;
-    String path =  null;
+    @FXML String path =  "";
+    static String classCode;
+    static String testCode;
+    CatalogManager manager;
 
+    public static String getClassCode() {
+        return classCode;
+    }
+
+    public static String getTestCode() {
+        return testCode;
+    }
 
     /**
      * TODO: Handle the Task and TextArea and
      * TODO: make a Listener between them
      * TODO: give the matching Code and Test to TDDController
-     * @param actionEvent
+     * @param
      * @throws IOException
      */
 
+    @FXML
     public String getPath(){
-        path = pathField.toString();
+        path = pathField.getText();
         return path;
     }
 
@@ -55,12 +66,23 @@ public class TaskListController {
     @FXML
     public void handleStartTDDButton(ActionEvent actionEvent) throws IOException {
         new TDDLoader(TaskListLoader.getWindow());
+        classCode = manager.getCurrentChosenOne().getClasses();
+        testCode = manager.getCurrentChosenOne().getTests();
+        System.out.println(classCode);
+        System.out.println(testCode);
+
+
+            /*TDDController controller = new TDDController();
+            controller.setCode(classCode);
+            controller.setTest(testCode);
+*/
         System.out.println("Start");
     }
     @FXML
     public void handleGoButton(ActionEvent actionEvent) throws IOException{
         path = getPath();
-        CatalogManager manager = new CatalogManager(path);
+        System.out.println(path);
+        manager = new CatalogManager(path);
         ArrayList<String> names = manager.getExerciseNames();
 
         for(int i = 0; i < names.size(); i++){
@@ -68,7 +90,10 @@ public class TaskListController {
             Tasks.getItems().add(current);
         }
 
-
+        Tasks.getSelectionModel().selectedItemProperty().addListener((observer,oldValue,newValue) ->{
+            String description = manager.compareChoiceWithCatalog(newValue);
+            Discription.setText(description);
+        });
     }
 }
 

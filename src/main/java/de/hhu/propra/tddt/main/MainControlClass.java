@@ -47,7 +47,7 @@ public class MainControlClass {
         start = startLoader.scene();
 
         SettingsLoader settingsLoader = new SettingsLoader(window);
-        settingsController = (SettingsController)w settingsLoader.controller();
+        settingsController = (SettingsController) settingsLoader.controller();
         setting = settingsLoader.scene();
 
         TaskListLoader taskListLoader = new TaskListLoader(window);

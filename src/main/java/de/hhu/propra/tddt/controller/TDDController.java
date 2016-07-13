@@ -29,19 +29,33 @@ import java.util.ResourceBundle;
  */
 public class TDDController implements Initializable {
 
+    private String code = TaskListController.classCode;
+    private String test = TaskListController.testCode;
+
     @FXML private Button Back;
     @FXML private Button Compile;
-    @FXML private TextArea codeArea;
-    @FXML private TextArea testArea;
-    private String code;
-    private String test;
+    @FXML private TextArea codeArea = new TextArea(code);
+    @FXML private TextArea testArea = new TextArea(test);
+
+
+    /*public  void setCode(String codeInput) {
+        code = codeInput;
+        System.out.println(code + " Setter für Code");
+        codeArea = new TextArea(code);
+    }
+
+    public  void setTest(String testInput) {
+        test = testInput;
+        System.out.println(test + " Setter für Tests ");
+        testArea = new TextArea(test);
+    }*/
+
 
 
     @FXML private CycleEnum phase = CycleEnum.TEST;
     @FXML private Label PhaseLabel;
     @FXML private Label Time;
-    @FXML private TextArea Test;
-    @FXML private TextArea Code;
+
     Cycle cycle = new Cycle();
 
     @FXML
@@ -113,11 +127,7 @@ public class TDDController implements Initializable {
 
     }
 
-    public TextArea getCodeArea(){
-        return codeArea;
-    }
 
-    public TextArea getTestArea() { return testArea; }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

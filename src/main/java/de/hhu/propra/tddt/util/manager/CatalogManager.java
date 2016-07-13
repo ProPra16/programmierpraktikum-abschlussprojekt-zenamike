@@ -18,6 +18,7 @@ public class CatalogManager {
     static XMLCatalogReader xmlInformation;
     static ArrayList<Exercise> exerciseCatalog;
     static ArrayList<String> exerciseNames;
+    static Exercise currentChosenOne;
 
     public CatalogManager(String path){
         useXMLReader(path);
@@ -25,6 +26,8 @@ public class CatalogManager {
     }
 
     private void useXMLReader(String path){
+
+        System.out.println("CheckPoint CatalogManager");
 
         xmlInformation = new XMLCatalogReader(path);
         exerciseCatalog = xmlInformation.getExerciseList();
@@ -49,10 +52,15 @@ public class CatalogManager {
     public String compareChoiceWithCatalog(String choice){
         for(int i = 0; i < exerciseCatalog.size(); i++){
             if(choice.equals(exerciseCatalog.get(i).getName())){
+                this.currentChosenOne = exerciseCatalog.get(i);
                 return exerciseCatalog.get(i).getDescription();
             }
         }
         return "";
+    }
+
+    public static Exercise getCurrentChosenOne() {
+        return currentChosenOne;
     }
 
 
