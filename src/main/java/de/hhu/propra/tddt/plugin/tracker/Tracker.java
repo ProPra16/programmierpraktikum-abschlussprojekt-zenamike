@@ -2,13 +2,21 @@ package de.hhu.propra.tddt.plugin.tracker;
 
 import de.hhu.propra.tddt.plugin.Plugin;
 import de.hhu.propra.tddt.plugin.PluginManager;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * Created by zeljko On 04.07.2016
  */
-public class Tracker implements Plugin{
+public class Tracker extends Application implements Plugin {
 
     PluginManager pluginManager;
+    Scene scene;
+    TrackerController trackerController;
 
     @Override
     public void start() {
@@ -16,8 +24,23 @@ public class Tracker implements Plugin{
     }
 
     @Override
+    public void start(Stage stage) throws Exception {
+        stage.setScene(scene);
+        trackerController.setDurationLabel();
+        trackerController.setErrorsFromList();
+        stage.show();
+    }
+
+    @Override
     public void stop() {
-        //@TODO finish that
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Tracker.fxml"));
+        try {
+            scene = new Scene(fxmlLoader.load());
+            trackerController = fxmlLoader.getController();
+            main(new String[1]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -26,10 +49,8 @@ public class Tracker implements Plugin{
         this.pluginManager = pluginManager;
     }
 
-    /*
-     * @TODO
-     * Build a wall and finish this method
-     * Still waiting for some test for the xml reader and writer to be sure they work :)
-     * FIRE EXCEPTIONS!!
-     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+
 }
