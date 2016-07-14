@@ -30,4 +30,9 @@ public class PluginLoader {
         if(isBabystepActivated == true) babystep.start();
         if(isTrackerActivated == true) tracker.start();
     }
+    
+    public void stopAllPlugins(){
+        if(isBabystepActivated == true) babystep.stop();
+        if(isTrackerActivated == true) tracker.stop();
+    }
 }
