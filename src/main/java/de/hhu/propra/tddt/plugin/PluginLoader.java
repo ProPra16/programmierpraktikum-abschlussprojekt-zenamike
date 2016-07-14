@@ -1,5 +1,6 @@
 package de.hhu.propra.tddt.plugin;
 
+import de.hhu.propra.tddt.informationcore.InformationCore;
 import de.hhu.propra.tddt.plugin.babystep.Babysteps;
 import de.hhu.propra.tddt.plugin.tracker.Tracker;
 
@@ -18,6 +19,12 @@ public class PluginLoader {
     private static boolean isBabystepActivated = false;
     private static boolean isTrackerActivated = false;
 
+
+    static {
+        babystep.setPluginManager(InformationCore.informationCore());
+        tracker.setPluginManager(InformationCore.informationCore());
+    }
+
     public void activateBabystep(boolean activate){
         isBabystepActivated = activate;
     }
@@ -30,7 +37,7 @@ public class PluginLoader {
         if(isBabystepActivated == true) babystep.start();
         if(isTrackerActivated == true) tracker.start();
     }
-    
+
     public void stopAllPlugins(){
         if(isBabystepActivated == true) babystep.stop();
         if(isTrackerActivated == true) tracker.stop();
