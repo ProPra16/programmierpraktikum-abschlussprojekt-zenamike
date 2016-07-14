@@ -35,9 +35,7 @@ public class CycleManager {
      *
      * @return currentPhase of the cycle
      *************************************************************************/
-
     public CycleEnum getCurrentPhase() {
-
         return cycle.getCurrentPhase();
     }
 
