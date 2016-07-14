@@ -46,7 +46,7 @@ public class CompileResults {
 
 
         /**
-         * Method: setCompileErrors
+         * Method: addCompileErrors
          * <p>
          * Task: Method that saves the compileerrors in one convinent linked list
          *
@@ -57,7 +57,7 @@ public class CompileResults {
 
 
 
-        protected void setCompileErrors(String compileErrors){
+        protected void addCompileErrors(String compileErrors){
             compilerErrorList.add(compileErrors);
         }
 
@@ -195,21 +195,44 @@ public class CompileResults {
          */
 
 
-        public static void setCycleError (int setError){
+        public static void setCycleError (int setError) {
 
-            switch(setError){
+            switch (setError) {
 
-                case 1: errorMessage = "Code is not allowed to compile here";
+                case 1:
+                    errorMessage = "Code is not allowed to compile here";
                     break;
-                case 2: errorMessage = "You can't change into the same phase again.";
+                case 2:
+                    errorMessage = "You can't change into the same phase again.";
                     break;
-                case 3: errorMessage = "You shallow not pass since something does not work, check" +
-                        "the following: ";
+                case 3:
+                    errorMessage = "You shallow not pass since something does not work, check" +
+                            "the following: ";
                     break;
-                default: errorMessage = null;
+                default:
+                    errorMessage = null;
             }
-
         }
+
+    /****
+     * Method: errorStringInit
+     * <p>
+     * Task: gets the compile errors and formats them in a readable way
+     *
+     *
+     * @return void
+     */
+
+    protected void errorStringInit (JavaStringCompiler compiler, CompilationUnit cu) {
+        String errorString = "";
+        for (CompileError compileError :
+                compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(cu)) {
+            errorString = "Line " + compileError.getLineNumber() + ": " + compileError.getMessage() +
+                    ": \n " + compileError.getCodeLineContainingTheError() + "\n" +
+                    compileError.getMessage() + "\n";
+            addCompileErrors(errorString);
+        }
+    }
 
         /**
          * Method: getCycleError

@@ -7,6 +7,25 @@ import de.hhu.propra.tddt.cycle.CycleEnum;
  */
 public class CycleManager {
 
+<<<<<<< HEAD
+=======
+
+    Cycle cycle = new Cycle();
+
+
+    public CycleManager(){
+        this.cycle = new Cycle();
+    }
+
+    /*************************************************************************
+     * Method: getCurrentPhase
+     * <p>
+     * Calls the current Phase from the cycle class
+     *
+     * @return currentPhase of the cycle
+     *************************************************************************/
+
+>>>>>>> 0072d4deb703d115e87998d594179a94f8b1ce03
     public CycleEnum getCurrentPhase() {
         // TODO: 09.07.16 When the GUI is implemented, fill this function
         //THIS IS ONLY A PLACEHOLDER FOR NOW

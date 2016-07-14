@@ -26,8 +26,13 @@ public class Cycle {
     CompileResults compResults = new CompileResults();
 
 
+<<<<<<< HEAD
     /**
      * Method: testPhase
+=======
+    /***************************************************************************
+     * Method: add phase
+>>>>>>> 0072d4deb703d115e87998d594179a94f8b1ce03
      * <p>
      * Task: Method that takes the testcode and the normal code and gives it with the
      * currentphase to the compilerManager in the refactor phase.
@@ -37,6 +42,7 @@ public class Cycle {
      *                     the user is currently working. More a failsafe check for the backend
      *                     processes than for the user.
      *
+<<<<<<< HEAD
      * @return returns the current phase in which the cycle is at the moment
      */
 
@@ -54,6 +60,12 @@ public class Cycle {
         }
         return currentPhase;
 
+=======
+     * @return void
+     *************************************************************************/
+    public void addPhase(CycleEnum cycleEnum){
+        phaseList.add(cycleEnum);
+>>>>>>> 0072d4deb703d115e87998d594179a94f8b1ce03
     }
 
 
@@ -113,8 +125,13 @@ public class Cycle {
     }
 
 
+<<<<<<< HEAD
     /**
      * Method: refactoringPhase
+=======
+    /*************************************************************************
+     * Method: enterNextPhase
+>>>>>>> 0072d4deb703d115e87998d594179a94f8b1ce03
      * <p>
      * Task: Method that takes the testcode and the normal code and gives it with the
      * currentphase to the compilerManager in the refactor phase.
@@ -125,6 +142,7 @@ public class Cycle {
      *                     the user is currently working. More a failsafe check for the backend
      *                     processes than for the user.
      *
+<<<<<<< HEAD
      * @return returns the current phase in which the cycle is at the moment
      */
 
@@ -142,6 +160,13 @@ public class Cycle {
         }
 
         return currentPhase;
+=======
+     * @return void
+     *************************************************************************/
+    public void enterNextPhase(){
+        currentPhaseAsInt++;
+        currentPhaseAsInt = currentPhaseAsInt % phaseList.size();
+>>>>>>> 0072d4deb703d115e87998d594179a94f8b1ce03
     }
 
 

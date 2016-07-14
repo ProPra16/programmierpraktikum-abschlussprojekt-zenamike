@@ -27,7 +27,7 @@ public class Compiler {
 
     }
 
-    /**
+    /***
      * Method: compileTest
      * <p>
      * Task: Method that takes the information from the CompileManager and compiles

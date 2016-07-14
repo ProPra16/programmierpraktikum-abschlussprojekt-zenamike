@@ -129,7 +129,6 @@ public class CompilerManager {
     }
 
 
-
     /**
      * Method: compileRefactor
      * <p>
