@@ -27,7 +27,7 @@ public class InformationCore implements PluginManager {
     private SettingsManager settingsManager = null;
     private Object compileManager = null;
 
-    private InformationCore(){
+    protected InformationCore(){
         //no constructor for you
     }
 
@@ -43,33 +43,28 @@ public class InformationCore implements PluginManager {
 
     @Setter
     public void setCodeManager(TextManager codeManager) {
-        if (this.codeManager != null) throw new IllegalStateException();
-        if (this.codeManager == null) this.codeManager = codeManager;
+        this.codeManager = codeManager;
     }
 
     @Setter
     public void setCompileManager(Object compileManager) {
-        if (this.compileManager != null) throw new IllegalStateException();
-        if (this.compileManager == null) this.compileManager = compileManager;
+        this.compileManager = compileManager;
 
     }
 
     @Setter
     public void setCycleManager(CycleManager cycleManager) {
-        if (this.cycleManager != null) throw new IllegalStateException();
-        if (this.cycleManager == null) this.cycleManager = cycleManager;
+        this.cycleManager = cycleManager;
     }
 
     @Setter
     public void setSettingsManager(SettingsManager settingsManager) {
-        if (this.settingsManager != null) throw new IllegalStateException();
-        if (this.settingsManager == null) this.settingsManager = settingsManager;
+        this.settingsManager = settingsManager;
     }
 
     @Setter
     public void setTestManager(TextManager testManager) {
-        if(this.testManager != null) throw new IllegalStateException();
-        if(this.testManager == null) this.testManager = testManager;
+        this.testManager = testManager;
     }
 
     @Override

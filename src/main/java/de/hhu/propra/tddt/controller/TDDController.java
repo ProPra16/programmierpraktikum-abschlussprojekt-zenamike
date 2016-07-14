@@ -100,7 +100,7 @@ public class TDDController implements Initializable {
             test = testArea.getText();
             code = codeArea.getText();
 
-            phase = cycle.codingPhase(code,test,phase);
+            //phase = cycle.codingPhase(code,test,phase);
 
             if(phase.equals(CycleEnum.REFACTOR)) {
                 PhaseLabel.setText("REFACTOR");
@@ -114,7 +114,7 @@ public class TDDController implements Initializable {
             test = testArea.getText();
             code = codeArea.getText();
 
-            phase = cycle.refactoringPhase(code,test,phase);
+            //phase = cycle.refactoringPhase(code,test,phase);
 
             if(phase.equals(CycleEnum.TEST)) {
                 PhaseLabel.setText("TEST");

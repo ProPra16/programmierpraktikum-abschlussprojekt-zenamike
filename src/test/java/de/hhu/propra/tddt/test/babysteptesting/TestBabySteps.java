@@ -12,6 +12,8 @@ import de.hhu.propra.tddt.settings.SettingsManager;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.rmi.CORBA.Stub;
+import javax.sound.midi.MidiDevice;
 import java.time.Duration;
 
 /**
@@ -26,8 +28,8 @@ public class TestBabySteps {
 
     @Test
     public void testApplySettings(){
-        PluginManager pluginManager = new StubInformationCore();
-        ((StubInformationCore) pluginManager).setSettingsManager(new StubSettingsManager2Seconds());
+        InformationCore pluginManager = StubInformationCore.informationCore();
+        ((InformationCore) pluginManager).setSettingsManager(new StubSettingsManager2Seconds());
         StubAccessDurationBabysteps babysteps = new StubAccessDurationBabysteps();
         babysteps.setPluginManager(pluginManager);
         babysteps.start();
@@ -45,8 +47,8 @@ public class TestBabySteps {
     public void testTextReset() throws InterruptedException {
 
         //Initializing the StubInformationCore as an PluginManager and setting the one special value
-        PluginManager pluginManager = new StubInformationCore();
-        ((StubInformationCore) pluginManager).setSettingsManager(new StubSettingsManager2Seconds());
+        InformationCore pluginManager = StubInformationCore.informationCore();
+        ((InformationCore) pluginManager).setSettingsManager(new StubSettingsManager2Seconds());
 
         Babysteps babysteps = new Babysteps();
         babysteps.setPluginManager(pluginManager);
@@ -63,8 +65,8 @@ public class TestBabySteps {
     @Test
     public void testNotTextReset() {
 
-        PluginManager pluginManager = new StubInformationCore();
-        ((StubInformationCore) pluginManager).setSettingsManager(new SettingsManager());
+        InformationCore pluginManager = StubInformationCore.informationCore();
+        ((InformationCore) pluginManager).setSettingsManager(new SettingsManager());
 
         //Initializing and starting babysteps
         Babysteps babysteps = new Babysteps();
@@ -90,10 +92,17 @@ class StubCycleManagerCycleCODE extends CycleManager {
 }
 
 class StubInformationCore extends InformationCore {
-    public StubInformationCore() {
-        super.setCodeManager(new TextManager("hello"));
-        super.getCodeManager().updatePhaseSave("hel");
-        super.setCycleManager(new StubCycleManagerCycleCODE());
+    private static InformationCore informationCore = InformationCore.informationCore();
+
+    private StubInformationCore() {
+        super();
+    }
+
+    public static InformationCore informationCore(){
+        informationCore.setCodeManager(new TextManager("hello"));
+        informationCore.getCodeManager().updatePhaseSave("hel");
+        informationCore.setCycleManager(new StubCycleManagerCycleCODE());
+        return informationCore;
     }
 }
 
