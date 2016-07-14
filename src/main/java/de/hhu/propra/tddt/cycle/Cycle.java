@@ -5,177 +5,77 @@ package de.hhu.propra.tddt.cycle;
  */
 
 
-import de.hhu.propra.tddt.compiler.CompileResults;
-import de.hhu.propra.tddt.compiler.CompilerManager;
-
+import java.util.LinkedList;
 
 
 /*********************************************************
  * Class: Cycle
  * <p>
- * Task: Class handling the other class objects. The whole process should happen
- * here. Probably needs additional help functions The javaFX magics gonna happen
- * here (responding to the gui)
+ * Task: Class handling the cycle. The cycle is initialized with
+ * a linked list.
  *
  * @author Kevin
+ * @version the current version is changed in order
+ * to work with the information core
  ********************************************************/
+
 public class Cycle {
-
-    CycleEnum phase = CycleEnum.TEST;
-    CompilerManager compManager = new CompilerManager();
-    CompileResults compResults = new CompileResults();
+    LinkedList<CycleEnum> phaseList = new LinkedList<>();
+    int currentPhaseAsInt = 0;
 
 
-<<<<<<< HEAD
-    /**
-     * Method: testPhase
-=======
+
     /***************************************************************************
      * Method: add phase
->>>>>>> 0072d4deb703d115e87998d594179a94f8b1ce03
      * <p>
-     * Task: Method that takes the testcode and the normal code and gives it with the
-     * currentphase to the compilerManager in the refactor phase.
+     * adds a new cycleenum to the list
      *
-     * @param testCode String testCode is the whole test the user typed into the textbox
-     * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
-     *                     the user is currently working. More a failsafe check for the backend
-     *                     processes than for the user.
+     * @param cycleEnum the list is filled with enums.
      *
-<<<<<<< HEAD
-     * @return returns the current phase in which the cycle is at the moment
-     */
-
-    public CycleEnum testingPhase(String testCode, CycleEnum currentPhase){
-        try{
-        if (currentPhase.equals(CycleEnum.TEST)) {
-
-            currentPhase = compManager.compileTest(testCode,currentPhase);
-
-        } else {
-            throw new IllegalStateException("Wrong function call");
-
-        }}catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return currentPhase;
-
-=======
      * @return void
      *************************************************************************/
     public void addPhase(CycleEnum cycleEnum){
         phaseList.add(cycleEnum);
->>>>>>> 0072d4deb703d115e87998d594179a94f8b1ce03
     }
 
-
-    /**
-     * Method: resetPhase
+    /**************************************************************************
+     * Method: numberOfPhases
      * <p>
-     * Task: Method that checks if the user is in the right phase to reset their code.
-     * If not they'll get notified.
+     * returns the size of the linked list thus giving the number of the initiliazed
+     * cycles phases
      *
      *
-     * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
-     *                     the user is currently working.
-     */
+     * @return currentPhase of the cycle
+     **************************************************************************/
 
-    public CycleEnum resetPhase(CycleEnum currentPhase){
-        if (currentPhase.equals(CycleEnum.REFACTOR)){
-            throw new IllegalStateException("Only allowed in the Phase CODE");
-        }
-        if (currentPhase.equals(CycleEnum.CODE)){
-            return phase = CycleEnum.TEST;
-
-        }
-        if (currentPhase.equals(CycleEnum.TEST)){
-            compResults.setCycleError(2);
-
-        }
-        return currentPhase;
+    public int numberOfPhases(){
+        return phaseList.size();
     }
 
-    /**
-     * Method: codingPhase
+    /**************************************************************************
+     * Method: getCurrentPhase
      * <p>
-     * Task: Method that takes the testcode and the normal code and gives it with the
-     * currentphase to the compilerManager in the refactor phase.
+     * returns the active cycle to the caller
      *
-     * @param testCode String testCode is the whole test the user typed into the textbox
-     * @param code  String code is the whole code which is going to be tested
-     * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
-     *                     the user is currently working. More a failsafe check for the backend
-     *                     processes than for the user.
-     *
-     * @return returns the current phase in which the cycle is at the moment
-     */
+     * @return currentPhase
+     **************************************************************************/
 
-    public CycleEnum codingPhase(String code, String testCode, CycleEnum currentPhase){
-       try {
-           if (currentPhase.equals(CycleEnum.CODE)) {
-               currentPhase = compManager.compileCode(code, testCode, currentPhase);
-
-           } else {
-               throw new IllegalStateException("Wrong function call");
-           }
-       }catch(Exception e){
-           System.out.println(e.getMessage());
-       }
-        return currentPhase;
+    public CycleEnum getCurrentPhase(){
+        return phaseList.get(currentPhaseAsInt);
     }
 
 
-<<<<<<< HEAD
-    /**
-     * Method: refactoringPhase
-=======
     /*************************************************************************
      * Method: enterNextPhase
->>>>>>> 0072d4deb703d115e87998d594179a94f8b1ce03
      * <p>
-     * Task: Method that takes the testcode and the normal code and gives it with the
-     * currentphase to the compilerManager in the refactor phase.
+     * increases the currentPhasesAsInt in order to increases the cycle phase.
+     * The modulo operation insures that the cycle counter variable stays inside
+     * the number of initilized cycles in the linked list
      *
-     * @param testCode String testCode is the whole test the user typed into the textbox
-     * @param code  String code is the whole code which is going to be tested
-     * @param currentPhase CycleEnum currentPhase gives information to the method with which phase
-     *                     the user is currently working. More a failsafe check for the backend
-     *                     processes than for the user.
-     *
-<<<<<<< HEAD
-     * @return returns the current phase in which the cycle is at the moment
-     */
-
-    public CycleEnum refactoringPhase(String code, String testCode, CycleEnum currentPhase) {
-        try {
-            if (currentPhase.equals(CycleEnum.REFACTOR)) {
-                currentPhase = compManager.compileRefactor(code, testCode, currentPhase);
-
-
-            } else {
-                throw new IllegalStateException("Wrong function call");
-            }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-        return currentPhase;
-=======
      * @return void
      *************************************************************************/
     public void enterNextPhase(){
         currentPhaseAsInt++;
         currentPhaseAsInt = currentPhaseAsInt % phaseList.size();
->>>>>>> 0072d4deb703d115e87998d594179a94f8b1ce03
     }
-
-
-
-
-
-
-
-
 }
-
-

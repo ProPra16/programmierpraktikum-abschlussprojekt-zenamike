@@ -1,14 +1,25 @@
 package de.hhu.propra.tddt.cycle;
 
-import de.hhu.propra.tddt.cycle.CycleEnum;
-
 /**
  * Created by zeljko On 01.07.2016
  */
+
+
+
+
+/*********************************************************
+ * Class: CycleManager
+ * <p>
+ * Task: Class handling the cycles, initializes the cycles
+ * and gets the current cycle returned. Also commands the cycle
+ * to move to the next phase.
+ *
+ * @author Kevin
+ ********************************************************/
+
+
 public class CycleManager {
 
-<<<<<<< HEAD
-=======
 
     Cycle cycle = new Cycle();
 
@@ -25,14 +36,36 @@ public class CycleManager {
      * @return currentPhase of the cycle
      *************************************************************************/
 
->>>>>>> 0072d4deb703d115e87998d594179a94f8b1ce03
     public CycleEnum getCurrentPhase() {
-        // TODO: 09.07.16 When the GUI is implemented, fill this function
-        //THIS IS ONLY A PLACEHOLDER FOR NOW
-        //DON'T CALL IT IF YOU WANT TO WORK WITH IT SERIOUSLY
-        //SINCE CYCLE.JAVA DOESN'T HANDLE THE FLOW OF THE CYCLE, BUT
-        //ONLY THE VERY MOMENT OF THE PHASES, CYCLE CANNOT ANSWER THIS
-        //FUNCTION
-        return CycleEnum.CODE;
+
+        return cycle.getCurrentPhase();
     }
+
+    /**************************************************************************
+     * Method: nextPhase
+     * <p>
+     * Calls the cycle and orders it to move to the next phase
+     *
+     * @return currentPhase of the cycle
+     **************************************************************************/
+
+    public CycleEnum nextPhase(){
+        cycle.enterNextPhase();
+        return getCurrentPhase();
+    }
+
+    /**************************************************************************
+     * Method: initializePhases
+     * <p>
+     * fills the LinkedList in Cycle with the Phases (Enums)
+     *
+     * @return currentPhase of the cycle
+     **************************************************************************/
+
+    private void initializePhases(){
+        cycle.phaseList.add(CycleEnum.CODE);
+        cycle.phaseList.add(CycleEnum.TEST);
+        cycle.phaseList.add(CycleEnum.REFACTOR);
+    }
+
 }
