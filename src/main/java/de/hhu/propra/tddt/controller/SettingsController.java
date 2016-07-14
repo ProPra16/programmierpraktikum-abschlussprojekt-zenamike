@@ -1,13 +1,17 @@
 package de.hhu.propra.tddt.controller;
 
+import de.hhu.propra.tddt.informationcore.InformationCore;
 import de.hhu.propra.tddt.loader.SettingsLoader;
 import de.hhu.propra.tddt.loader.StartLoader;
 import de.hhu.propra.tddt.loader.TDDLoader;
-
+import de.hhu.propra.tddt.plugin.PluginLoader;
+import de.hhu.propra.tddt.settings.Setting;
+import de.hhu.propra.tddt.settings.SettingException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
@@ -26,6 +30,9 @@ public class SettingsController {
     @FXML private CheckBox Tracking;
     @FXML private Button Back;
     @FXML private Button TDDCycle;
+    @FXML private TextField Time;
+
+
 
     private static boolean Babybool = false;
     private static String Babysteps = "B-out";
@@ -35,18 +42,22 @@ public class SettingsController {
 
     @FXML
     public void handleBabyStepsBox(ActionEvent actionEvent) {
-        if(Babybool == false) {Babybool = true; Babysteps = "Babysteps-on";
+        if(Babybool == false) {
+            Babybool = true; Babysteps = "Babysteps-on";
             System.out.println(getBabySteps());
-            /**
-             * TODO: give the brain the information that Babysteps is on;
-             */
+            PluginLoader.pluginLoader().activateBabystep(true);
+            try {
+                InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", Time.getText()));
+            } catch (SettingException e) {
+                e.printStackTrace();
+            }
+
             return;
         }
-        if(Babybool == true ) {Babybool = false; Babysteps = "B-off";
+        if(Babybool == true ) {
+            Babybool = false; Babysteps = "B-off";
             System.out.println(getBabySteps());
-            /**
-             * TODO: give the brain the information that Babysteps is off;
-             */
+            PluginLoader.pluginLoader().activateBabystep(false);
             return;
         }
     }
@@ -54,16 +65,12 @@ public class SettingsController {
     public void handleTrackingBox(ActionEvent actionEvent) {
         if(Trackbool == false) {Trackbool = true; Track = "Tracking-on";
             System.out.println(getTracking());
-            /**
-             * TODO: give the brain the information that Tracking is on;
-             */
+            PluginLoader.pluginLoader().activateTracker(true);
             return;
         }
         if(Trackbool == true ) {Trackbool = false;Track = "T-off";
             System.out.println(getTracking());
-            /**
-             * TODO: give the brain the information that Tracking is off;
-             */
+            PluginLoader.pluginLoader().activateTracker(false);
             return;
         }
     }
@@ -78,6 +85,7 @@ public class SettingsController {
         new TDDLoader(SettingsLoader.getWindow());
         System.out.println("Start");
     }
+
 
     public static String getBabySteps(){
         return Babysteps;

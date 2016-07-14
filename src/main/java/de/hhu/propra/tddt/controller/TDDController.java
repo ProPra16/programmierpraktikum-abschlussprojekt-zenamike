@@ -1,8 +1,10 @@
 package de.hhu.propra.tddt.controller;
 
-import de.hhu.propra.tddt.cycle.Cycle;
+import de.hhu.propra.tddt.contentmanager.TextManager;
 import de.hhu.propra.tddt.cycle.CycleEnum;
+import de.hhu.propra.tddt.informationcore.InformationCore;
 import de.hhu.propra.tddt.loader.StartLoader;
+import de.hhu.propra.tddt.plugin.PluginLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -52,11 +54,9 @@ public class TDDController implements Initializable {
 
 
 
-    @FXML private CycleEnum phase = CycleEnum.TEST;
+    private CycleEnum phase = CycleEnum.TEST;
     @FXML private Label PhaseLabel;
-    @FXML private Label Time;
 
-    Cycle cycle = new Cycle();
 
     @FXML
     public void handleBackButton(ActionEvent actionEvent) throws IOException {
@@ -64,30 +64,37 @@ public class TDDController implements Initializable {
         if(phase.equals(CycleEnum.TEST))
         {
             new StartLoader(StartLoader.getWindow());
-
+            PluginLoader.pluginLoader().stopAllPlugins();
         }
         if(phase.equals(CycleEnum.CODE))
         {
-
-
+            phase = CycleEnum.TEST;
+            PhaseLabel.setText("TEST");
+            testArea.setEditable(true);
+            codeArea.setEditable(false);
         }
         if(phase.equals(CycleEnum.REFACTOR))
         {
-
-
+            phase = CycleEnum.CODE;
+            PhaseLabel.setText("CODE");
+            testArea.setEditable(false);
+            codeArea.setEditable(true);
         }
         System.out.println("Back");
     }
+
+
     @FXML
     public void handleCompileButton(ActionEvent actionEvent) {
         System.out.println("Compile");
 
         if(phase.equals(CycleEnum.TEST))
         {
-            /*
-            phase = InformationCore.informationCore.getCyleManager.getCurrentPhase();
-            InformationCore.informationcore.setCodeManager();
-            */
+
+            InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
+            System.out.println("ERROR in TEST: "+InformationCore.informationCore().getCompileManager().getCompileResultList());
+            phase = InformationCore.informationCore().getCycleManager().getCurrentPhase();
+            System.out.println(InformationCore.informationCore().getCodeManager().getText()  + " blablabla");
             if(phase.equals(CycleEnum.CODE)) {
                 PhaseLabel.setText("CODE");
                 codeArea.setEditable(true);
@@ -97,11 +104,11 @@ public class TDDController implements Initializable {
         }
         if(phase.equals(CycleEnum.CODE))
         {
-            test = testArea.getText();
-            code = codeArea.getText();
+            InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
+            InformationCore.informationCore().getCompileManager().compileCode(InformationCore.informationCore().getCodeManager().getText());
+            System.out.println("ERROR in CODE: " + InformationCore.informationCore().getCompileManager().getCompileResultList());
 
-            //phase = cycle.codingPhase(code,test,phase);
-
+            phase = InformationCore.informationCore().getCycleManager().getCurrentPhase();
             if(phase.equals(CycleEnum.REFACTOR)) {
                 PhaseLabel.setText("REFACTOR");
                 testArea.setEditable(true);
@@ -111,11 +118,12 @@ public class TDDController implements Initializable {
         }
         if(phase.equals(CycleEnum.REFACTOR))
         {
-            test = testArea.getText();
-            code = codeArea.getText();
 
-            //phase = cycle.refactoringPhase(code,test,phase);
+            InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
+            InformationCore.informationCore().getCompileManager().compileCode(InformationCore.informationCore().getCodeManager().getText());
+            System.out.println("ERROR in REFACTOR: " + InformationCore.informationCore().getCompileManager().getCompileResultList());
 
+            phase = InformationCore.informationCore().getCycleManager().getCurrentPhase();
             if(phase.equals(CycleEnum.TEST)) {
                 PhaseLabel.setText("TEST");
                 testArea.setEditable(true);
@@ -131,10 +139,11 @@ public class TDDController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*
-        InformationCore.informationCore().setCodeManager(codeArea);
-        InformationCore.informationCore().setTestManager(testArea);
-        */
+        InformationCore.informationCore().setCodeManager(new TextManager(codeArea));
+        InformationCore.informationCore().setTestManager(new TextManager(testArea));
+        codeArea.setEditable(false);
+        PhaseLabel.setText("TEST");
+
     }
 }
 
