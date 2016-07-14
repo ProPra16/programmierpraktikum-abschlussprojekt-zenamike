@@ -25,7 +25,7 @@ public class Cycle {
 
 
 
-    /**************************************************************************
+    /***************************************************************************
      * Method: add phase
      * <p>
      * adds a new cycleenum to the list
@@ -33,7 +33,7 @@ public class Cycle {
      * @param cycleEnum the list is filled with enums.
      *
      * @return void
-     **************************************************************************/
+     *************************************************************************/
     public void addPhase(CycleEnum cycleEnum){
         phaseList.add(cycleEnum);
     }
@@ -65,7 +65,7 @@ public class Cycle {
     }
 
 
-    /**************************************************************************
+    /*************************************************************************
      * Method: enterNextPhase
      * <p>
      * increases the currentPhasesAsInt in order to increases the cycle phase.
@@ -73,7 +73,7 @@ public class Cycle {
      * the number of initilized cycles in the linked list
      *
      * @return void
-     **************************************************************************/
+     *************************************************************************/
     public void enterNextPhase(){
         currentPhaseAsInt++;
         currentPhaseAsInt = currentPhaseAsInt % phaseList.size();

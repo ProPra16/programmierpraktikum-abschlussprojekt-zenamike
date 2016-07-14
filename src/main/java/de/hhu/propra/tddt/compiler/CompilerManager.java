@@ -73,7 +73,7 @@ public class CompilerManager {
     }
 
 
-    /**
+    /****
      * Method: setCycleError
      * <p>
      * Task: Method that decides which error is saved to a String so the GUI can

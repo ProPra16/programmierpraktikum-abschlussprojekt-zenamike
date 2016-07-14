@@ -28,13 +28,13 @@ public class CycleManager {
         this.cycle = new Cycle();
     }
 
-    /**************************************************************************
+    /*************************************************************************
      * Method: getCurrentPhase
      * <p>
      * Calls the current Phase from the cycle class
      *
      * @return currentPhase of the cycle
-     **************************************************************************/
+     *************************************************************************/
 
     public CycleEnum getCurrentPhase() {
 

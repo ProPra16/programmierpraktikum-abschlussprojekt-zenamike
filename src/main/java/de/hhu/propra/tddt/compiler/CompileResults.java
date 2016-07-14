@@ -168,7 +168,7 @@ public class CompileResults {
 
 
 
-    /**
+    /****
      * Method: errorStringInit
      * <p>
      * Task: gets the compile errors and formats them in a readable way
