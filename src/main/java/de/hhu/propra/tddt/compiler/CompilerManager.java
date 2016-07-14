@@ -12,7 +12,9 @@ public class CompilerManager {
     Compiler compiler = new Compiler();
     LinkedList<String> CodeCompileMessages = new LinkedList<>();
     LinkedList<String> TestCompileMessages = new LinkedList<>();
+    LinkedList<LinkedList<String>> compileResultList = new LinkedList<>();
     String errorMessage;
+    int compilationNumber = 0;
 
 
     public CompilerManager(){
@@ -30,20 +32,22 @@ public class CompilerManager {
      *
      *@param code needs the testcode as a string to have something to work with.
      *
-     * @return LinkedList<String> compileResults
-     *          in this order:
+     * the list will look like this
+     *            LinkedList<String> compileResults
      *                  compile duration
      *                  compile errors
+     *
+     *@return void
      */
 
-    public LinkedList<String> compileCode (String code){
+    public void compileCode (String code){
         try{
             CodeCompileMessages = compiler.compileCode(code);
 
         }catch(Exception e) {
             System.out.println(e.getMessage());
         }
-        return CodeCompileMessages;
+        addResultsIntoCompileResultList(CodeCompileMessages);
     }
 
     /**
@@ -54,22 +58,24 @@ public class CompilerManager {
      *
      *@param testCode needs the testcode as a string to have something to work with.
      *
-     * @return LinkedList<String> testResults
-     *              in this order:
+     * the list will look like this
+     *                LinkedList<String> testResults
      *                  failed tests
      *                  ignored tests
      *                  successful tests
      *                  test duration
      *                  test fail messages
+     *
+     *@return
      */
 
-    public LinkedList<String> compileTest (String testCode){
+    public void compileTest (String testCode){
         try{
             TestCompileMessages = compiler.compileTest(testCode);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        return TestCompileMessages;
+        addResultsIntoCompileResultList(TestCompileMessages);
     }
 
 
@@ -114,5 +120,48 @@ public class CompilerManager {
         return errorMessage;
     }
 
+
+    /**
+     * Method: addResultsIntoCompileResultList
+     * <p>
+     * adds both result list into one list
+     *
+     * @param list the result list from either compileCode or compileTest
+     *
+     * @return void
+     */
+
+    private void addResultsIntoCompileResultList (LinkedList<String> list){
+        compileResultList.add(0, list);
+        compilationNumber++;
+    }
+
+    /**
+     * Method: getCompileResultList
+     * <p>
+     * gives the result list to the caller
+     *
+     *
+     * @return LinkedList<LinkedList<String>> compileResultList
+     */
+
+
+    public LinkedList<LinkedList<String>> getCompileResultList(){
+        return compileResultList;
+    }
+
+    /**
+     * Method: getCompilationNumber
+     * <p>
+     * gives the compilation number to the caller, so that one knows
+     * how many times the programm compilated sth
+     *
+     *
+     * @return compilationNumber
+     */
+
+    public int getCompilationNumber(){
+        return compilationNumber;
+    }
 
 }

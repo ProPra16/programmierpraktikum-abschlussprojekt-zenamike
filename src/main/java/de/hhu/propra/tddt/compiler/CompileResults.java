@@ -183,36 +183,9 @@ public class CompileResults {
         }
 
 
-        /**
-         * Method: setCycleError
-         * <p>
-         * Task: Method that decides which error is saved to a String so the GUI can
-         * pop an alarm box
-         *
-         * @param setError tells clearly which errors it's going to be
-         *
-         * @return void
-         */
 
 
-        public static void setCycleError (int setError) {
 
-            switch (setError) {
-
-                case 1:
-                    errorMessage = "Code is not allowed to compile here";
-                    break;
-                case 2:
-                    errorMessage = "You can't change into the same phase again.";
-                    break;
-                case 3:
-                    errorMessage = "You shallow not pass since something does not work, check" +
-                            "the following: ";
-                    break;
-                default:
-                    errorMessage = null;
-            }
-        }
 
     /****
      * Method: errorStringInit
@@ -233,18 +206,4 @@ public class CompileResults {
             addCompileErrors(errorString);
         }
     }
-
-        /**
-         * Method: getCycleError
-         * <p>
-         * Task: Method that just gives the errorMessage String to the GUI
-         *
-         *
-         * @return errorMessage
-         */
-
-        public String getCycleError(){
-            return errorMessage;
-        }
-
-    }
+}
