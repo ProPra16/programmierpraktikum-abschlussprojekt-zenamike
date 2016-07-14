@@ -19,14 +19,20 @@ import jdk.nashorn.internal.objects.annotations.Setter;
  */
 public class InformationCore implements PluginManager {
 
+    private static InformationCore informationCore = new InformationCore();
+
     private TextManager codeManager = null;
     private TextManager testManager = null;
     private CycleManager cycleManager = null;
     private SettingsManager settingsManager = null;
     private Object compileManager = null;
 
-    protected InformationCore(){
-        //no parameter is required, but instead of taking 5 parameter i am
+    private InformationCore(){
+        //no constructor for you
+    }
+
+    public static InformationCore informationCore(){
+        return informationCore;
     }
 
     /*
