@@ -66,17 +66,9 @@ public class TaskListController {
     @FXML
     public void handleStartTDDButton(ActionEvent actionEvent) throws IOException {
         new TDDLoader(TaskListLoader.getWindow());
-        classCode = manager.getCurrentChosenOne().getClasses();
-        testCode = manager.getCurrentChosenOne().getTests();
-        System.out.println(classCode);
-        System.out.println(testCode);
+        TDDLoader.controller.setCode(classCode);
+        TDDLoader.controller.setTest(testCode);
 
-
-            /*TDDController controller = new TDDController();
-            controller.setCode(classCode);
-            controller.setTest(testCode);
-*/
-        System.out.println("Start");
     }
     @FXML
     public void handleGoButton(ActionEvent actionEvent) throws IOException{
@@ -93,6 +85,8 @@ public class TaskListController {
         Tasks.getSelectionModel().selectedItemProperty().addListener((observer,oldValue,newValue) ->{
             String description = manager.compareChoiceWithCatalog(newValue);
             Discription.setText(description);
+            classCode = manager.getCurrentChosenOne().getClasses();
+            testCode = manager.getCurrentChosenOne().getTests();
         });
     }
 }

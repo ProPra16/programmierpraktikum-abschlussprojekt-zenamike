@@ -2,6 +2,7 @@ package de.hhu.propra.tddt.loader;
 
 import de.hhu.propra.tddt.controller.TDDController;
 
+import de.hhu.propra.tddt.controller.TaskListController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,7 +24,7 @@ public class TDDLoader {
 
     protected Scene tDD;
     protected static Stage window;
-    protected TDDController controller;
+    static public TDDController controller;
 
     /**
      * Method: StartController
@@ -50,6 +51,7 @@ public class TDDLoader {
 
         tDD = new Scene(fxmlLoader.load());
         controller = fxmlLoader.getController();
+
     }
 
     public Scene scene(){
@@ -60,6 +62,8 @@ public class TDDLoader {
 
     public TDDController controller() throws IOException{
         loadFXMLInformation();
+        //System.out.println("Controller erstellt.");
+        controller.setCode(TaskListController.getClassCode());
         return controller;
     }
 

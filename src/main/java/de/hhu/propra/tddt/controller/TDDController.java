@@ -34,21 +34,21 @@ public class TDDController implements Initializable {
 
     @FXML private Button Back;
     @FXML private Button Compile;
-    @FXML private TextArea codeArea = new TextArea(code);
-    @FXML private TextArea testArea = new TextArea(test);
+    @FXML public TextArea codeArea;
+    @FXML public TextArea testArea;
 
 
-    /*public  void setCode(String codeInput) {
+    public  void setCode(String codeInput) {
         code = codeInput;
-        System.out.println(code + " Setter für Code");
-        codeArea = new TextArea(code);
+        //System.out.println(code + " Setter für Code");
+        codeArea.setText(code);
     }
 
     public  void setTest(String testInput) {
         test = testInput;
-        System.out.println(test + " Setter für Tests ");
-        testArea = new TextArea(test);
-    }*/
+        //System.out.println(test + " Setter für Tests ");
+        testArea.setText(test);
+    }
 
 
 
