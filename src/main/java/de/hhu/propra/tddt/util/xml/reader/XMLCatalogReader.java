@@ -38,7 +38,7 @@ public class XMLCatalogReader {
         ExerciseList = new ArrayList<>();
 
         try {
-            System.out.println("CheckPoint XMLCatalogReader");
+            //System.out.println("CheckPoint XMLCatalogReader");
 
 
             //Using factory get an instance of document builder

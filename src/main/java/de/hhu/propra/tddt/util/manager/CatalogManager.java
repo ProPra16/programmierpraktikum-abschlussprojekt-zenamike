@@ -27,7 +27,7 @@ public class CatalogManager {
 
     private void useXMLReader(String path){
 
-        System.out.println("CheckPoint CatalogManager");
+        //System.out.println("CheckPoint CatalogManager");
 
         xmlInformation = new XMLCatalogReader(path);
         exerciseCatalog = xmlInformation.getExerciseList();
