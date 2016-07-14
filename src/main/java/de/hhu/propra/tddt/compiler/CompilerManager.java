@@ -14,6 +14,7 @@ public class CompilerManager {
     LinkedList<String> TestCompileMessages = new LinkedList<>();
     LinkedList<LinkedList<String>> compileResultList = new LinkedList<>();
     String errorMessage;
+    int compilationNumber = 0;
 
 
     public CompilerManager(){
@@ -125,12 +126,14 @@ public class CompilerManager {
      * <p>
      * adds both result list into one list
      *
+     * @param list the result list from either compileCode or compileTest
      *
      * @return void
      */
 
     private void addResultsIntoCompileResultList (LinkedList<String> list){
-        compileResultList.add(list);
+        compileResultList.add(0, list);
+        compilationNumber++;
     }
 
     /**
@@ -145,6 +148,20 @@ public class CompilerManager {
 
     public LinkedList<LinkedList<String>> getCompileResultList(){
         return compileResultList;
+    }
+
+    /**
+     * Method: getCompilationNumber
+     * <p>
+     * gives the compilation number to the caller, so that one knows
+     * how many times the programm compilated sth
+     *
+     *
+     * @return compilationNumber
+     */
+
+    public int getCompilationNumber(){
+        return compilationNumber;
     }
 
 }
