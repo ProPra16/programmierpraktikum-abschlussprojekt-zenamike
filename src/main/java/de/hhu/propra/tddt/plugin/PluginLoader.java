@@ -13,16 +13,22 @@ import de.hhu.propra.tddt.plugin.tracker.Tracker;
  */
 public class PluginLoader {
 
+    private static PluginLoader pluginLoader = new PluginLoader();
+
     private static final Plugin babystep = new Babysteps();
     private static final Plugin tracker = new Tracker();
 
     private static boolean isBabystepActivated = false;
     private static boolean isTrackerActivated = false;
 
-
+    private PluginLoader(){ }
     static {
         babystep.setPluginManager(InformationCore.informationCore());
         tracker.setPluginManager(InformationCore.informationCore());
+    }
+
+    public static PluginLoader pluginLoader(){
+        return pluginLoader;
     }
 
     public void activateBabystep(boolean activate){
