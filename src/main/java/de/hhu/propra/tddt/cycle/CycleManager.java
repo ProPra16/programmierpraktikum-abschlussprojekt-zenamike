@@ -26,6 +26,7 @@ public class CycleManager {
 
     public CycleManager(){
         this.cycle = new Cycle();
+        initializePhases();
     }
 
     /*************************************************************************
