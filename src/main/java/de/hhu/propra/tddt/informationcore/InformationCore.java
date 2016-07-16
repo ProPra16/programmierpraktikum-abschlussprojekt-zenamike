@@ -1,5 +1,7 @@
 package de.hhu.propra.tddt.informationcore;
 
+import de.hhu.propra.tddt.compiler.Compiler;
+import de.hhu.propra.tddt.compiler.CompilerManager;
 import de.hhu.propra.tddt.contentmanager.TextManager;
 import de.hhu.propra.tddt.cycle.CycleManager;
 import de.hhu.propra.tddt.plugin.PluginManager;
@@ -25,7 +27,7 @@ public class InformationCore implements PluginManager {
     private TextManager testManager = null;
     private CycleManager cycleManager = null;
     private SettingsManager settingsManager = null;
-    private Object compileManager = null;
+    private CompilerManager compileManager = null;
 
     protected InformationCore(){
         //no constructor for you
@@ -47,7 +49,7 @@ public class InformationCore implements PluginManager {
     }
 
     @Setter
-    public void setCompileManager(Object compileManager) {
+    public void setCompileManager(CompilerManager compileManager) {
         this.compileManager = compileManager;
 
     }
@@ -96,7 +98,7 @@ public class InformationCore implements PluginManager {
     }
 
     @Override
-    public Object getCompileManager() {
+    public CompilerManager getCompileManager() {
         if(compileManager == null) throw new
                 IllegalArgumentException("You have to set the CompileManager before you can pass it");
         return compileManager;
