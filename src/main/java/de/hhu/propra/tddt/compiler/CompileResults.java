@@ -70,7 +70,7 @@ public class CompileResults {
          */
 
         public LinkedList<String> getCompilerErrors(){
-            return compilerErrorList;
+            return compileResults;
         }
 
 
