@@ -5,6 +5,8 @@ import de.hhu.propra.tddt.util.classnameparser.ClassNameParserException;
 import org.junit.Assert;
 import org.junit.Test;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -30,7 +32,9 @@ public class TestClassNameParser {
         Path path = null;
         try {
             URL url = getClass().getResource("/HelloWorld.java");
-            path = Paths.get(url.getPath());
+            URI uri = url.toURI();
+            path = Paths.get(uri.getPath());
+
             classname = readFile(path);
             classname = ClassNameParser.getClassName(classname);
             System.out.println(classname);
@@ -42,6 +46,8 @@ public class TestClassNameParser {
             System.out.println(path.toAbsolutePath().toString());
         }catch(ClassNameParserException f){
             System.out.println(f.getMessage());
+        }catch (URISyntaxException g){
+            System.out.println(g.getMessage());
         }
         Assert.assertEquals("HelloWorld", classname);
 
