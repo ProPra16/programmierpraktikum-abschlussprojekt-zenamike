@@ -29,7 +29,6 @@ public class CompileResults {
 
     LinkedList<String> testResults = new LinkedList<>();
     LinkedList<String>compileResults = new LinkedList<>();
-    LinkedList<String> compilerErrorList = new LinkedList<>();
     static String errorMessage;
 
     String failedTests = null;
@@ -58,7 +57,7 @@ public class CompileResults {
 
 
         protected void addCompileErrors(String compileErrors){
-            compilerErrorList.add(compileErrors);
+            compileResults.add(compileErrors);
         }
 
         /**
