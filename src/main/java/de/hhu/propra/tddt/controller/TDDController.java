@@ -93,7 +93,7 @@ public class TDDController implements Initializable {
             System.out.println(results+"   results");
 
             // Nächste Phase setzen oder Fehler ausgeben
-            if(results.equals("[1]")){
+            if(results.equals("1")){
                 // Settings stoppen + Starten
                 PluginLoader.pluginLoader().stopAllPlugins();
                 PluginLoader.pluginLoader().startAllPlugins();
