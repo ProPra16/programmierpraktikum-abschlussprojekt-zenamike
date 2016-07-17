@@ -24,11 +24,7 @@ import java.util.ResourceBundle;
  *  Class: handles the scenes' buttons (namely back and compile button)
  */
 
-/** TODO: reading the text areas, setting areas to immutable one at a time,
- *  TODO: adding the clock(label), adding the phase(label)
- *  TODO: adding code and test code, changing the compile and back button
- *  TODO: depending on phase
- */
+
 public class TDDController implements Initializable {
 
     private String code = TaskListController.classCode;
@@ -38,7 +34,6 @@ public class TDDController implements Initializable {
     @FXML private Button Compile;
     @FXML public TextArea codeArea;
     @FXML public TextArea testArea;
-
 
     public  void setCode(String codeInput) {
         code = codeInput;
@@ -86,15 +81,35 @@ public class TDDController implements Initializable {
 
     @FXML
     public void handleCompileButton(ActionEvent actionEvent) {
-        System.out.println("Compile");
+        System.out.println("Compilation Nr: " + InformationCore.informationCore().getCompileManager().getCompilationNumber());
 
         if(phase.equals(CycleEnum.TEST))
         {
-
+            System.out.println("Compiling in TEST");
             InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
-            System.out.println("ERROR in TEST: "+InformationCore.informationCore().getCompileManager().getCompileResultList());
+            System.out.println("\n!!! Code Text !!!  \n "+InformationCore.informationCore().getCodeManager().getText());
+            System.out.println("\n!!! Test Text !!!  \n "+InformationCore.informationCore().getTestManager().getText());
+            String results = InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0);
+            System.out.println(results+"   results");
+
+            // Nächste Phase setzen oder Fehler ausgeben
+            if(results.equals("[1]")){
+                // Settings stoppen + Starten
+                PluginLoader.pluginLoader().stopAllPlugins();
+                PluginLoader.pluginLoader().startAllPlugins();
+                System.out.println(phase);
+
+            }
+            else{
+                for (int i = 0; !InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(i).isEmpty(); i++) {
+                    System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(i));
+                }
+            }
+
+
+            // Phase auf Nächste setzen
             phase = InformationCore.informationCore().getCycleManager().getCurrentPhase();
-            System.out.println(InformationCore.informationCore().getCodeManager().getText()  + " blablabla");
+            System.out.println(phase);
             if(phase.equals(CycleEnum.CODE)) {
                 PhaseLabel.setText("CODE");
                 codeArea.setEditable(true);
@@ -102,12 +117,48 @@ public class TDDController implements Initializable {
             }
             return;
         }
+
+
         if(phase.equals(CycleEnum.CODE))
         {
-            InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
-            InformationCore.informationCore().getCompileManager().compileCode(InformationCore.informationCore().getCodeManager().getText());
-            System.out.println("ERROR in CODE: " + InformationCore.informationCore().getCompileManager().getCompileResultList());
+            System.out.println("Compiling in CODE");
 
+            //zum überprüfen ob Code und! Test compilieren
+            boolean compiliert = false;
+
+            // Code Compilieren und Fails ausgeben
+            InformationCore.informationCore().getCompileManager().compileCode(InformationCore.informationCore().getCodeManager().getText());
+            for (int i = 0; !InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(i).isEmpty(); i++) {
+                System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(i));
+            }
+            if(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(2).isEmpty()){
+                compiliert = true;
+            }
+            else {
+                compiliert = false;
+            }
+
+            // Test Compilieren und Fails ausgeben
+            InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
+            for (int i = 0; !InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(i).isEmpty(); i++) {
+                System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(i));
+            }
+            if( InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0).equals("0"))
+            {
+                compiliert = true;
+            }
+            else {
+                compiliert = false;
+            }
+
+            // Nächste Phase setzen
+            if( compiliert == true) {
+                // Settings stoppen + starten
+                PluginLoader.pluginLoader().stopAllPlugins();
+                PluginLoader.pluginLoader().startAllPlugins();
+            }
+
+            // Phase auf Nächste setzen
             phase = InformationCore.informationCore().getCycleManager().getCurrentPhase();
             if(phase.equals(CycleEnum.REFACTOR)) {
                 PhaseLabel.setText("REFACTOR");
@@ -118,16 +169,49 @@ public class TDDController implements Initializable {
         }
         if(phase.equals(CycleEnum.REFACTOR))
         {
+            System.out.println("Compiling in REFACTOR");
 
-            InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
+            //zum überprüfen ob Code und! Test compilieren
+            boolean compiliert = false;
+
+
+            // Code Compilieren und Fails ausgeben
             InformationCore.informationCore().getCompileManager().compileCode(InformationCore.informationCore().getCodeManager().getText());
-            System.out.println("ERROR in REFACTOR: " + InformationCore.informationCore().getCompileManager().getCompileResultList());
+            for (int i = 0; !InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(i).isEmpty(); i++) {
+                System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(i));
+            }
+            if( InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(2).equals("")){
+                compiliert = true;
+            }
+            else {
+                compiliert = false;
+            }
 
-            phase = InformationCore.informationCore().getCycleManager().getCurrentPhase();
+
+
+            // Test Compilieren und Fails ausgeben
+            InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
+            for (int i = 0; !InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(i).isEmpty(); i++) {
+                System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(i));
+            }
+            if( InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0).equals("0")) {
+                compiliert = true;
+            }
+            else {
+                compiliert = false;
+            }
+
+
+            // Nächste Phase setzen
+            if( compiliert == true) {
+                // Settings stoppen + starten
+                PluginLoader.pluginLoader().stopAllPlugins();
+                PluginLoader.pluginLoader().startAllPlugins();
+            }
             if(phase.equals(CycleEnum.TEST)) {
                 PhaseLabel.setText("TEST");
                 testArea.setEditable(true);
-                codeArea.setEditable(true);
+                codeArea.setEditable(false);
             }
             return;
 
@@ -139,8 +223,11 @@ public class TDDController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         InformationCore.informationCore().setCodeManager(new TextManager(codeArea));
         InformationCore.informationCore().setTestManager(new TextManager(testArea));
+        PluginLoader.pluginLoader().startAllPlugins();
+
         codeArea.setEditable(false);
         PhaseLabel.setText("TEST");
 
