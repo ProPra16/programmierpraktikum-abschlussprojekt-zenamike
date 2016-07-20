@@ -10,13 +10,18 @@
         </classes>
         <tests>
             <test>
-
-                import static org.junit.Assert.*;
+                import org.junit.Assert;
                 import org.junit.Test;
-                public class RomanNumbersTest {
+                public class RomanNumberConverterTest {
                 @Test
                 public void testSomething() {
-                } }
+                    double numberajdflk = Math.random();
+                    System.out.println(numberajdflk);
+                    int number = (int) (numberajdflk*2);
+                    Assert.assertEquals(1,number);
+                }
+
+                }
             </test>
 
         </tests>

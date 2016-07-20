@@ -37,12 +37,6 @@ public class InformationCore implements PluginManager {
         return informationCore;
     }
 
-    /*
-     * @TODO
-     * bind the compileManager right here in and change the return type of the
-     * method in the interface.
-     */
-
     @Setter
     public void setCodeManager(TextManager codeManager) {
         this.codeManager = codeManager;

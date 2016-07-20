@@ -81,6 +81,7 @@ public class TestBabySteps {
     }
 }
 
+
 class StubCycleManagerCycleCODE extends CycleManager {
     @Override
     public CycleEnum getCurrentPhase() {

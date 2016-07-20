@@ -23,13 +23,6 @@ import java.util.List;
  * @version 0.1
  */
 
-    /*
-     * @TODO
-     * 1. Finish this class
-     * 2. Test it
-     * 3. Remove Bugs and errors
-     * 4. GoTO 2.
-     */
 public class Settings {
 
     HashMap<String, Setting> settingHashMap = new HashMap<>();

@@ -51,9 +51,16 @@ public class Compiler {
         CompilationUnit compilationTestUnit = new CompilationUnit(testName, testCode, isARealTest);
         compilationUnitName = "compilationTestUnit";
         testCompilerInit(compilationTestUnit);
-        compileResults.setTestResults(testComp);
-        compileResults.errorStringInit(testComp, compilationTestUnit);
 
+
+        /*
+         * Kommentar von Zeljko Bekcic vom 20.07.2016 um 22.47
+         * Komischerweise wirft
+         */
+        compileResults.setTestResults(testComp);
+
+
+        compileResults.errorStringInit(testComp, compilationTestUnit);
         return compileResults.getTestResults();
     }
 

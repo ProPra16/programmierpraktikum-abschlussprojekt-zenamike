@@ -94,7 +94,9 @@ public class CompileResults {
             int successfulTestsNumber = compiler.getTestResult().getNumberOfSuccessfulTests();
             successfulTests = Integer.toString(successfulTestsNumber);
             Duration testDurationTime = compiler.getTestResult().getTestDuration();
-            testDuration = Long.toString(testDurationTime.getSeconds());
+            /*
+            testDuration = String.valueOf(testDurationTime.toMillis());
+
             Collection<TestFailure> testFailures = compiler.getTestResult().getTestFailures();
             String testFailureCollectionString ="";
             if (!testFailures.isEmpty()) {
@@ -102,13 +104,14 @@ public class CompileResults {
                 testFailures.toArray(arr);
                 testFailureCollectionString = Arrays.toString(arr);
             }
+            */
 
 
             testResults.add(failedTests);
             testResults.add(ignoredTests);
             testResults.add(successfulTests);
-            testResults.add(testDuration);
-            testResults.add(testFailureCollectionString);
+            //testResults.add(testDuration);
+            //testResults.add(testFailureCollectionString);
 
         }
 
@@ -150,16 +153,16 @@ public class CompileResults {
         protected void setCodeResults(JavaStringCompiler compiler, CompilationUnit compilationUnit){
             Duration compileDurationTime = compiler.getCompilerResult().getCompileDuration();
             compileDuration = Long.toString(compileDurationTime.getSeconds());
-            Collection<CompileError> compileMessages = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnit);
-
+            //Collection<CompileError> compileMessages = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnit);
+            /*
             if (!compileMessages.isEmpty()) {
                 String arr[] = new String[compileMessages.size()];
                 compileMessages.toArray(arr);
                 compileMessage = Arrays.toString(arr);
             }
-
-            compileResults.add(compileDuration);
-            compileResults.add(compileMessage);
+            */
+            //compileResults.add(compileDuration);
+            //compileResults.add(compileMessage);
         }
 
         /**
