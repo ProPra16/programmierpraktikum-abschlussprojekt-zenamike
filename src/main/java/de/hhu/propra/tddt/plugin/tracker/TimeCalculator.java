@@ -8,13 +8,13 @@ import java.time.LocalTime;
  */
 public class TimeCalculator {
 
-    private static LocalTime start;
+    private LocalTime start;
 
-    public static void startTime() {
+    public void startTime() {
         if (start == null) start = LocalTime.now();
     }
 
-    public static Duration endTime() {
+    public Duration endTime() {
         if (start == null) throw new NullPointerException(
                 "You have not started the time calculation. You have to call " +
                         "startTime() before you call this method.");
