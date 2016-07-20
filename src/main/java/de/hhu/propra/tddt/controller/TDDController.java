@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static de.hhu.propra.tddt.cycle.CycleEnum.*;
-
 
 /**
  * Created by MichaelLiske on 09.07.16
@@ -41,18 +39,15 @@ public class TDDController implements Initializable {
     public TextArea codeArea;
     @FXML
     public TextArea testArea;
-    public String results;
     boolean compiliert;
 
     public void setCode(String codeInput) {
         code = codeInput;
-        //System.out.println(code + " Setter für Code");
         codeArea.setText(code);
     }
 
     public void setTest(String testInput) {
         test = testInput;
-        //System.out.println(test + " Setter für Tests ");
         testArea.setText(test);
     }
 
@@ -69,22 +64,18 @@ public class TDDController implements Initializable {
                 PluginLoader.pluginLoader().stopAllPlugins();
             }
             case CODE: {
-                InformationCore.informationCore().getCycleManager().nextPhase();
-                InformationCore.informationCore().getCycleManager().nextPhase();
-                PhaseLabel.setText("TEST");
+                einePhaseZurück();
+                PhaseLabel.setText(CurrentPhase());
                 testArea.setEditable(true);
                 codeArea.setEditable(false);
-                PluginLoader.pluginLoader().stopAllPlugins();
-                PluginLoader.pluginLoader().startAllPlugins();
+                stopAndStartPlugins();
             }
             case REFACTOR: {
-                InformationCore.informationCore().getCycleManager().nextPhase();
-                InformationCore.informationCore().getCycleManager().nextPhase();
-                PhaseLabel.setText("CODE");
+                einePhaseZurück();
+                PhaseLabel.setText(CurrentPhase());
                 testArea.setEditable(false);
                 codeArea.setEditable(true);
-                PluginLoader.pluginLoader().stopAllPlugins();
-                PluginLoader.pluginLoader().startAllPlugins();
+                stopAndStartPlugins();
             }
             System.out.println("Back");
         }
@@ -96,141 +87,164 @@ public class TDDController implements Initializable {
         System.out.println("Compilation Nr: " + InformationCore.informationCore().getCompileManager().getCompilationNumber());
         switch (InformationCore.informationCore().getCycleManager().getCurrentPhase()) {
             case TEST:
-                System.out.println("Compiling in TEST");
-                InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
-                try {
-                    System.out.println("Test compiliert");
-                    InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0).equals("1");
+                compiliert = false;
+                compilierenTest();
+                CompileResultsPrüfenMitEinemFail();
 
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Test gibt NULL aus");
-                }
-
-                // Nächste Phase setzen oder Fehler ausgeben
-                if (InformationCore.informationCore().getCycleManager().getCurrentPhase() == CODE)
-                    // Settings stoppen + Starten{
-                    PluginLoader.pluginLoader().stopAllPlugins();
-
-
-                // Phase auf Nächste setzen
-                if (InformationCore.informationCore().getCycleManager().getCurrentPhase() == CODE) {
-                    PhaseLabel.setText("CODE");
-                    codeArea.setEditable(true);
-                    testArea.setEditable(false);
-                    PluginLoader.pluginLoader().startAllPlugins();
+                if(prüfenInTEST()){
+                    InformationCore.informationCore().getCycleManager().nextPhase();
                 }
                 break;
 
 
             case CODE:
-                System.out.println("Compiling in CODE");
 
-                //zum überprüfen ob Code und! Test compilieren
+                //zum überprüfen ob compiliert
                 compiliert = false;
 
-                // Code Compilieren und Fails ausgeben
-                InformationCore.informationCore().getCompileManager().compileCode(InformationCore.informationCore().getCodeManager().getText());
-                InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
+                // Code Compilieren
+                compilierenCode();
+                CompileResultsPrüfenVonCode();
 
-                try {
-                    System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0));
-                    System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(1));
-                    if (!InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(2).equals("0")) {
-                        compiliert = true;
-                        /*for(int i = 0 ; i < InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).size(); i++){
-                            System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(i));
-                        }*/
-                    } else {
-                        compiliert = false;
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Code gibt NULL aus");
-                    return;
+
+                // Test Compilieren
+                compilierenTest();
+                CompileResultsPrüfenVonTest();
+                ResultsAusgeben();
+
+                if(compiliert){
+                    InformationCore.informationCore().getCycleManager().nextPhase();
                 }
-
-
-                // Test Compilieren und Fails ausgeben
-                try {
-                    if (InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0).equals("0")) {
-                        compiliert = true;
-                    } else {
-                        compiliert = false;
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Test gibt NULL aus");
-                    return;
-                }
-
-
-                // Nächste Phase setzen
-                if (compiliert == true) {
-                    // Settings stoppen + starten
-                    PluginLoader.pluginLoader().stopAllPlugins();
-                }
-
-
-                // Phase auf Nächste setzen
-                if (InformationCore.informationCore().getCycleManager().getCurrentPhase() == REFACTOR) {
-                    PhaseLabel.setText("REFACTOR");
-                    testArea.setEditable(true);
-                    codeArea.setEditable(true);
-                    PluginLoader.pluginLoader().startAllPlugins();
-                }
+                prüfenInCODE();
                 break;
 
             case REFACTOR:
 
                 System.out.println("Compiling in REFACTOR");
 
-                //zum überprüfen ob Code und! Test compilieren
+                //zum überprüfen ob compiliert
                 compiliert = false;
 
-
-                // Code Compilieren und Fails ausgeben
-                InformationCore.informationCore().getCompileManager().compileCode(InformationCore.informationCore().getCodeManager().getText());
-                try {
-                    if (InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(2).isEmpty()) {
-                        compiliert = true;
-                        System.out.println("Code compiliert");
-                    } else {
-                        compiliert = false;
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Code gibt NULL aus");
-                    return;
-                }
+                // Code Compilieren
+                compilierenCode();
+                CompileResultsPrüfenVonCode();
+                ResultsAusgeben();
 
 
-                // Test Compilieren und Fails ausgeben
-                InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
-                try {
-                    if (InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0).equals("0")) {
-                        compiliert = true;
-                        System.out.println("Test compiliert");
-                    } else {
-                        compiliert = false;
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Test gibt NULL aus");
-                    return;
+                // Test Compilieren
+                compilierenTest();
+                CompileResultsPrüfenVonTest();
+                if(compiliert){
+                    InformationCore.informationCore().getCycleManager().nextPhase();
                 }
-
-                // Nächste Phase setzen
-                if (compiliert == true) {
-                    // Settings stoppen + starten
-                    PluginLoader.pluginLoader().stopAllPlugins();
-                }
-                if (InformationCore.informationCore().getCycleManager().getCurrentPhase()==TEST) {
-                    PhaseLabel.setText("TEST");
-                    testArea.setEditable(true);
-                    codeArea.setEditable(false);
-                    PluginLoader.pluginLoader().startAllPlugins();
-                }
+                prüfenInRefactor();
                 break;
         }
 
 
     }
+
+    public void CompileResultsPrüfenMitEinemFail(){
+        try {
+            System.out.println("Test compiliert");
+            if (InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0).equals("1")){
+                compiliert = true;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Test gibt NULL aus");
+        }
+    }
+    public void CompileResultsPrüfenVonCode(){
+        try {
+            if (InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(2).equals("0")) {
+                compiliert = true;
+                System.out.println("Code compiliert");
+            } else {
+                compiliert = false;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Test gibt NULL aus");
+        }
+    }
+    public void CompileResultsPrüfenVonTest(){
+        try {
+            if (InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0).equals("0")) {
+                compiliert = true;
+                System.out.println("Test compiliert");
+            } else {
+                compiliert = false;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Test gibt NULL aus");
+        }
+    }
+
+
+
+    public boolean prüfenInTEST(){
+        if (InformationCore.informationCore().getCycleManager().getCurrentPhase() == CycleEnum.CODE) {
+            stopAndStartPlugins();
+            PhaseLabel.setText(CurrentPhase());
+            codeArea.setEditable(true);
+            testArea.setEditable(false);
+            return true;
+        }
+        return false;
+    }
+    public boolean prüfenInCODE(){
+        if (InformationCore.informationCore().getCycleManager().getCurrentPhase() == CycleEnum.REFACTOR) {
+            stopAndStartPlugins();
+            PhaseLabel.setText(CurrentPhase());
+            codeArea.setEditable(true);
+            testArea.setEditable(true);
+            return true;
+        }
+        return false;
+    }
+    public boolean prüfenInRefactor(){
+        if (InformationCore.informationCore().getCycleManager().getCurrentPhase() == CycleEnum.TEST) {
+            stopAndStartPlugins();
+            PhaseLabel.setText(CurrentPhase());
+            codeArea.setEditable(false);
+            testArea.setEditable(true);
+
+            return true;
+        }
+        return false;
+    }
+
+    public void compilierenTest(){
+        InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
+    }
+    public void compilierenCode(){
+        InformationCore.informationCore().getCompileManager().compileCode(InformationCore.informationCore().getCodeManager().getText());
+    }
+
+    public void ResultsAusgeben(){
+        System.out.println("CompilerResultList.get0");
+        System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0));
+        try{
+            System.out.println("CompilerResultList.get1");
+            System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(1));
+        }catch (IndexOutOfBoundsException e){
+        }
+    }
+
+
+    public void einePhaseZurück(){
+        InformationCore.informationCore().getCycleManager().nextPhase();
+        InformationCore.informationCore().getCycleManager().nextPhase();
+    }
+
+    public void stopAndStartPlugins(){
+        PluginLoader.pluginLoader().stopAllPlugins();
+        PluginLoader.pluginLoader().startAllPlugins();
+    }
+
+    public String CurrentPhase(){
+        return InformationCore.informationCore().getCycleManager().getCurrentPhase().toString();
+    }
+
 
 
     @Override
@@ -241,7 +255,8 @@ public class TDDController implements Initializable {
         PluginLoader.pluginLoader().startAllPlugins();
 
         codeArea.setEditable(false);
-        PhaseLabel.setText("TEST");
+        einePhaseZurück(); // weils scheinbar bei 1 statt bi 0 im Enum anfängt...
+        PhaseLabel.setText(CurrentPhase());
 
     }
 }
