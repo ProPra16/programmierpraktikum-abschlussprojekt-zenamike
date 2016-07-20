@@ -29,18 +29,18 @@ public class TestBabySteps {
     @Test
     public void testApplySettings(){
         InformationCore pluginManager = StubInformationCore.informationCore();
-        ((InformationCore) pluginManager).setSettingsManager(new StubSettingsManager2Seconds());
+        ((InformationCore) pluginManager).setSettingsManager(new StubSettingsManager2Minutes());
         StubAccessDurationBabysteps babysteps = new StubAccessDurationBabysteps();
         babysteps.setPluginManager(pluginManager);
         babysteps.start();
 
         try {
-            Thread.sleep(Duration.ofSeconds(5).toMillis());
+            Thread.sleep(Duration.ofMinutes(3).toMillis());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        Assert.assertEquals(Duration.ofSeconds(2), babysteps.getDuration());
+        Assert.assertEquals(Duration.ofMinutes(2), babysteps.getDuration());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class TestBabySteps {
 
         //Initializing the StubInformationCore as an PluginManager and setting the one special value
         InformationCore pluginManager = StubInformationCore.informationCore();
-        ((InformationCore) pluginManager).setSettingsManager(new StubSettingsManager2Seconds());
+        ((InformationCore) pluginManager).setSettingsManager(new StubSettingsManager2Minutes());
 
         Babysteps babysteps = new Babysteps();
         babysteps.setPluginManager(pluginManager);
@@ -106,10 +106,10 @@ class StubInformationCore extends InformationCore {
     }
 }
 
-class StubSettingsManager2Seconds extends SettingsManager {
-    public StubSettingsManager2Seconds() {
+class StubSettingsManager2Minutes extends SettingsManager {
+    public StubSettingsManager2Minutes() {
         try {
-            super.addSetting(new Setting("babysteps", "2000"));
+            super.addSetting(new Setting("babysteps", "2"));
         } catch (SettingException e) {
             System.err.println("Sir, we got a problem over here");
         }
