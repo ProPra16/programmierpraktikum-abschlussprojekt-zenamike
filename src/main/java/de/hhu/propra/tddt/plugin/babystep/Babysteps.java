@@ -46,6 +46,7 @@ public class Babysteps implements Plugin {
                 resetCode();
             }
         };
+        timer = new Timer();
         timer.schedule(timerTask, duration.toMillis());
 
         /*

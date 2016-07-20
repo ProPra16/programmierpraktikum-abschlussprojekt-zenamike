@@ -32,7 +32,12 @@ public class Tracker extends Application implements Plugin {
     //method from the Application
     @Override
     public void start(Stage stage) throws Exception {
-        duration = timeCalculator.endTime();
+        try {
+            duration = timeCalculator.endTime();
+        } catch (NullPointerException e) {
+            timeCalculator.startTime();
+            duration = timeCalculator.endTime();
+        }
         stage.setScene(scene);
         stage.show();
     }

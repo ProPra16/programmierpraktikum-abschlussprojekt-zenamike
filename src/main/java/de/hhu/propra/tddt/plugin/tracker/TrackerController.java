@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  */
 public class TrackerController implements Initializable {
 
-    private Duration durationStatic;
+    private Duration duration;
     private List<String> errorListStatic;
 
     @FXML Label durationLabel;
@@ -27,7 +27,7 @@ public class TrackerController implements Initializable {
     }
 
     public void setDurationLabel(){
-        durationLabel.setText(String.valueOf(durationStatic.toMillis()) + "milliseconds");
+        durationLabel.setText(String.valueOf(duration.toMillis()) + "milliseconds");
     }
 
     public void setErrorsFromList(){
@@ -35,6 +35,6 @@ public class TrackerController implements Initializable {
     }
 
     public void setDuration(Duration duration){
-        durationStatic = duration;
+        this.duration = duration;
     }
 }
