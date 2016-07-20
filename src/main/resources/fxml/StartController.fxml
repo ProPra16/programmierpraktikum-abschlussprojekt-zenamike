@@ -10,7 +10,6 @@
    <children>
       <VBox layoutX="250.0" layoutY="163.0" prefHeight="68.0" prefWidth="100.0" spacing="20.0">
          <children>
-            <Button id="Button" alignment="CENTER" mnemonicParsing="false" onAction="#handleSettingsButton" prefHeight="27.0" prefWidth="139.0" stylesheets="@../css/StartCSS.css" text="Settings" />
             <Button id="Button" alignment="CENTER" mnemonicParsing="false" onAction="#handleTaskButton" prefHeight="27.0" prefWidth="101.0" stylesheets="@../css/StartCSS.css" text="Task List" />
             <Button id="Button" alignment="CENTER" layoutX="10.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleStartButton" prefHeight="27.0" prefWidth="101.0" stylesheets="@../css/StartCSS.css" text="Start TDD" />
          </children>
