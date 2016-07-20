@@ -89,7 +89,7 @@ public class Compiler {
      * <p>
      * Task: Initializes the test compiler.
      *
-     *@param compUnit needs a Compilation Unit to start the compiler.
+     *@param compUnit needs a Compilation Unit to starting the compiler.
      *
      * @return void
      */
@@ -104,7 +104,7 @@ public class Compiler {
      * <p>
      * Task: Initializes the test compiler.
      *
-     *@param compUnit needs a Compilation Unit to start the compiler.
+     *@param compUnit needs a Compilation Unit to starting the compiler.
      *
      * @return void
      */

@@ -15,7 +15,7 @@ import java.net.URL;
 
 /**
  *  Class: load the fxml file information and set the stage to the
- *  current scene (namely start)
+ *  current scene (namely starting)
  */
 public class StartLoader {
 

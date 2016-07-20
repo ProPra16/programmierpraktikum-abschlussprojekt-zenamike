@@ -21,13 +21,33 @@ public class Tracker extends Application implements Plugin {
     TimeCalculator timeCalculator = new TimeCalculator();
     Duration duration;
 
+    Stage stage = new Stage();
+
 
     //method from the interface : plugin
     @Override
-    public void start() {
+    public void starting() {
         timeCalculator.startTime();
     }
 
+    @Override
+    public void stopping() {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Tracker.fxml"));
+        try {
+            scene = new Scene(fxmlLoader.load());
+            trackerController = fxmlLoader.getController();
+            trackerController.setDurationLabel();
+            trackerController.setErrorsFromList();
+            trackerController.setDuration(duration);
+            start(stage);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     //method from the Application
     @Override
@@ -40,23 +60,6 @@ public class Tracker extends Application implements Plugin {
         }
         stage.setScene(scene);
         stage.show();
-    }
-
-    @Override
-    public void stop() {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Tracker.fxml"));
-        try {
-            scene = new Scene(fxmlLoader.load());
-            trackerController = fxmlLoader.getController();
-            trackerController.setDurationLabel();
-            trackerController.setErrorsFromList();
-            trackerController.setDuration(duration);
-
-            main(new String[1]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

@@ -30,7 +30,7 @@ public class Babysteps implements Plugin {
     private Timer timer = new Timer();
 
     @Override
-    public void start() {
+    public void starting() {
         if (pluginManager == null)
             throw new IllegalStateException("The PluginManager has not been set. Please set the PluginManager before using this Plugin.");
 
@@ -46,8 +46,9 @@ public class Babysteps implements Plugin {
                 resetCode();
             }
         };
-        timer = new Timer();
+        timer.purge();
         timer.schedule(timerTask, duration.toMillis());
+
 
         /*
          * If you have exceeded the given time this plugin will reset the code
@@ -56,7 +57,7 @@ public class Babysteps implements Plugin {
     }
 
     @Override
-    public void stop() {
+    public void stopping() {
         timer.cancel();
     }
 

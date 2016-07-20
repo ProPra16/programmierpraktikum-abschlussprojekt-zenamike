@@ -16,7 +16,7 @@ import java.io.IOException;
 
 /**
  *  Class: handles the scenes' buttons (namely setting, tasklist and
- *  start button)
+ *  starting button)
  */
 
 public class StartController{

@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.time.Duration;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,8 +16,8 @@ import java.util.ResourceBundle;
  */
 public class TrackerController implements Initializable {
 
-    private Duration duration;
-    private List<String> errorListStatic;
+    private Duration duration = Duration.ZERO;
+    private List<String> errorListStatic = new LinkedList<>();
 
     @FXML Label durationLabel;
     @FXML VBox contentVBOX;
@@ -24,6 +25,10 @@ public class TrackerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+
+    public void setErrorList(List<String> list){
+        errorListStatic = list;
     }
 
     public void setDurationLabel(){

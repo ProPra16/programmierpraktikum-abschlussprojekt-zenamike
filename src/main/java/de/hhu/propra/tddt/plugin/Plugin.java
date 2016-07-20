@@ -25,19 +25,19 @@ package de.hhu.propra.tddt.plugin;
 public interface Plugin {
 
     /**************************************************************************
-     * Method: start
+     * Method: starting
      * <p>
      * Starting a plugin requires this method.
      **************************************************************************/
-    public void start();
+    public void starting();
 
     /**************************************************************************
-     * Method: stop
+     * Method: stopping
      * <p>
-     * Stopping a plugin will happen with this method. Be it an 'emergency-stop'
+     * Stopping a plugin will happen with this method. Be it an 'emergency-stopping'
      * or you just want to turn it off.
      **************************************************************************/
-    public void stop();
+    public void stopping();
 
     /**************************************************************************
      * Method: setPluginManager

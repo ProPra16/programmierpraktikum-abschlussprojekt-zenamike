@@ -40,12 +40,12 @@ public class PluginLoader {
     }
 
     public void startAllPlugins(){
-        if(isBabystepActivated == true) babystep.start();
-        if(isTrackerActivated == true) tracker.start();
+        if(isBabystepActivated == true) babystep.starting();
+        if(isTrackerActivated == true) tracker.starting();
     }
 
     public void stopAllPlugins(){
-        if(isBabystepActivated == true) babystep.stop();
-        if(isTrackerActivated == true) tracker.stop();
+        if(isBabystepActivated == true) babystep.stopping();
+        if(isTrackerActivated == true) tracker.stopping();
     }
 }

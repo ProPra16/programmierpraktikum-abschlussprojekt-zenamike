@@ -4,7 +4,6 @@ import de.hhu.propra.tddt.contentmanager.TextManager;
 import de.hhu.propra.tddt.cycle.CycleEnum;
 import de.hhu.propra.tddt.cycle.CycleManager;
 import de.hhu.propra.tddt.informationcore.InformationCore;
-import de.hhu.propra.tddt.plugin.PluginManager;
 import de.hhu.propra.tddt.plugin.babystep.Babysteps;
 import de.hhu.propra.tddt.settings.Setting;
 import de.hhu.propra.tddt.settings.SettingException;
@@ -12,8 +11,6 @@ import de.hhu.propra.tddt.settings.SettingsManager;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.rmi.CORBA.Stub;
-import javax.sound.midi.MidiDevice;
 import java.time.Duration;
 
 /**
@@ -32,7 +29,7 @@ public class TestBabySteps {
         ((InformationCore) pluginManager).setSettingsManager(new StubSettingsManager2Minutes());
         StubAccessDurationBabysteps babysteps = new StubAccessDurationBabysteps();
         babysteps.setPluginManager(pluginManager);
-        babysteps.start();
+        babysteps.starting();
 
         try {
             Thread.sleep(Duration.ofMinutes(3).toMillis());
@@ -52,7 +49,7 @@ public class TestBabySteps {
 
         Babysteps babysteps = new Babysteps();
         babysteps.setPluginManager(pluginManager);
-        babysteps.start();
+        babysteps.starting();
 
         Thread.sleep(Duration.ofMinutes(3).toMillis());
 
@@ -60,7 +57,7 @@ public class TestBabySteps {
     }
 
     /*
-     * This test verifies that the code will not be reseted if you stop the plugin
+     * This test verifies that the code will not be reseted if you stopping the plugin
      */
     @Test
     public void testNotTextReset() {
@@ -71,14 +68,14 @@ public class TestBabySteps {
         //Initializing and starting babysteps
         Babysteps babysteps = new Babysteps();
         babysteps.setPluginManager(pluginManager);
-        babysteps.start();
+        babysteps.starting();
 
         try {
             Thread.sleep(Duration.ofSeconds(5).toMillis());
         } catch (InterruptedException e) {
 
         }
-        babysteps.stop();
+        babysteps.stopping();
 
         Assert.assertEquals("hello", pluginManager.getCodeManager().getText());
     }

@@ -27,7 +27,7 @@ public class CompilerManager {
     /**
      * Method: compileCode
      * <p>
-     * Task: Method that start the compilation process, if the code produces errors,
+     * Task: Method that starting the compilation process, if the code produces errors,
      * the linked list will be filled
      *
      *@param code needs the testcode as a string to have something to work with.
@@ -53,7 +53,7 @@ public class CompilerManager {
     /**
      * Method: compileTest
      * <p>
-     * Task: Method that start the compilation process for the tests, if the tests succeed
+     * Task: Method that starting the compilation process for the tests, if the tests succeed
      * or produce any errors or is uncompileable this will be put in this linked list.
      *
      *@param testCode needs the testcode as a string to have something to work with.
