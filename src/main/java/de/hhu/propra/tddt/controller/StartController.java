@@ -1,6 +1,5 @@
 package de.hhu.propra.tddt.controller;
 
-import de.hhu.propra.tddt.loader.SettingsLoader;
 import de.hhu.propra.tddt.loader.StartLoader;
 import de.hhu.propra.tddt.loader.TDDLoader;
 import de.hhu.propra.tddt.loader.TaskListLoader;
@@ -21,16 +20,10 @@ import java.io.IOException;
  */
 
 public class StartController{
-    @FXML private Button Setting;
     @FXML private Button TaskList;
     @FXML private Button TDDCycle;
 
 
-    @FXML
-    public void handleSettingsButton(ActionEvent actionEvent) throws IOException {
-        new SettingsLoader(StartLoader.getWindow());
-        System.out.println("Settings");
-    }
     @FXML
     public void handleTaskButton(ActionEvent actionEvent) throws IOException {
         new TaskListLoader(StartLoader.getWindow());

@@ -1,16 +1,11 @@
 package de.hhu.propra.tddt.main;
 
-import de.hhu.propra.tddt.controller.SettingsController;
 import de.hhu.propra.tddt.controller.StartController;
 import de.hhu.propra.tddt.controller.TDDController;
 import de.hhu.propra.tddt.controller.TaskListController;
-
-import de.hhu.propra.tddt.loader.SettingsLoader;
 import de.hhu.propra.tddt.loader.StartLoader;
 import de.hhu.propra.tddt.loader.TDDLoader;
 import de.hhu.propra.tddt.loader.TaskListLoader;
-
-
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -32,7 +27,6 @@ public class MainControlClass {
     protected Scene tDD;
 
     protected StartController startController;
-    protected SettingsController settingsController;
     protected TaskListController taskListController;
     protected TDDController tDDController;
 
@@ -45,10 +39,6 @@ public class MainControlClass {
         StartLoader startLoader = new StartLoader(window);
         startController = (StartController) startLoader.controller();
         start = startLoader.scene();
-
-        SettingsLoader settingsLoader = new SettingsLoader(window);
-        settingsController = (SettingsController) settingsLoader.controller();
-        setting = settingsLoader.scene();
 
         TaskListLoader taskListLoader = new TaskListLoader(window);
         taskListController = (TaskListController) taskListLoader.controller();

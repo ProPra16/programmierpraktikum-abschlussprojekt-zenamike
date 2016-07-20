@@ -33,6 +33,7 @@ public class Main extends Application{
 
     @Override
     public void start(Stage window) throws Exception{
+        window.setOnCloseRequest(e-> System.exit(0));
         new MainControlClass(window);
     }
 }

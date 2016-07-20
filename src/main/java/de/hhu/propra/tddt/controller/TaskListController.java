@@ -1,15 +1,16 @@
 package de.hhu.propra.tddt.controller;
 
+import de.hhu.propra.tddt.informationcore.InformationCore;
 import de.hhu.propra.tddt.loader.StartLoader;
 import de.hhu.propra.tddt.loader.TDDLoader;
 import de.hhu.propra.tddt.loader.TaskListLoader;
+import de.hhu.propra.tddt.plugin.PluginLoader;
+import de.hhu.propra.tddt.settings.Setting;
+import de.hhu.propra.tddt.settings.SettingException;
 import de.hhu.propra.tddt.util.manager.CatalogManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,12 +27,15 @@ import java.util.ArrayList;
 public class TaskListController {
 
     @FXML public Button Go;
-    @FXML private Button Back;
-    @FXML private Button TDDCycle;
     @FXML private ChoiceBox<String> Tasks;
     @FXML private TextArea Discription;
     @FXML private TextField pathField;
     @FXML String path =  "";
+    @FXML private CheckBox BabySteps;
+    @FXML private CheckBox Tracking;
+    @FXML private Button Back;
+    @FXML private Button TDDCycle;
+    @FXML private TextField Time;
     static String classCode;
     static String testCode;
     CatalogManager manager;
@@ -89,5 +93,59 @@ public class TaskListController {
             testCode = manager.getCurrentChosenOne().getTests();
         });
     }
+
+
+
+
+
+    private static boolean Babybool = false;
+    private static String Babysteps = "B-out";
+    private static boolean Trackbool= false;
+    private static String Track  = "T-out";
+
+
+    @FXML
+    public void handleBabyStepsBox(ActionEvent actionEvent) {
+        if(Babybool == false) {
+            Babybool = true; Babysteps = "Babysteps-on";
+            System.out.println(getBabySteps());
+            PluginLoader.pluginLoader().activateBabystep(true);
+            try {
+                InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", Time.getText()));
+            } catch (SettingException e) {
+                e.printStackTrace();
+            }
+
+            return;
+        }
+        if(Babybool == true ) {
+            Babybool = false; Babysteps = "B-off";
+            System.out.println(getBabySteps());
+            PluginLoader.pluginLoader().activateBabystep(false);
+            return;
+        }
+    }
+    @FXML
+    public void handleTrackingBox(ActionEvent actionEvent) {
+        if(Trackbool == false) {Trackbool = true; Track = "Tracking-on";
+            System.out.println(getTracking());
+            PluginLoader.pluginLoader().activateTracker(true);
+            return;
+        }
+        if(Trackbool == true ) {Trackbool = false;Track = "T-off";
+            System.out.println(getTracking());
+            PluginLoader.pluginLoader().activateTracker(false);
+            return;
+        }
+    }
+
+
+
+    public static String getBabySteps(){
+        return Babysteps;
+    }
+    public static String getTracking() { return Track;     }
+
+
 }
 
