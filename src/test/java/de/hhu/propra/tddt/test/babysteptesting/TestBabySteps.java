@@ -54,7 +54,7 @@ public class TestBabySteps {
         babysteps.setPluginManager(pluginManager);
         babysteps.start();
 
-        Thread.sleep(Duration.ofSeconds(5).toMillis());
+        Thread.sleep(Duration.ofMinutes(3).toMillis());
 
         Assert.assertEquals(pluginManager.getCodeManager().getText(), "hel");
     }
