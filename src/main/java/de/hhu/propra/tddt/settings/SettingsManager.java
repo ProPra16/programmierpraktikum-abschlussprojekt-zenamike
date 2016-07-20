@@ -13,7 +13,7 @@ package de.hhu.propra.tddt.settings;
 public class SettingsManager {
 
     private final Settings settings = new Settings();
-
+t
     /**
      * Loading one specific Setting from the Settings.
      *
