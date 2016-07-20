@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.Duration;
 
 /**
  * Created by zeljko On 04.07.2016
@@ -17,31 +18,36 @@ public class Tracker extends Application implements Plugin {
     PluginManager pluginManager;
     Scene scene;
     TrackerController trackerController;
+    TimeCalculator timeCalculator = new TimeCalculator();
+    Duration duration;
 
 
     //method from the interface : plugin
     @Override
     public void start() {
-        //nothing needed to do on startup,
-        //
+        timeCalculator.startTime();
     }
 
 
     //method from the Application
     @Override
     public void start(Stage stage) throws Exception {
+        duration = timeCalculator.endTime();
         stage.setScene(scene);
-        trackerController.setDurationLabel();
-        trackerController.setErrorsFromList();
         stage.show();
     }
 
     @Override
     public void stop() {
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Tracker.fxml"));
         try {
             scene = new Scene(fxmlLoader.load());
             trackerController = fxmlLoader.getController();
+            trackerController.setDurationLabel();
+            trackerController.setErrorsFromList();
+            trackerController.setDuration(duration);
+
             main(new String[1]);
         } catch (IOException e) {
             e.printStackTrace();

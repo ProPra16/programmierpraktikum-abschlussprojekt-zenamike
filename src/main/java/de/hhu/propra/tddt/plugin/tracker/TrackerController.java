@@ -15,8 +15,8 @@ import java.util.ResourceBundle;
  */
 public class TrackerController implements Initializable {
 
-    private static Duration durationStatic;
-    private static List<String> errorListStatic;
+    private Duration durationStatic;
+    private List<String> errorListStatic;
 
     @FXML Label durationLabel;
     @FXML VBox contentVBOX;
@@ -34,7 +34,7 @@ public class TrackerController implements Initializable {
         errorListStatic.stream().forEach(e -> contentVBOX.getChildren().add(new Label(e)));
     }
 
-    public static void setDuration(Duration duration){
+    public void setDuration(Duration duration){
         durationStatic = duration;
     }
 }

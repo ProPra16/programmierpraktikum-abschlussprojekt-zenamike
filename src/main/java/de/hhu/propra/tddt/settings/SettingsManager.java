@@ -14,11 +14,6 @@ public class SettingsManager {
 
     private final Settings settings = new Settings();
 
-    public void saveSettings(){
-        //@TODO this will 100% be needed to rework
-        settings.saveSettings();
-    }
-
     /**
      * Loading one specific Setting from the Settings.
      *
