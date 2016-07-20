@@ -41,44 +41,7 @@ public class Settings {
      * When Settings becomes initialized it automatically loads the settings from the file
      */
     protected Settings(){
-        loadSettings();
-    }
 
-    /**
-     * Load the current settings from a specified file.
-     */
-    protected void loadSettings() {
-        /*
-         * @TODO
-         * 1. Fire rockets
-         * 2. Blame Kim Jong-Un(o)
-         * 2. Use hte XMLReader
-         */
-        try {
-            XMLReader xmlReader = new XMLReader(getClass().getResource("/settings/settings.xml").toExternalForm(), true);
-
-            System.out.println(getClass().getResource("/settings/settings.xml").toExternalForm());
-            System.out.println(XMLReader.getXmlToString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Save the settings to a specified file.
-     */
-    protected void saveSettings() {
-        /*
-         * @TODO
-         * 1. Build new rockets
-         * 2. Found team rocket
-         * 3. Blame Donald Trump
-         * 4. Use the XMLWriter
-         */
     }
 
     /**
