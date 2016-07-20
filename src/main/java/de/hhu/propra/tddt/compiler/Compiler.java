@@ -52,7 +52,7 @@ public class Compiler {
         compilationUnitName = "compilationTestUnit";
         testCompilerInit(compilationTestUnit);
         compileResults.setTestResults(testComp);
-        compileResults.errorStringInit(codeComp, compilationTestUnit);
+        compileResults.errorStringInit(testComp, compilationTestUnit);
 
         return compileResults.getTestResults();
     }
