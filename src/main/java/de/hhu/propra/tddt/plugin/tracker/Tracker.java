@@ -18,11 +18,16 @@ public class Tracker extends Application implements Plugin {
     Scene scene;
     TrackerController trackerController;
 
+
+    //method from the interface : plugin
     @Override
     public void start() {
-        //@TODO finish this
+        //nothing needed to do on startup,
+        //
     }
 
+
+    //method from the Application
     @Override
     public void start(Stage stage) throws Exception {
         stage.setScene(scene);
