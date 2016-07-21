@@ -80,7 +80,7 @@ public class Cycle {
     }
 
     public void enterLastPhase(){
-        currentPhaseAsInt = currentPhaseAsInt + phaseList.size()-1;
+        currentPhaseAsInt = currentPhaseAsInt + phaseList.size()-1; //TODO: Someone Check if this is correkt
         currentPhaseAsInt = currentPhaseAsInt % phaseList.size();
     }
 }
