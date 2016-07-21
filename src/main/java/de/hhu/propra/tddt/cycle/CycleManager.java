@@ -67,4 +67,9 @@ public class CycleManager {
         cycle.phaseList.add(CycleEnum.REFACTOR);
     }
 
+    public CycleEnum lastPhase(){
+        cycle.enterLastPhase();
+        return getCurrentPhase();
+    }
+
 }

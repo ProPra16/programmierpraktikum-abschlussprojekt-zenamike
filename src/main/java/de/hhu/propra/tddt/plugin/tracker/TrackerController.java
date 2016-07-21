@@ -24,7 +24,6 @@ public class TrackerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     public void setErrorList(List<String> list){
@@ -32,7 +31,7 @@ public class TrackerController implements Initializable {
     }
 
     public void setDurationLabel(){
-        durationLabel.setText(String.valueOf(duration.toMillis()) + "milliseconds");
+        durationLabel.setText(String.valueOf(duration.toMinutes()) + "minutes");
     }
 
     public void setErrorsFromList(){

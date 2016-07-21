@@ -41,6 +41,6 @@
       </TextArea>
       <CheckBox id="TimePhaseLabel" fx:id="Tracking" layoutX="24.0" layoutY="212.0" mnemonicParsing="false" onAction="#handleTrackingBox" prefHeight="18.0" prefWidth="174.0" stylesheets="@../css/StartCSS.css" text="Tracking" />
       <CheckBox id="TimePhaseLabel" fx:id="BabySteps" layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleBabyStepsBox" prefHeight="22.0" prefWidth="174.0" stylesheets="@../css/StartCSS.css" text="BabySteps" />
-      <TextField fx:id="Time" layoutX="133.0" layoutY="22.0" promptText="Time in Min." />
+      <TextField fx:id="Time" layoutX="133.0" layoutY="22.0" promptText="Time in Min. " />
    </children>
 </AnchorPane>

@@ -3,12 +3,8 @@ package de.hhu.propra.tddt.compiler;
 import vk.core.api.CompilationUnit;
 import vk.core.api.CompileError;
 import vk.core.api.JavaStringCompiler;
-import vk.core.api.TestFailure;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedList;
 
 /**

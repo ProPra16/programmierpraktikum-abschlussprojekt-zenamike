@@ -87,21 +87,22 @@ public class TDDController implements Initializable {
         System.out.println("\n\nCompilation Nr: " + InformationCore.informationCore().getCompileManager().getCompilationNumber()+"\n");
         switch (InformationCore.informationCore().getCycleManager().getCurrentPhase()) {
             case TEST:
+                stopAndStartPlugins();
                 compiliert = false;
                 compilierenTest();
                 CompileResultsPrüfenMitEinemFail();
                 ResultsAusgeben();
-
                 if(prüfenInTEST()){
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
                 testPhaseCycle();
                 PhaseLabel.setText(CurrentPhase());
+                setAreaIfBabySteps();
                 break;
 
 
             case CODE:
-
+                stopAndStartPlugins();
                 //zum überprüfen ob compiliert
                 compiliert = false;
 
@@ -114,18 +115,17 @@ public class TDDController implements Initializable {
                 compilierenTest();
                 CompileResultsPrüfenVonTest();
                 ResultsAusgeben();
-
                 if(compiliert){
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
                 prüfenInCODE();
                 testPhaseCycle();
                 PhaseLabel.setText(CurrentPhase());
-
+                setAreaIfBabySteps();
                 break;
 
             case REFACTOR:
-
+                stopAndStartPlugins();
                 System.out.println("Compiling in REFACTOR");
 
                 //zum überprüfen ob compiliert
@@ -134,25 +134,25 @@ public class TDDController implements Initializable {
                 // Code Compilieren
                 compilierenCode();
                 CompileResultsPrüfenVonCode();
-                ResultsAusgeben();
-
 
                 // Test Compilieren
                 compilierenTest();
                 CompileResultsPrüfenVonTest();
+                ResultsAusgeben();
                 if(compiliert){
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
                 prüfenInRefactor();
                 testPhaseCycle();
                 PhaseLabel.setText(CurrentPhase());
+                setAreaIfBabySteps();
                 break;
         }
 
 
     }
 
-    public boolean CompileResultsPrüfenMitEinemFail(){
+    private boolean CompileResultsPrüfenMitEinemFail(){
         try {
             System.out.println("Test compiliert");
             if (InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0).equals("1")){
@@ -163,7 +163,7 @@ public class TDDController implements Initializable {
         }
         return compiliert;
     }
-    public void CompileResultsPrüfenVonCode(){
+    private void CompileResultsPrüfenVonCode(){
         try {
             if (InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(2).equals("0")) {
                 compiliert = true;
@@ -175,12 +175,13 @@ public class TDDController implements Initializable {
             System.out.println("Test gibt NULL aus");
         }
     }
-    public void CompileResultsPrüfenVonTest(){
+    private void CompileResultsPrüfenVonTest(){
         try {
             if (InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0).equals("0")) {
                 compiliert = true;
                 System.out.println("Test compiliert");
-            } else {
+            }
+            if(!InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0).equals("0")) {
                 compiliert = false;
             }
         } catch (IndexOutOfBoundsException e) {
@@ -189,29 +190,25 @@ public class TDDController implements Initializable {
     }
 
 
-
-    public boolean prüfenInTEST(){
+    //Sets the TextAreas editable
+    private boolean prüfenInTEST(){
         if (InformationCore.informationCore().getCycleManager().getCurrentPhase() == CycleEnum.CODE) {
-            stopAndStartPlugins();
             codeArea.setEditable(true);
             testArea.setEditable(false);
             return true;
         }
         return false;
     }
-    public boolean prüfenInCODE(){
+    private boolean prüfenInCODE(){
         if (InformationCore.informationCore().getCycleManager().getCurrentPhase() == CycleEnum.REFACTOR) {
-            stopAndStartPlugins();
             codeArea.setEditable(true);
             testArea.setEditable(true);
             return true;
         }
         return false;
     }
-    public boolean prüfenInRefactor(){
+    private boolean prüfenInRefactor(){
         if (InformationCore.informationCore().getCycleManager().getCurrentPhase() == CycleEnum.TEST) {
-            stopAndStartPlugins();
-            PhaseLabel.setText(CurrentPhase());
             codeArea.setEditable(false);
             testArea.setEditable(true);
 
@@ -220,14 +217,18 @@ public class TDDController implements Initializable {
         return false;
     }
 
-    public void compilierenTest(){
+    //Compiles
+    private void compilierenTest(){
         InformationCore.informationCore().getCompileManager().compileTest(InformationCore.informationCore().getTestManager().getText());
     }
-    public void compilierenCode(){
+    private void compilierenCode(){
         InformationCore.informationCore().getCompileManager().compileCode(InformationCore.informationCore().getCodeManager().getText());
     }
 
-    public void ResultsAusgeben(){
+    /**
+     * gives you the Compilation Result
+     */
+    private void ResultsAusgeben(){
         System.out.println("CompilerResultList.get0");
         System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0));
         System.out.println();
@@ -239,33 +240,56 @@ public class TDDController implements Initializable {
         }
     }
 
-
-    public void einePhaseZurück(){
-        InformationCore.informationCore().getCycleManager().nextPhase();
-        InformationCore.informationCore().getCycleManager().nextPhase();
+    /**
+     * switches the Phase one back
+     */
+    private void einePhaseZurück(){
+        InformationCore.informationCore().getCycleManager().lastPhase();
     }
 
-    public void stopAndStartPlugins(){
+    /**
+     * stop the Plugins and start them again
+     */
+    private void stopAndStartPlugins(){
         PluginLoader.pluginLoader().stopAllPlugins();
         PluginLoader.pluginLoader().startAllPlugins();
     }
 
-    public String CurrentPhase(){
+    /**
+     * gives you the currentPhase
+     * @return as String
+     */
+    private String CurrentPhase(){
         return InformationCore.informationCore().getCycleManager().getCurrentPhase().toString();
     }
 
-    public void stopPluginCatchExeption(){
+    /**
+     * chatch the exeption @ if Phase=TEST + Back button pressed
+     */
+    private void stopPluginCatchExeption(){
         try {
             PluginLoader.pluginLoader().stopAllPlugins();
         }catch (IllegalStateException e){
+            System.out.println("Plugins schon gestoppt");
         }
     }
 
-    public void testPhaseCycle(){
+    /**
+     * Prints the CurrentPhase
+     */
+    private void testPhaseCycle(){
         System.out.println("++++++++++++++");
         System.out.println(CurrentPhase());
     }
 
+
+    /**
+     * resets the text for Babysteps
+     */
+    private void setAreaIfBabySteps(){
+        testArea.setText(InformationCore.informationCore().getTestManager().getText());
+        codeArea.setText(InformationCore.informationCore().getTestManager().getText());
+    }
 
 
     @Override

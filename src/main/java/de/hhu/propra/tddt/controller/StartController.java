@@ -1,9 +1,10 @@
 package de.hhu.propra.tddt.controller;
 
+import de.hhu.propra.tddt.cycle.CycleManager;
+import de.hhu.propra.tddt.informationcore.InformationCore;
 import de.hhu.propra.tddt.loader.StartLoader;
 import de.hhu.propra.tddt.loader.TDDLoader;
 import de.hhu.propra.tddt.loader.TaskListLoader;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -32,6 +33,7 @@ public class StartController{
     @FXML
     public void handleStartButton(ActionEvent actionEvent) throws IOException {
         new TDDLoader(StartLoader.getWindow());
+        InformationCore.informationCore().setCycleManager(new CycleManager());
         System.out.println("Start");
     }
 }

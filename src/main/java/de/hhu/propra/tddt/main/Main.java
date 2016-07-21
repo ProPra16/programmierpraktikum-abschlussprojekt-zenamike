@@ -23,8 +23,8 @@ public class Main extends Application{
     public static void main(String[] args){
 
         InformationCore.informationCore().setSettingsManager(new SettingsManager());
-        InformationCore.informationCore().setCycleManager(new CycleManager());
         InformationCore.informationCore().setCompileManager(new CompilerManager());
+        InformationCore.informationCore().setCycleManager(new CycleManager());
 
         launch(args);
     }
