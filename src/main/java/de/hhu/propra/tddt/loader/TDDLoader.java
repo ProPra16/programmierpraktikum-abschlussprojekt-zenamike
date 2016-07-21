@@ -64,6 +64,7 @@ public class TDDLoader {
         loadFXMLInformation();
         //System.out.println("Controller erstellt.");
         controller.setCode(TaskListController.getClassCode());
+        controller.setTest(TaskListController.getTestCode());
         return controller;
     }
 

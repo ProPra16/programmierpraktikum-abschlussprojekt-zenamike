@@ -84,7 +84,7 @@ public class TDDController implements Initializable {
     @FXML
     public void handleCompileButton(ActionEvent actionEvent) {
 
-        System.out.println("Compilation Nr: " + InformationCore.informationCore().getCompileManager().getCompilationNumber());
+        System.out.println("\n\nCompilation Nr: " + InformationCore.informationCore().getCompileManager().getCompilationNumber()+"\n");
         switch (InformationCore.informationCore().getCycleManager().getCurrentPhase()) {
             case TEST:
                 compiliert = false;
@@ -95,6 +95,7 @@ public class TDDController implements Initializable {
                 if(prüfenInTEST()){
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
+                testPhaseCycle();
                 PhaseLabel.setText(CurrentPhase());
                 break;
 
@@ -118,6 +119,7 @@ public class TDDController implements Initializable {
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
                 prüfenInCODE();
+                testPhaseCycle();
                 PhaseLabel.setText(CurrentPhase());
 
                 break;
@@ -142,6 +144,7 @@ public class TDDController implements Initializable {
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
                 prüfenInRefactor();
+                testPhaseCycle();
                 PhaseLabel.setText(CurrentPhase());
                 break;
         }
@@ -227,6 +230,7 @@ public class TDDController implements Initializable {
     public void ResultsAusgeben(){
         System.out.println("CompilerResultList.get0");
         System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0));
+        System.out.println();
         try{
             System.out.println("CompilerResultList.get1");
             System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(1));
@@ -255,6 +259,11 @@ public class TDDController implements Initializable {
             PluginLoader.pluginLoader().stopAllPlugins();
         }catch (IllegalStateException e){
         }
+    }
+
+    public void testPhaseCycle(){
+        System.out.println("++++++++++++++");
+        System.out.println(CurrentPhase());
     }
 
 

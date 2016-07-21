@@ -43,6 +43,10 @@ public class TaskListController implements Initializable {
     static String classCode;
     static String testCode;
     CatalogManager manager;
+    private static boolean Babybool = false;
+    private static String Babysteps = "B-out";
+    private static boolean Trackbool= false;
+    private static String Track  = "T-out";
 
     public static String getClassCode() {
         return classCode;
@@ -52,13 +56,6 @@ public class TaskListController implements Initializable {
         return testCode;
     }
 
-    /**
-     * TODO: Handle the Task and TextArea and
-     * TODO: make a Listener between them
-     * TODO: give the matching Code and Test to TDDController
-     * @param
-     * @throws IOException
-     */
 
     @FXML
     public String getPath(){
@@ -100,14 +97,6 @@ public class TaskListController implements Initializable {
 
 
 
-
-
-    private static boolean Babybool = false;
-    private static String Babysteps = "B-out";
-    private static boolean Trackbool= false;
-    private static String Track  = "T-out";
-
-
     @FXML
     public void handleBabyStepsBox(ActionEvent actionEvent) {
         if(Babybool == false) {
@@ -116,8 +105,10 @@ public class TaskListController implements Initializable {
             PluginLoader.pluginLoader().activateBabystep(true);
             BabySteps.setSelected(true);
             try {
-                if(Objects.equals(Time.getText(), ""))    InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", "3"));
-                if(!Objects.equals(Time.getText(), ""))    InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", Time.getText()));
+                if(Objects.equals(Time.getText(), ""))
+                    InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", "3"));
+                if(!Objects.equals(Time.getText(), ""))
+                    InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", Time.getText()));
             } catch (SettingException e) {
                 e.printStackTrace();
             }
