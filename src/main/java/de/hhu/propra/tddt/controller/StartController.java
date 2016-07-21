@@ -27,7 +27,7 @@ public class StartController{
     @FXML
     public void handleTaskButton(ActionEvent actionEvent) throws IOException {
         new TaskListLoader(StartLoader.getWindow());
-        System.out.println("Task");
+        System.out.println("Settings+Tasks");
     }
     @FXML
     public void handleStartButton(ActionEvent actionEvent) throws IOException {

@@ -10,10 +10,14 @@ import de.hhu.propra.tddt.settings.SettingException;
 import de.hhu.propra.tddt.util.manager.CatalogManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 
 /**
@@ -24,7 +28,7 @@ import java.util.ArrayList;
  *  Class: handles the scenes' buttons (namely back and startTDD button)
  */
 
-public class TaskListController {
+public class TaskListController implements Initializable {
 
     @FXML public Button Go;
     @FXML private ChoiceBox<String> Tasks;
@@ -110,8 +114,10 @@ public class TaskListController {
             Babybool = true; Babysteps = "Babysteps-on";
             System.out.println(getBabySteps());
             PluginLoader.pluginLoader().activateBabystep(true);
+            BabySteps.setSelected(true);
             try {
-                InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", Time.getText()));
+                if(Objects.equals(Time.getText(), ""))    InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", "3"));
+                if(!Objects.equals(Time.getText(), ""))    InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", Time.getText()));
             } catch (SettingException e) {
                 e.printStackTrace();
             }
@@ -120,6 +126,7 @@ public class TaskListController {
         }
         if(Babybool == true ) {
             Babybool = false; Babysteps = "B-off";
+            BabySteps.setSelected(false);
             System.out.println(getBabySteps());
             PluginLoader.pluginLoader().activateBabystep(false);
             return;
@@ -128,11 +135,13 @@ public class TaskListController {
     @FXML
     public void handleTrackingBox(ActionEvent actionEvent) {
         if(Trackbool == false) {Trackbool = true; Track = "Tracking-on";
+            Tracking.setSelected(true);
             System.out.println(getTracking());
             PluginLoader.pluginLoader().activateTracker(true);
             return;
         }
         if(Trackbool == true ) {Trackbool = false;Track = "T-off";
+            Tracking.setSelected(false);
             System.out.println(getTracking());
             PluginLoader.pluginLoader().activateTracker(false);
             return;
@@ -147,5 +156,10 @@ public class TaskListController {
     public static String getTracking() { return Track;     }
 
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Tracking.setSelected(Trackbool);
+        BabySteps.setSelected(Babybool);
+    }
 }
 

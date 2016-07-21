@@ -61,7 +61,7 @@ public class TDDController implements Initializable {
         switch (InformationCore.informationCore().getCycleManager().getCurrentPhase()) {
             case TEST: {
                 new StartLoader(StartLoader.getWindow());
-                PluginLoader.pluginLoader().stopAllPlugins();
+                stopPluginCatchExeption();
             }
             case CODE: {
                 einePhaseZurück();
@@ -90,10 +90,12 @@ public class TDDController implements Initializable {
                 compiliert = false;
                 compilierenTest();
                 CompileResultsPrüfenMitEinemFail();
+                ResultsAusgeben();
 
                 if(prüfenInTEST()){
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
+                PhaseLabel.setText(CurrentPhase());
                 break;
 
 
@@ -116,6 +118,8 @@ public class TDDController implements Initializable {
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
                 prüfenInCODE();
+                PhaseLabel.setText(CurrentPhase());
+
                 break;
 
             case REFACTOR:
@@ -138,13 +142,14 @@ public class TDDController implements Initializable {
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
                 prüfenInRefactor();
+                PhaseLabel.setText(CurrentPhase());
                 break;
         }
 
 
     }
 
-    public void CompileResultsPrüfenMitEinemFail(){
+    public boolean CompileResultsPrüfenMitEinemFail(){
         try {
             System.out.println("Test compiliert");
             if (InformationCore.informationCore().getCompileManager().getCompileResultList().get(0).get(0).equals("1")){
@@ -153,6 +158,7 @@ public class TDDController implements Initializable {
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Test gibt NULL aus");
         }
+        return compiliert;
     }
     public void CompileResultsPrüfenVonCode(){
         try {
@@ -184,7 +190,6 @@ public class TDDController implements Initializable {
     public boolean prüfenInTEST(){
         if (InformationCore.informationCore().getCycleManager().getCurrentPhase() == CycleEnum.CODE) {
             stopAndStartPlugins();
-            PhaseLabel.setText(CurrentPhase());
             codeArea.setEditable(true);
             testArea.setEditable(false);
             return true;
@@ -194,7 +199,6 @@ public class TDDController implements Initializable {
     public boolean prüfenInCODE(){
         if (InformationCore.informationCore().getCycleManager().getCurrentPhase() == CycleEnum.REFACTOR) {
             stopAndStartPlugins();
-            PhaseLabel.setText(CurrentPhase());
             codeArea.setEditable(true);
             testArea.setEditable(true);
             return true;
@@ -227,6 +231,7 @@ public class TDDController implements Initializable {
             System.out.println("CompilerResultList.get1");
             System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(1));
         }catch (IndexOutOfBoundsException e){
+            System.out.println("Noch nicht vorhanden");
         }
     }
 
@@ -245,6 +250,13 @@ public class TDDController implements Initializable {
         return InformationCore.informationCore().getCycleManager().getCurrentPhase().toString();
     }
 
+    public void stopPluginCatchExeption(){
+        try {
+            PluginLoader.pluginLoader().stopAllPlugins();
+        }catch (IllegalStateException e){
+        }
+    }
+
 
 
     @Override
@@ -255,7 +267,6 @@ public class TDDController implements Initializable {
         PluginLoader.pluginLoader().startAllPlugins();
 
         codeArea.setEditable(false);
-        einePhaseZurück(); // weils scheinbar bei 1 statt bi 0 im Enum anfängt...
         PhaseLabel.setText(CurrentPhase());
 
     }
