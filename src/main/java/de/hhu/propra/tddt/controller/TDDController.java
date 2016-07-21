@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by MichaelLiske on 09.07.16
@@ -188,7 +189,11 @@ public class TDDController implements Initializable {
     }
 
     public void stopAndStartPlugins() {
-        PluginLoader.pluginLoader().stopAllPlugins();
+        try{
+            PluginLoader.pluginLoader().stopAllPlugins();
+        } catch( Exception e){
+            //NO EXCEPTION FOR YOU
+        }
         PluginLoader.pluginLoader().startAllPlugins();
     }
 

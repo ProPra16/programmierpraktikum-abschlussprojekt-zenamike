@@ -4,6 +4,7 @@ package de.hhu.propra.tddt.plugin.babystep;
  * Created by zeljko On 24.06.2016
  */
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import de.hhu.propra.tddt.cycle.CycleEnum;
 import de.hhu.propra.tddt.plugin.Plugin;
 import de.hhu.propra.tddt.plugin.PluginManager;
@@ -39,8 +40,9 @@ public class Babysteps implements Plugin {
             applySettingSetting();
         } catch (SettingException e) {
             System.err.println("COULD NOT LOAD SETTINGS FROM THE SETTINGSMANAGER");
-        }
 
+        }
+        System.err.println("STARTED");
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run(){
@@ -64,6 +66,7 @@ public class Babysteps implements Plugin {
     }
 
     private void applySettingSetting() throws SettingException {
+        pluginManager.getSettingsManager().dump();
         Setting setting = pluginManager.getSettingsManager().loadSetting("babysteps");
         duration = Duration.ofMinutes(Long.parseLong(setting.getValue()));
     }

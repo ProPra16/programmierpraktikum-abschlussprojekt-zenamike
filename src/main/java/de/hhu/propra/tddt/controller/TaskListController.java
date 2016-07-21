@@ -113,8 +113,12 @@ public class TaskListController implements Initializable {
             PluginLoader.pluginLoader().activateBabystep(true);
             BabySteps.setSelected(true);
             try {
+                if(Objects.equals(Time.getText(),"")){
+                    InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", "3"));
+                }
                 if(!Objects.equals(Time.getText(), ""))
                     InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", Time.getText()));
+                    InformationCore.informationCore().getSettingsManager().dump();
             } catch (SettingException e) {
                 e.printStackTrace();
             }

@@ -17,7 +17,11 @@ import java.util.ResourceBundle;
 public class TrackerController implements Initializable {
 
     private Duration duration = Duration.ZERO;
-    private List<String> errorListStatic = new LinkedList<>();
+    private List<String> errorList = new LinkedList<>();
+
+    private Label failedTest = new Label();
+    private Label ignoredTest = new Label();
+    private Label succededTest = new Label();
 
     @FXML Label durationLabel;
     @FXML VBox contentVBOX;
@@ -26,8 +30,8 @@ public class TrackerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
-    public void setErrorList(List<String> list){
-        errorListStatic = list;
+    public void setErrorList(LinkedList<String> list){
+        errorList = list;
     }
 
     public void setDurationLabel(){
@@ -35,7 +39,9 @@ public class TrackerController implements Initializable {
     }
 
     public void setErrorsFromList(){
-        errorListStatic.stream().forEach(e -> contentVBOX.getChildren().add(new Label(e)));
+            failedTest.setText(errorList.get(0));
+            ignoredTest.setText(errorList.get(1));
+            succededTest.setText(errorList.get(2));
     }
 
     public void setDuration(Duration duration){

@@ -52,4 +52,9 @@ public class SettingsManager {
         settings.removeSettingWithID(id);
     }
 
+
+    public void dump(){
+        settings.dumpSettings().forEach(e-> System.out.println(e.getID()));
+        settings.dumpSettings().forEach(e-> System.out.println(e.getValue()));
+    }
 }

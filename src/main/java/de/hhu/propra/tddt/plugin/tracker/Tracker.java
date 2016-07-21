@@ -1,11 +1,13 @@
 package de.hhu.propra.tddt.plugin.tracker;
 
+import de.hhu.propra.tddt.informationcore.InformationCore;
 import de.hhu.propra.tddt.plugin.Plugin;
 import de.hhu.propra.tddt.plugin.PluginManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.ir.IfNode;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -27,6 +29,7 @@ public class Tracker extends Application implements Plugin {
     //method from the interface : plugin
     @Override
     public void starting() {
+        System.out.println("I Have Been Called");
         timeCalculator.startTime();
     }
 
@@ -35,11 +38,16 @@ public class Tracker extends Application implements Plugin {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Tracker.fxml"));
         try {
+
+            duration = timeCalculator.endTime();
+
             scene = new Scene(fxmlLoader.load());
             trackerController = fxmlLoader.getController();
             trackerController.setDurationLabel();
+            trackerController.setErrorList(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0));
             trackerController.setErrorsFromList();
             trackerController.setDuration(duration);
+
             start(stage);
 
         } catch (IOException e) {
@@ -58,6 +66,7 @@ public class Tracker extends Application implements Plugin {
             timeCalculator.startTime();
             duration = timeCalculator.endTime();
         }
+
         stage.setScene(scene);
         stage.show();
     }

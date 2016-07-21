@@ -50,13 +50,16 @@ public class TextManager {
     public void resetText() {
         if (phaseSave == null) phaseSave = "";
         if (string == null) textArea.setText(phaseSave);
+
         if (textArea == null) string = phaseSave;
     }
 
     @Getter
     public String getText() {
         if (string == null) return textArea.getText();
+
         if (textArea == null) return string;
+
         return null;
     }
 

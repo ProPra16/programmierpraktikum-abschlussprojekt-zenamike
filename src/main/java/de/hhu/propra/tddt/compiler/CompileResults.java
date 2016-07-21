@@ -95,6 +95,7 @@ public class CompileResults {
             testResults.add(successfulTests);
             testResults.add(ignoredTests);
             testResults.add(failedTests);
+
         } else {
             testResults.add("");
             testResults.add("");
