@@ -1,6 +1,5 @@
 package de.hhu.propra.tddt.controller;
 
-import de.hhu.propra.tddt.cycle.CycleManager;
 import de.hhu.propra.tddt.informationcore.InformationCore;
 import de.hhu.propra.tddt.loader.StartLoader;
 import de.hhu.propra.tddt.loader.TDDLoader;
@@ -75,8 +74,6 @@ public class TaskListController implements Initializable {
         new TDDLoader(TaskListLoader.getWindow());
         TDDLoader.controller.setCode(classCode);
         TDDLoader.controller.setTest(testCode);
-        InformationCore.informationCore().setCycleManager(new CycleManager());
-
 
     }
     @FXML
