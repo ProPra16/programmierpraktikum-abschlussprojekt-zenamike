@@ -189,15 +189,15 @@ public class TDDController implements Initializable {
     }
 
     public void stopAndStartPlugins() {
-        try{
+        try {
             PluginLoader.pluginLoader().stopAllPlugins();
-        } catch( Exception e){
+        } catch (Exception e) {
             //NO EXCEPTION FOR YOU
         }
         PluginLoader.pluginLoader().startAllPlugins();
     }
 
-    public void updateInformationForTextManager(){
+    public void updateInformationForTextManager() {
         InformationCore.informationCore().getTestManager().updatePhaseSave(testArea.getText());
         System.out.println("UPDATE INFORMATION FOR TEXTMANAGER");
         System.out.println(testArea.getText());
@@ -223,7 +223,11 @@ public class TDDController implements Initializable {
         InformationCore.informationCore().setCodeManager(new TextManager(codeArea));
         InformationCore.informationCore().setTestManager(new TextManager(testArea));
 
-        uiUpdateForTest();
+        try {
+            uiUpdateForTest();
+        } catch (Exception e) {
+
+        }
 
         PhaseLabel.setText(CurrentPhase());
 

@@ -29,7 +29,6 @@ public class Tracker extends Application implements Plugin {
     //method from the interface : plugin
     @Override
     public void starting() {
-        System.out.println("I Have Been Called");
         timeCalculator.startTime();
     }
 
@@ -44,7 +43,6 @@ public class Tracker extends Application implements Plugin {
             scene = new Scene(fxmlLoader.load());
             trackerController = fxmlLoader.getController();
             trackerController.setDurationLabel();
-            trackerController.setErrorList(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0));
             trackerController.setErrorsFromList();
             trackerController.setDuration(duration);
 
