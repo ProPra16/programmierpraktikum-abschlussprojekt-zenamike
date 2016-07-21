@@ -63,89 +63,72 @@ public class TDDController implements Initializable {
                 break;
             }
             case CODE: {
-                einePhaseZurück();
+                einePhaseZurueck();
                 PhaseLabel.setText(CurrentPhase());
-                testArea.setEditable(true);
-                codeArea.setEditable(false);
-                stopAndStartPlugins();
+                uiUpdateForTest();
                 break;
             }
             case REFACTOR: {
-                einePhaseZurück();
+                einePhaseZurueck();
                 PhaseLabel.setText(CurrentPhase());
-                testArea.setEditable(false);
-                codeArea.setEditable(true);
-                stopAndStartPlugins();
+                uiUpdateForCode();
                 break;
             }
         }
-        System.out.println("Back");
     }
 
     @FXML
     public void handleCompileButton(ActionEvent actionEvent) {
 
-        System.out.println("\n\nCompilation Nr: "
-                + InformationCore.informationCore().getCompileManager().getCompilationNumber() + "\n");
         switch (InformationCore.informationCore().getCycleManager().getCurrentPhase()) {
             case TEST:
                 compiliert = false;
                 compilierenTest();
-                CompileResultsPrüfenMitEinemFail();
-                ResultsAusgeben();
+                CompileResultsPruefenMitEinemFail();
 
                 if (!compiliert) {
                     uiUpdateForCode();
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
-                testPhaseCycle();
                 PhaseLabel.setText(CurrentPhase());
                 break;
 
             case CODE:
 
-                // zum überprüfen ob compiliert
+                // zum ueberpruefen ob compiliert
                 compiliert = false;
 
                 // Test Compilieren
                 compilierenTest();
-                CompileResultsPrüfenVonTest();
-                ResultsAusgeben();
+                CompileResultsPruefenVonTest();
 
                 if (compiliert) {
                     uiUpdateForRefactor();
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
-                testPhaseCycle();
                 PhaseLabel.setText(CurrentPhase());
-
                 break;
 
             case REFACTOR:
 
-                System.out.println("Compiling in REFACTOR");
-
-                // zum überprüfen ob compiliert
+                // zum ueberpruefen ob compiliert
                 compiliert = false;
 
                 // Code Compilieren
                 compilierenCode();
-                CompileResultsPrüfenVonTest();
-                ResultsAusgeben();
+                CompileResultsPruefenVonTest();
 
                 if (compiliert) {
                     uiUpdateForTest();
                     InformationCore.informationCore().getCycleManager().nextPhase();
                 }
-                testPhaseCycle();
                 PhaseLabel.setText(CurrentPhase());
                 break;
         }
 
     }
 
-    public void CompileResultsPrüfenMitEinemFail() {
-        System.out.println("Test compiliert");
+    public void CompileResultsPruefenMitEinemFail() {
         CompilerManager compileManager = InformationCore.informationCore().getCompileManager();
         LinkedList<LinkedList<String>> theList = compileManager.getCompileResultList();
         LinkedList<String> elementList = theList.get(0);
@@ -156,7 +139,7 @@ public class TDDController implements Initializable {
         }
     }
 
-    public void CompileResultsPrüfenVonTest() {
+    public void CompileResultsPruefenVonTest() {
         LinkedList<LinkedList<String>> compileResultList = InformationCore.informationCore().getCompileManager()
                 .getCompileResultList();
         if (compileResultList.get(0).get(2)
@@ -168,18 +151,21 @@ public class TDDController implements Initializable {
     }
 
     public void uiUpdateForCode() {
+        updateInformationForTextManager();
         stopAndStartPlugins();
         codeArea.setEditable(true);
         testArea.setEditable(false);
     }
 
     public void uiUpdateForRefactor() {
+        updateInformationForTextManager();
         stopAndStartPlugins();
         codeArea.setEditable(true);
         testArea.setEditable(true);
     }
 
     public void uiUpdateForTest() {
+        updateInformationForTextManager();
         stopAndStartPlugins();
         PhaseLabel.setText(CurrentPhase());
         codeArea.setEditable(false);
@@ -196,14 +182,7 @@ public class TDDController implements Initializable {
         compilierenTest();
     }
 
-    public void ResultsAusgeben() {
-        System.out.println("CompilerResultList.get0");
-        System.out.println(InformationCore.informationCore().getCompileManager().getCompileResultList().get(0));
-        System.out.println();
-
-    }
-
-    public void einePhaseZurück() {
+    public void einePhaseZurueck() {
         InformationCore.informationCore().getCycleManager().nextPhase();
         InformationCore.informationCore().getCycleManager().nextPhase();
     }
@@ -211,6 +190,15 @@ public class TDDController implements Initializable {
     public void stopAndStartPlugins() {
         PluginLoader.pluginLoader().stopAllPlugins();
         PluginLoader.pluginLoader().startAllPlugins();
+    }
+
+    public void updateInformationForTextManager(){
+        InformationCore.informationCore().getTestManager().updatePhaseSave(testArea.getText());
+        System.out.println("UPDATE INFORMATION FOR TEXTMANAGER");
+        System.out.println(testArea.getText());
+
+        InformationCore.informationCore().getCodeManager().updatePhaseSave(codeArea.getText());
+        System.out.println(codeArea.getText());
     }
 
     public String CurrentPhase() {
@@ -224,19 +212,14 @@ public class TDDController implements Initializable {
         }
     }
 
-    public void testPhaseCycle() {
-        System.out.println("++++++++++++++");
-        System.out.println(CurrentPhase());
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         InformationCore.informationCore().setCodeManager(new TextManager(codeArea));
         InformationCore.informationCore().setTestManager(new TextManager(testArea));
-        PluginLoader.pluginLoader().startAllPlugins();
 
-        codeArea.setEditable(false);
+        uiUpdateForTest();
+
         PhaseLabel.setText(CurrentPhase());
 
     }

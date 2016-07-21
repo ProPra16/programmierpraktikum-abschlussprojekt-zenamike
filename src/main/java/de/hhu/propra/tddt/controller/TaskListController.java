@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.xml.sax.SAXParseException;
 
+import javax.sound.midi.MidiDevice;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -41,13 +42,13 @@ public class TaskListController implements Initializable {
     @FXML private Button Back;
     @FXML private Button TDDCycle;
     @FXML private TextField Time;
+
     static String classCode;
     static String testCode;
     CatalogManager manager;
+
     private static boolean Babybool = false;
-    private static String Babysteps = "B-out";
     private static boolean Trackbool= false;
-    private static String Track  = "T-out";
 
     public static String getClassCode() {
         return classCode;
@@ -75,7 +76,16 @@ public class TaskListController implements Initializable {
         TDDLoader.controller.setCode(classCode);
         TDDLoader.controller.setTest(testCode);
 
+        InformationCore.informationCore().getCodeManager().updatePhaseSave(classCode);
+        InformationCore.informationCore().getTestManager().updatePhaseSave(testCode);
+
+        System.out.println(InformationCore.informationCore().getTestManager().getPhaseSave());
+        System.out.println(InformationCore.informationCore().getTestManager().getText());
+
+        System.out.println(InformationCore.informationCore().getCodeManager().getPhaseSave());
+        System.out.println(InformationCore.informationCore().getCodeManager().getText());
     }
+
     @FXML
     public void handleGoButton(ActionEvent actionEvent) throws SAXParseException{
         path = getPath();
@@ -96,18 +106,13 @@ public class TaskListController implements Initializable {
         });
     }
 
-
-
     @FXML
     public void handleBabyStepsBox(ActionEvent actionEvent) {
         if(Babybool == false) {
-            Babybool = true; Babysteps = "Babysteps-on";
-            System.out.println(getBabySteps());
+            Babybool = true;
             PluginLoader.pluginLoader().activateBabystep(true);
             BabySteps.setSelected(true);
             try {
-                if(Objects.equals(Time.getText(), ""))
-                    InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", "3"));
                 if(!Objects.equals(Time.getText(), ""))
                     InformationCore.informationCore().getSettingsManager().addSetting(new Setting("babysteps", Time.getText()));
             } catch (SettingException e) {
@@ -117,36 +122,25 @@ public class TaskListController implements Initializable {
             return;
         }
         if(Babybool == true ) {
-            Babybool = false; Babysteps = "B-off";
+            Babybool = false;
             BabySteps.setSelected(false);
-            System.out.println(getBabySteps());
             PluginLoader.pluginLoader().activateBabystep(false);
             return;
         }
     }
     @FXML
     public void handleTrackingBox(ActionEvent actionEvent) {
-        if(Trackbool == false) {Trackbool = true; Track = "Tracking-on";
+        if(Trackbool == false) {Trackbool = true;
             Tracking.setSelected(true);
-            System.out.println(getTracking());
             PluginLoader.pluginLoader().activateTracker(true);
             return;
         }
-        if(Trackbool == true ) {Trackbool = false;Track = "T-off";
+        if(Trackbool == true ) {Trackbool = false;
             Tracking.setSelected(false);
-            System.out.println(getTracking());
             PluginLoader.pluginLoader().activateTracker(false);
             return;
         }
     }
-
-
-
-    public static String getBabySteps(){
-        return Babysteps;
-    }
-    public static String getTracking() { return Track;     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

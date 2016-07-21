@@ -31,29 +31,25 @@ public class Babysteps implements Plugin {
 
     @Override
     public void starting() {
+
+
         if (pluginManager == null)
             throw new IllegalStateException("The PluginManager has not been set. Please set the PluginManager before using this Plugin.");
-
         try {
             applySettingSetting();
         } catch (SettingException e) {
-            System.out.println("COULD NOT LOAD SETTINGS FROM THE SETTINGSMANAGER");
+            System.err.println("COULD NOT LOAD SETTINGS FROM THE SETTINGSMANAGER");
         }
 
         TimerTask timerTask = new TimerTask() {
             @Override
-            public void run() {
+            public void run(){
+                System.out.println("Your code has gone");
                 resetCode();
             }
         };
-        timer.purge();
+        timer = new Timer();
         timer.schedule(timerTask, duration.toMillis());
-
-
-        /*
-         * If you have exceeded the given time this plugin will reset the code
-         * you wrote in this cycle element and reset the cycle
-         */
     }
 
     @Override
