@@ -62,8 +62,8 @@ public class CycleManager {
      **************************************************************************/
 
     private void initializePhases(){
-        cycle.phaseList.add(CycleEnum.CODE);
         cycle.phaseList.add(CycleEnum.TEST);
+        cycle.phaseList.add(CycleEnum.CODE);
         cycle.phaseList.add(CycleEnum.REFACTOR);
     }
 
