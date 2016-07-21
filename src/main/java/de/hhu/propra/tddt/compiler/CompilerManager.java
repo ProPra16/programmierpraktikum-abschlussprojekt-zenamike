@@ -7,17 +7,26 @@ import java.util.LinkedList;
  */
 public class CompilerManager {
 
+
+
+    /*********************************************************
+     * Class: CompilerManager
+     * <p>
+     * Task: Class handling the results from the compiler and
+     * the calls from the gui
+     *
+     * @author Kevin
+     * @version the current version is changed in order
+     * to work with the information core
+     ********************************************************/
+
     Compiler compiler = new Compiler();
-    LinkedList<String> CodeCompileMessages = new LinkedList<>();
     LinkedList<String> TestCompileMessages = new LinkedList<>();
+    LinkedList<String>CodeCompileMessages = new LinkedList<>();
     LinkedList<LinkedList<String>> compileResultList = new LinkedList<>();
-    String errorMessage;
+
     int compilationNumber = 0;
 
-    public CompilerManager() {
-        this.compiler = compiler;
-
-    }
 
     /**
      *
@@ -31,12 +40,15 @@ public class CompilerManager {
      * @param testCode
      *            needs the testcode as a string to have something to work with.
      *
+     *
+     * @param code
+     *          needs also the code from the right textfield to work
+     *
      *            the list will look like this LinkedList<String> testResults
      *            failed tests ignored tests successful tests test duration test
      *            fail messages
-     * @param testCode2
      *
-     * @return
+     * @return void
      */
 
     public void compileTest(String code, String testCode) {
@@ -45,67 +57,45 @@ public class CompilerManager {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
         addResultsIntoCompileResultList(TestCompileMessages);
-    }
-
-    /****
-     * Method: setCycleError
-     * <p>
-     * Task: Method that decides which error is saved to a String so the GUI can
-     * pop an alarm box
-     *
-     * @param setError
-     *            tells clearly which errors it's going to be
-     *
-     * @return void
-     */
-
-    public void setCycleError(int setError) { // remove or set somewhere else
-
-        switch (setError) {
-
-            case 1:
-                errorMessage = "Code is not allowed to compile here";
-                break;
-            case 2:
-                errorMessage = "You can't change into the same phase again.";
-                break;
-            case 3:
-                errorMessage = "You shallow not pass since something does not work, check" +
-                        "the following: ";
-                break;
-            default:
-                errorMessage = null;
-        }
+        CodeCompileMessages = compiler.getCompilerErrors();
+        addResultsIntoCompileResultListAtPlaceOne(CodeCompileMessages);
 
     }
 
-    /**
-     * Method: getCycleError
-     * <p>
-     * Task: Method that just gives the errorMessage String to the GUI
-     *
-     *
-     * @return errorMessage
-     */
-
-    public String getCycleError() {
-        return errorMessage;
-    }
 
     /**
      * Method: addResultsIntoCompileResultList
      * <p>
-     * adds both result list into one list
+     * adds the result into one bigger list
      *
      * @param list
-     *            the result list from either compileCode or compileTest
+     *            the result list compileTest
      *
      * @return void
      */
 
     private void addResultsIntoCompileResultList(LinkedList<String> list) {
         compileResultList.add(0, list);
+        compilationNumber++;
+    }
+
+
+    /**
+     * Method: addResultsIntoCompileResultListAtPlaceOne
+     * <p>
+     * adds the compile errors to the list
+     *
+     * @param list
+     *            the compile errors as a list
+     *
+     * @return void
+     */
+
+
+    private void addResultsIntoCompileResultListAtPlaceOne(LinkedList<String> list) {
+        compileResultList.add(1, list);
         compilationNumber++;
     }
 

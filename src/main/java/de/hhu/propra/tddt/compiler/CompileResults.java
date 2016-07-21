@@ -4,15 +4,7 @@ import vk.core.api.CompilationUnit;
 import vk.core.api.CompileError;
 import vk.core.api.CompilerResult;
 import vk.core.api.JavaStringCompiler;
-import vk.core.api.TestFailure;
-
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedList;
-
-import de.hhu.propra.tddt.informationcore.InformationCore;
 
 /**
  * Created by schiggy on 10.07.16.
@@ -31,14 +23,10 @@ public class CompileResults {
 
     LinkedList<String> testResults = new LinkedList<>();
     LinkedList<String> compileResults = new LinkedList<>();
-    static String errorMessage;
 
     String failedTests = null;
     String ignoredTests = null;
     String successfulTests = null;
-    String testDuration = null;
-    String compileDuration = null;
-    String compileMessage = null;
 
     /**
      * Method: addCompileErrors
@@ -90,7 +78,6 @@ public class CompileResults {
             ignoredTests = Integer.toString(ignoredTestsNumber);
             int successfulTestsNumber = compiler.getTestResult().getNumberOfSuccessfulTests();
             successfulTests = Integer.toString(successfulTestsNumber);
-            Duration testDurationTime = compiler.getTestResult().getTestDuration();
 
             testResults.add(successfulTests);
             testResults.add(ignoredTests);
@@ -120,50 +107,6 @@ public class CompileResults {
         return testResults;
     }
 
-    /**
-     * Method: setCompileResults
-     * <p>
-     * Task: Method that saves the errors/information from the internal compiler
-     * into an ArrayList.
-     *
-     * @param compiler
-     *            so that method can access the information
-     * @param compilationUnit
-     *            is needed for the CompileError collection in order to specify
-     *            with CompilationUnit should be looked at.
-     *
-     * @return void
-     */
-
-    protected void setCodeResults(JavaStringCompiler compiler, CompilationUnit compilationUnit) {
-        Duration compileDurationTime = compiler.getCompilerResult().getCompileDuration();
-        compileDuration = Long.toString(compileDurationTime.getSeconds());
-        // Collection<CompileError> compileMessages =
-        // compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnit);
-		/*
-		 * if (!compileMessages.isEmpty()) { String arr[] = new
-		 * String[compileMessages.size()]; compileMessages.toArray(arr);
-		 * compileMessage = Arrays.toString(arr); }
-		 */
-        // compileResults.add(compileDuration);
-        // compileResults.add(compileMessage);
-    }
-
-    /**
-     * Method: getCompileResults
-     * <p>
-     * Task: Method that makes the information from setTestResults accessable.
-     * **important** for the GUI
-     *
-     *
-     *
-     * @return LinkedList<String> compileResults in this order: compileErrors
-     *         compileDuration compileMessage
-     */
-
-    public LinkedList<String> getCompileResults() {
-        return compileResults;
-    }
 
     /****
      * Method: errorStringInit
@@ -174,9 +117,17 @@ public class CompileResults {
      * @return void
      */
 
-    protected void errorStringInit(JavaStringCompiler compiler, CompilationUnit cu) {
+    protected void errorStringInit(JavaStringCompiler compiler, CompilationUnit cu, CompilationUnit cu2) {
         String errorString = "";
+        addCompileErrors("In the TESTCODE: \n");
         for (CompileError compileError : compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(cu)) {
+            errorString = "Line " + compileError.getLineNumber() + ": " + compileError.getMessage() +
+                    ": \n " + compileError.getCodeLineContainingTheError() + "\n" +
+                    compileError.getMessage() + "\n";
+            addCompileErrors(errorString);
+        }
+        addCompileErrors("In the CODE: \n");
+        for (CompileError compileError : compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(cu2)) {
             errorString = "Line " + compileError.getLineNumber() + ": " + compileError.getMessage() +
                     ": \n " + compileError.getCodeLineContainingTheError() + "\n" +
                     compileError.getMessage() + "\n";

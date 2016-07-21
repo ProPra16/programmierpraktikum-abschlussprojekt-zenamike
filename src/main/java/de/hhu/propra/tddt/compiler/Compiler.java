@@ -14,16 +14,9 @@ import java.util.LinkedList;
 public class Compiler {
 
     JavaStringCompiler testComp;
-    JavaStringCompiler codeComp;
     String compilationUnitName = null;
     CompileResults compileResults = new CompileResults();
 
-    public Compiler() {
-        this.testComp = testComp;
-        this.codeComp = codeComp;
-        this.compilationUnitName = compilationUnitName;
-
-    }
 
     /***
      * Method: compileTest
@@ -32,9 +25,10 @@ public class Compiler {
      * compiles the code, results of that compilation is taken to
      * CompileResults.
      *
-     * @param testCode
+     * @param code
      *            needs the testcode as a string to have something to work with.
-     * @param testCode2
+     * @param testCode
+     *            needs the code as a string in order to compile it
      *
      * @return LinkedList<String> testResults in this order: failed tests
      *         ignored tests successful tests test duration test fail messages
@@ -51,7 +45,7 @@ public class Compiler {
 
         compileResults.setTestResults(testComp);
 
-        compileResults.errorStringInit(testComp, compilationTestUnit);
+        compileResults.errorStringInit(testComp, compilationTestUnit, compilationUnit);
         return compileResults.getTestResults();
     }
 
@@ -73,19 +67,16 @@ public class Compiler {
     }
 
     /**
-     * Method: codeCompilerInit
+     * Method: getCompilerErrors
      * <p>
-     * Task: Initializes the test compiler.
+     * Task: passes the compile errors along to the manager from the result class.
      *
-     * @param compUnit
-     *            needs a Compilation Unit to starting the compiler.
      *
      * @return void
      */
 
-    private void codeCompilerInit(CompilationUnit compUnit) {
-        codeComp = CompilerFactory.getCompiler(compUnit);
-        codeComp.compileAndRunTests();
+    public LinkedList<String> getCompilerErrors(){
+        return compileResults.getCompilerErrors();
     }
 
 }

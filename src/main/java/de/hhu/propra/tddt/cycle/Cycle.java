@@ -79,8 +79,18 @@ public class Cycle {
         currentPhaseAsInt = currentPhaseAsInt % phaseList.size();
     }
 
+    /*************************************************************************
+     * Method: enterLastPhase
+     * <p>
+     * decreases the currentPhasesAsInt in order to decreases the cycle phase.
+     * The modulo operation insures that the cycle counter variable stays inside
+     * the number of initilized cycles in the linked list
+     *
+     * @return void
+     *************************************************************************/
+
     public void enterLastPhase(){
-        currentPhaseAsInt = currentPhaseAsInt + phaseList.size()-1; //TODO: Someone Check if this is correkt
+        currentPhaseAsInt = currentPhaseAsInt + phaseList.size()-1; //it's ok
         currentPhaseAsInt = currentPhaseAsInt % phaseList.size();
     }
 }
