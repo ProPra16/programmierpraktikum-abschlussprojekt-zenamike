@@ -14,7 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.xml.sax.SAXParseException;
 
-import javax.sound.midi.MidiDevice;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -60,12 +59,6 @@ public class TaskListController implements Initializable {
 
 
     @FXML
-    public String getPath(){
-        path = pathField.getText();
-        return path;
-    }
-
-    @FXML
     public void handleBackButton(ActionEvent actionEvent) throws IOException {
         new StartLoader(TaskListLoader.getWindow());
         System.out.println("Back");
@@ -89,6 +82,10 @@ public class TaskListController implements Initializable {
     @FXML
     public void handleGoButton(ActionEvent actionEvent) throws SAXParseException{
         path = getPath();
+        if(path.equals("")) {
+            System.out.println("No path.");
+            return;
+        }
         System.out.println(path);
         manager = new CatalogManager(path);
         ArrayList<String> names = manager.getExerciseNames();
@@ -104,6 +101,12 @@ public class TaskListController implements Initializable {
             classCode = manager.getCurrentChosenOne().getClasses();
             testCode = manager.getCurrentChosenOne().getTests();
         });
+    }
+
+    @FXML
+    public String getPath(){
+        path = pathField.getText();
+        return path;
     }
 
     @FXML

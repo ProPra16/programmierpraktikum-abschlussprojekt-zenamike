@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 
 import java.io.IOException;
 
+import static de.hhu.propra.tddt.controller.TaskListController.classCode;
+import static de.hhu.propra.tddt.controller.TaskListController.testCode;
+
 /**
  * Created by MichaelLiske on 09.07.16
  */
@@ -31,6 +34,9 @@ public class StartController{
     @FXML
     public void handleStartButton(ActionEvent actionEvent) throws IOException {
         new TDDLoader(StartLoader.getWindow());
+        TDDLoader.controller.setCode(classCode);
+        TDDLoader.controller.setTest(testCode);
+
         System.out.println("Start");
     }
 }
