@@ -2,7 +2,6 @@ package de.hhu.propra.tddt.controller;
 
 import de.hhu.propra.tddt.compiler.CompilerManager;
 import de.hhu.propra.tddt.contentmanager.TextManager;
-import de.hhu.propra.tddt.cycle.CycleEnum;
 import de.hhu.propra.tddt.informationcore.InformationCore;
 import de.hhu.propra.tddt.loader.StartLoader;
 import de.hhu.propra.tddt.plugin.PluginLoader;
@@ -17,7 +16,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by MichaelLiske on 09.07.16
@@ -81,54 +79,56 @@ public class TDDController implements Initializable {
     @FXML
     public void handleCompileButton(ActionEvent actionEvent) {
 
-        switch (InformationCore.informationCore().getCycleManager().getCurrentPhase()) {
-            case TEST:
-                compiliert = false;
-                compilierenTest();
-                CompileResultsPruefenMitEinemFail();
+        try {
 
-                if (!compiliert) {
-                    uiUpdateForCode();
-                    InformationCore.informationCore().getCycleManager().nextPhase();
-                }
-                PhaseLabel.setText(CurrentPhase());
-                break;
+            switch (InformationCore.informationCore().getCycleManager().getCurrentPhase()) {
+                case TEST:
+                    compiliert = false;
+                    compilierenTest();
+                    CompileResultsPruefenMitEinemFail();
 
-            case CODE:
+                    if (!compiliert) {
+                        uiUpdateForCode();
+                        InformationCore.informationCore().getCycleManager().nextPhase();
+                    }
+                    PhaseLabel.setText(CurrentPhase());
+                    break;
 
-                // zum ueberpruefen ob compiliert
-                compiliert = false;
+                case CODE:
 
-                // Test Compilieren
-                compilierenTest();
-                CompileResultsPruefenVonTest();
+                    // zum ueberpruefen ob compiliert
+                    compiliert = false;
 
-                if (compiliert) {
-                    uiUpdateForRefactor();
-                    InformationCore.informationCore().getCycleManager().nextPhase();
-                }
-                PhaseLabel.setText(CurrentPhase());
-                break;
+                    // Test Compilieren
+                    compilierenTest();
+                    CompileResultsPruefenVonTest();
 
-            case REFACTOR:
+                    if (compiliert) {
+                        uiUpdateForRefactor();
+                        InformationCore.informationCore().getCycleManager().nextPhase();
+                    }
+                    PhaseLabel.setText(CurrentPhase());
+                    break;
 
-                // zum ueberpruefen ob compiliert
-                compiliert = false;
+                case REFACTOR:
 
-                // Code Compilieren
-                compilierenCode();
-                CompileResultsPruefenVonTest();
+                    // zum ueberpruefen ob compiliert
+                    compiliert = false;
 
-                if (compiliert) {
-                    uiUpdateForTest();
-                    InformationCore.informationCore().getCycleManager().nextPhase();
-                }
-                PhaseLabel.setText(CurrentPhase());
-                break;
-        }
+                    // Code Compilieren
+                    compilierenCode();
+                    CompileResultsPruefenVonTest();
 
+                    if (compiliert) {
+                        uiUpdateForTest();
+                        InformationCore.informationCore().getCycleManager().nextPhase();
+                    }
+                    PhaseLabel.setText(CurrentPhase());
+                    break;
+            }
+
+        }catch (IndexOutOfBoundsException e){}
     }
-
     public void CompileResultsPruefenMitEinemFail() {
         CompilerManager compileManager = InformationCore.informationCore().getCompileManager();
         LinkedList<LinkedList<String>> theList = compileManager.getCompileResultList();
