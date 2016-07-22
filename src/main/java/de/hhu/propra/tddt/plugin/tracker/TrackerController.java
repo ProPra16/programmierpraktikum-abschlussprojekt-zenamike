@@ -9,7 +9,6 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.time.Duration;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -24,14 +23,17 @@ public class TrackerController implements Initializable {
     private Label ignoredTest = new Label();
     private Label succededTest = new Label();
 
+    private Label thisFuckingLabel = new Label();
+
+
     @FXML
     Label durationLabel;
     @FXML
     VBox contentVBOX;
 
-    VBox anotherVBOX = new VBox();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        contentVBOX.getChildren().addAll(failedTest, ignoredTest, succededTest, new Label("YOUR ERRORS ARE: "), thisFuckingLabel);
     }
 
     public void setDurationLabel() {
@@ -39,22 +41,36 @@ public class TrackerController implements Initializable {
     }
 
     public void setErrorsFromList() {
-        contentVBOX.getChildren().remove(anotherVBOX);
-        anotherVBOX = new VBox();
         errorList = InformationCore.informationCore().getCompileManager().getCompileResultList();
-        failedTest.setText(errorList.get(0).get(0));
-        ignoredTest.setText(errorList.get(0).get(1));
-        succededTest.setText(errorList.get(0).get(2));
-        contentVBOX.getChildren().add(new Label("YOU ERRORS ARE:"));
-        contentVBOX.getChildren().add(anotherVBOX);
-        errorList.get(1).forEach(e -> {
-            anotherVBOX.getChildren().add(new Label(e));
-            System.out.println(e);
-        });
+        updateShortCompileResultLabel();
+        updateMoreCompileResultLabel();
 
     }
 
+    private void updateShortCompileResultLabel(){
+
+        if(errorList.get(0).get(0).equals("") || errorList.get(0).get(0).equals(" ")){
+            failedTest.setText("FAILED TESTS: THE TEST IS NOT COMPILEABLE" );
+            ignoredTest.setText("");
+            succededTest.setText("");
+        } else {
+            failedTest.setText("FAILED TESTS: " + errorList.get(0).get(0));
+            ignoredTest.setText("IGNORED TESTS: "+errorList.get(0).get(1));
+            succededTest.setText("SUCCEDED TESTS: "+errorList.get(0).get(2));
+        }
+    }
+
+    private void updateMoreCompileResultLabel(){
+        String fuckingString = "";
+        for (String string: errorList.get(1)) {
+            fuckingString = fuckingString + string;
+        }
+        System.out.println(fuckingString);
+        thisFuckingLabel.setText(fuckingString);
+    }
     public void setDuration(Duration duration) {
         this.duration = duration;
     }
+
+
 }
