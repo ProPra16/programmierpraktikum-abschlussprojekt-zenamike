@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -17,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/StartCSS.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhu.propra.tddt.controller.TaskListController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/StartCSS.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhu.propra.tddt.controller.TaskListController">
    <children>
       <HBox alignment="CENTER_RIGHT" layoutY="354.0" prefHeight="0.0" prefWidth="0.0" />
       <Button id="Button" fx:id="TDDCycle" layoutX="507.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleStartTDDButton" text="Start TDD" />
@@ -28,7 +23,7 @@
       <Label id="TimePhaseLabel" layoutX="71.0" layoutY="359.0" prefHeight="27.0" prefWidth="41.0" text="Path :" />
       <TextField fx:id="pathField" layoutX="119.0" layoutY="359.0" />
       <Button id="Button" fx:id="Go" layoutX="300.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleGoButton" prefHeight="27.0" prefWidth="41.0" text="Go" />
-      <TextArea editable="false" layoutX="53.0" layoutY="60.0" prefHeight="128.0" prefWidth="225.0" text="ACHTUNG: BITTE ZUERST DIE ZEIT EINTRAGEN, DANN DAS HAECKCHEN SETZEN. BabySteps ermöglicht es, die jeweiligen &#10;Phasen des TDD-Zyklusses zeitlich zu&#10;limitieren. Wenn die Zeit (hier: 3 Minuten)&#10;vorüber ist und kein fehlschlagender Test&#10;bzw. funktionierender Code entstanden ist&#10;werden alle Eingaben der aktuellen Phase&#10;gelöscht und die Phase beginnt erneut.&#10;Hinweis: Es gibt kein Zeitlimit für die &#10;Phase &quot;Refactor&quot;.">
+      <TextArea editable="false" layoutX="53.0" layoutY="60.0" prefHeight="156.0" prefWidth="242.0" text="ACHTUNG: ZUERST DIE ZEIT EINTRAGEN, &#10;DANN DAS HAECKCHEN SETZEN. &#10;BabySteps ermöglicht es, die jeweiligen &#10;Phasen des TDD-Zyklusses zeitlich zu&#10;limitieren. Wenn die Zeit (hier: 3 Minuten)&#10;vorüber ist und kein fehlschlagender Test&#10;bzw. funktionierender Code entstanden ist&#10;werden alle Eingaben der aktuellen Phase&#10;gelöscht und die Phase beginnt erneut.&#10;Hinweis: Es gibt kein Zeitlimit für die &#10;Phase &quot;Refactor&quot;.">
          <effect>
             <DropShadow />
          </effect>
@@ -36,7 +31,7 @@
             <Font size="10.0" />
          </font>
       </TextArea>
-      <TextArea editable="false" layoutX="53.0" layoutY="243.0" prefHeight="95.0" prefWidth="225.0" text="Tracking ermöglicht es, dem Nutzer eine &#10;eine detaillierte Darstellung seiner Aktivität&#10;einzusehen.Zu diesem gehören Beispiels-&#10;weise die benötigte Zeit für bestimmte &#10;Aufgabenteile, ebensowie die Art &#10;begangener Fehler.">
+      <TextArea editable="false" layoutX="53.0" layoutY="258.0" prefHeight="85.0" prefWidth="242.0" text="Tracking ermöglicht es, dem Nutzer eine eine &#10;detaillierte Darstellung seiner Aktivität&#10;einzusehen.Zu diesem gehören Beispielsweise&#10;die benötigte Zeit für bestimmte Aufgabenteile, &#10;ebensowie die Art begangener Fehler.">
          <effect>
             <DropShadow />
          </effect>
@@ -44,7 +39,7 @@
             <Font size="10.0" />
          </font>
       </TextArea>
-      <CheckBox id="TimePhaseLabel" fx:id="Tracking" layoutX="24.0" layoutY="212.0" mnemonicParsing="false" onAction="#handleTrackingBox" prefHeight="18.0" prefWidth="174.0" stylesheets="@../css/StartCSS.css" text="Tracking" />
+      <CheckBox id="TimePhaseLabel" fx:id="Tracking" layoutX="24.0" layoutY="225.0" mnemonicParsing="false" onAction="#handleTrackingBox" prefHeight="18.0" prefWidth="174.0" stylesheets="@../css/StartCSS.css" text="Tracking" />
       <CheckBox id="TimePhaseLabel" fx:id="BabySteps" layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleBabyStepsBox" prefHeight="22.0" prefWidth="174.0" stylesheets="@../css/StartCSS.css" text="BabySteps" />
       <TextField fx:id="Time" layoutX="133.0" layoutY="22.0" promptText="Time in Min. " />
    </children>
